@@ -4,7 +4,7 @@ import Principal from './Principal';
 const Navbar = () => {
   return (
     <div>
-        <nav className="navbar navbar-expand-lg bg-light">
+        <nav className="navbar navbar-expand-lg bg-primary">
   <div className="container-fluid">
     <Link to="/">
         <img src='./kowloon.png' width="50"/>

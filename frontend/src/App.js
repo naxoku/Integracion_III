@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Users from "./componentes/Users";
 import  Principal  from "./componentes/Principal";
-import Navbar from './componentes/navbar';
+import Navbar from './componentes/Navbar';
 
 function App() {
   return (
@@ -13,11 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Principal/>}/>
         <Route path="/login" element={<Users/>} />
-
         <Route path="/Navbar" element={<Navbar/>}/>
-
-        <Route path="/navbar" element={<Navbar/>} />
-
       </Routes>
   </Router>
  
