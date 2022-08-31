@@ -73,7 +73,7 @@ function Users() {
   };
 
   const editUser = async (id) => {
-    const res = await fetch(`${API}/users/${id}`);
+    const res = await fetch(`${API}/user/${id}`);
     const data = await res.json();
 
     setEditing(true);
