@@ -14,7 +14,7 @@ users = db.users
 #Flask config
 app = Flask(__name__)
 
-
+CORS(app)
 
 
 #routes
