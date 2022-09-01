@@ -1,7 +1,13 @@
+from base64 import encode
+import email
+from email import message
+from pickle import GET
+from urllib import response
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo, ObjectId
 from flask_cors import CORS
 from bson.json_util import loads, dumps
+from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
 
 
@@ -16,18 +22,30 @@ app = Flask(__name__)
 
 CORS(app)
 
-
 #routes
 
 @app.route('/users', methods=['POST'])
 def createUsers():
-    id = users.insert_one({
-        'name' : request.json['name'],
-        'email' : request.json['email'],
-        'password' : request.json['password']
-    })
-    return jsonify(str(id.inserted_id)) 
-        
+    name = request.json['name']
+    email = request.json['email']
+    password = request.json['password']
+
+    if name and email and password:
+        hashed = generate_password_hash(password)
+        id = db.users.insert_one(
+            {'name': name, 'email': email, 'password' : hashed}
+        )
+        response = {
+            'id' : str(id),
+            'name': name,
+            'email': email,
+            'password': hashed
+        }
+        return response
+    else:
+        {'message': 'received'}
+    return  {'message': 'received'} 
+
 
 @app.route('/users', methods=['GET'])
 def getUsers():
@@ -66,7 +84,6 @@ def updateUsers(id):
         'password': request.json['password']
     }})
     return jsonify({'msg': 'Usuario actualizado'})
-
 
 
 if __name__ == "__main__":
