@@ -1,9 +1,13 @@
 from base64 import encode
 import email
 from email import message
+import json
+import mimetypes
+from bson import json_util 
+from bson.objectid import ObjectId
 from pickle import GET
 from urllib import response
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_pymongo import PyMongo, ObjectId
 from flask_cors import CORS
 from bson.json_util import loads, dumps
@@ -43,9 +47,8 @@ def createUsers():
         }
         return response
     else:
-        {'message': 'received'}
+        return not_found()
     return  {'message': 'received'} 
-
 
 @app.route('/users', methods=['GET'])
 def getUsers():
@@ -59,17 +62,11 @@ def getUsers():
         })
     return jsonify(users)
     
-@app.route('/user/<id>', methods=['GET'])
+@app.route('/users/<id>', methods=['GET'])
 def getUser(id):
     user = db.users.find_one({'_id': ObjectId(id)})
-    print(type(user))
-    return jsonify({
-        '_id': str(ObjectId(user['_id'])),
-        'name': user['name'],
-        'email': user['email'],
-        'password': user['password']
-        
-    })
+    response = json_util.dumps(user)
+    return Response(response, mimetype="application/json")
 
 @app.route('/users/<id>', methods=['DELETE'])
 def deleteUsers(id):
@@ -78,13 +75,27 @@ def deleteUsers(id):
 
 @app.route('/users/<id>', methods=['PUT'])
 def updateUsers(id):
-    db.users.update_one({'_id': ObjectId(id)}, {'$set': {
-        'name': request.json['name'],
-        'email': request.json['email'],
-        'password': request.json['password']
-    }})
-    return jsonify({'msg': 'Usuario actualizado'})
+    name = request.json['name']
+    email = request.json['email']
+    password = request.json['password']
+    if name and email and password:
+        hashed = generate_password_hash(password)
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'name': name,
+            'email': email,
+            'password': hashed
+        }})
+        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    return response
 
+@app.errorhandler(404)
+def not_found(error = None):
+    response = jsonify({
+        'message':'Recurso no encontrado' + request.url,
+        'status': 404
+    })
+    response.status_code = 404
+    return response
 
 if __name__ == "__main__":
     app.run(debug=True)
