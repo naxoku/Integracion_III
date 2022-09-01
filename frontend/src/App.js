@@ -6,19 +6,16 @@ import  Principal  from "./componentes/Principal";
 import Navbar from './componentes/navbar';
 
 function App() {
-  return (
-
-  <Router>
-    <Navbar/>
-      <Routes>
-        <Route path="/" element={<Principal/>}/>
-        <Route path="/login" element={<Users/>} />
-        <Route path="/Navbar" element={<Navbar/>}/>
-      </Routes>
-  </Router>
- 
-    
-  );
+    return (
+        <Router>
+            <Navbar/>
+                <Routes>
+                    <Route path="/" element={<Principal/>}/>
+                    <Route path="/login" element={<Users/>} />
+                    <Route path="/Navbar" element={<Navbar/>}/>
+                </Routes>
+        </Router>
+    );
 }
-
+    
 export default App;
