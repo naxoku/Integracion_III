@@ -6,11 +6,13 @@ function Users() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [edad, setEdad] = useState("");
     
     const [editing, setEditing] = useState(false);
     const [id, setId] = useState("");
     
     const nameInput = useRef(null);
+    const edadInput = useRef(null);
     
     let [users, setUsers] = useState([]);
     
@@ -25,6 +27,7 @@ function Users() {
                 body: JSON.stringify({
                   name,
                   email,
+                  edad,
                   password,
                 }),
             });
@@ -50,6 +53,7 @@ function Users() {
         
         setName("");
         setEmail("");
+        setEdad("");
         setPassword("");
         nameInput.current.focus();
     };  
@@ -139,6 +143,19 @@ function Users() {
                             className="form-control m-1"
                             placeholder="Nombre de usuario"
                             ref={nameInput}
+                            autoFocus
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input
+                            type="number"
+                            onChange={(e) => setEdad(e.target.value)}
+                            value={edad}
+                            className="form-control m-1"
+                            min="0" 
+                            max="100"
+                            placeholder="Edad"
+                            ref={edadInput}
                             autoFocus
                         />
                     </div>
