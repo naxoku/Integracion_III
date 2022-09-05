@@ -6,13 +6,13 @@ export const getToken = () => {
     }
 };
 
-export const setToken = () => {
+export const setToken = (token) => {
     if (typeof localStorage !== 'undefined'){
         return localStorage.setItem("token", token);
     }
 };
 
-export const removeToken = () => {
+export const removeToken = (token) => {
     if (typeof localStorage !== 'undefined'){
         return localStorage.removeItem("token");
     }

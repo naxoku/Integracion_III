@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {removeToken}  from "../utils";
 import {setToken}  from "../utils";
-import {axios} from "axios";
+import axios from "axios";
 
 const API = process.env.REACT_APP_API;
 
@@ -28,21 +28,15 @@ function Users() {
         e.preventDefault();
         removeToken();
         try {
-            const response = await fetch(`${API}/users/login`,{
-                method: "POST",
-                mode: 'cors',
-                headers: {
-                    "Content-Type": "application/json",
-                  },
-                body: JSON.stringify({
-                 'email2' :email2, 
-                 'password2' :password2,
-                }),
-            });
+         const response = await axios.post(`${API}/login`,{
+            email2,
+            password2
+         });
 
-           if (response.status == 200){
+           if (response.status === 200){
+            console.log(response.data.token);
             setToken(response.data.token);
-            window.location = "/"
+            window.location = "/";
             return null;
            }
            setError("Hubo un problema al ingresar, por favor intente nuevamente")
@@ -139,15 +133,16 @@ function Users() {
                 <div className="m-3">
                     <h4>Iniciar sesión</h4>
                 </div>
-                <form onSubmit={login} className="card card-body">
+                <form method = "POST" onSubmit={login} className="card card-body">
                     
                     <div className="form-group">
                         <input
-                            type="text"
+                            type="email"
                             onChange={(e) => setEmail2(e.target.value)}
                             value={email2}
                             className="form-control m-1"
                             placeholder="Correo electrónico"
+                            name={email2}
                         />
                     </div>
                     <div className="form-group">
@@ -157,6 +152,7 @@ function Users() {
                             value={password2}
                             className="form-control m-1"
                             placeholder="Contraseña"
+                            name={password2}
                         />
                     </div>
                     <button className="container-fluid btn btn-primary btn-block m-1">
