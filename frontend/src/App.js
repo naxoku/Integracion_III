@@ -4,8 +4,15 @@ import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Users from "./componentes/Users";
 import  Principal  from "./componentes/Principal";
 import Navbar from './componentes/Navbar';
+import {checkIfIsLoggedIn}  from "./utils";
+import {getLoggedInUserId}  from "./utils";
 
 function App() {
+
+    const isLoggedIn = checkIfIsLoggedIn();
+    const user = getLoggedInUserId();
+    
+
     return (
         <Router>
             <Navbar/>

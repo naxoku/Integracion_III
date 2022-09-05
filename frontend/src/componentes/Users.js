@@ -1,4 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
+import {removeToken}  from "../utils";
+import {setToken}  from "../utils";
+import {axios} from "axios";
 
 const API = process.env.REACT_APP_API;
 
@@ -7,14 +10,47 @@ function Users() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [edad, setEdad] = useState("");
+    const [password2, setPassword2] = useState("");
+    const [email2, setEmail2] = useState("");
     
     const [editing, setEditing] = useState(false);
     const [id, setId] = useState("");
+
+    const [error, setError] = useState("");
     
     const nameInput = useRef(null);
     const edadInput = useRef(null);
     
     let [users, setUsers] = useState([]);
+
+
+    const login = async (e) => {
+        e.preventDefault();
+        removeToken();
+        try {
+            const response = await fetch(`${API}/users/login`,{
+                method: "POST",
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/json",
+                  },
+                body: JSON.stringify({
+                 'email2' :email2, 
+                 'password2' :password2,
+                }),
+            });
+
+           if (response.status == 200){
+            setToken(response.data.token);
+            window.location = "/"
+            return null;
+           }
+           setError("Hubo un problema al ingresar, por favor intente nuevamente")
+        } catch (e){
+            console.error(e);
+            setError("El usuario y/o la contraseña son incorrecto(s)")
+        }
+    }
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -103,13 +139,13 @@ function Users() {
                 <div className="m-3">
                     <h4>Iniciar sesión</h4>
                 </div>
-                <form onSubmit={handleSubmit} className="card card-body">
+                <form onSubmit={login} className="card card-body">
                     
                     <div className="form-group">
                         <input
-                            type="email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
+                            type="text"
+                            onChange={(e) => setEmail2(e.target.value)}
+                            value={email2}
                             className="form-control m-1"
                             placeholder="Correo electrónico"
                         />
@@ -117,8 +153,8 @@ function Users() {
                     <div className="form-group">
                         <input
                             type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
+                            onChange={(e) => setPassword2(e.target.value)}
+                            value={password2}
                             className="form-control m-1"
                             placeholder="Contraseña"
                         />
