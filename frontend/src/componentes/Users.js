@@ -96,94 +96,95 @@ function Users() {
     }, []);
 
     return (
+        <div className="container-md">
+            <div className="row">
         
-        <div className="row">
-        
-            <div className="col-md-4">
-                <div className="m-3">
-                    <h4>Iniciar sesión</h4>
+                <div className="col-md-4 text-lg-center">
+                    <div className="m-3">
+                        <h4>Iniciar sesión</h4>
+                    </div>
+                    <form onSubmit={handleSubmit} className="card card-body">
+
+                        <div className="form-group">
+                            <input
+                                type="email"
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                                className="form-control m-1"
+                                placeholder="Correo electrónico"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                                className="form-control m-1"
+                                placeholder="Contraseña"
+                            />
+                        </div>
+                        <button className="container-fluid btn btn-primary btn-block m-1">
+                            {editing ? "Update" : "Create"}
+                        </button>
+                    </form>
                 </div>
-                <form onSubmit={handleSubmit} className="card card-body">
-                    
-                    <div className="form-group">
-                        <input
-                            type="email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            className="form-control m-1"
-                            placeholder="Correo electrónico"
-                        />
+
+
+                <div className="col-md-4">
+                    <div className="m-3">
+                        <h4>Crear cuenta de usuario</h4>
                     </div>
-                    <div className="form-group">
-                        <input
-                            type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            className="form-control m-1"
-                            placeholder="Contraseña"
-                        />
-                    </div>
-                    <button className="container-fluid btn btn-primary btn-block m-1">
-                        {editing ? "Update" : "Create"}
-                    </button>
-                </form>
-            </div>
-        
-      
-            <div className="col-md-4">
-                <div className="m-3">
-                    <h4>Crear cuenta de usuario</h4>
+                    <form onSubmit={handleSubmit} className="card card-body">
+                        <div className="form-group">
+                            <input
+                                type="text"
+                                onChange={(e) => setName(e.target.value)}
+                                value={name}
+                                className="form-control m-1"
+                                placeholder="Nombre de usuario"
+                                ref={nameInput}
+                                autoFocus
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="number"
+                                onChange={(e) => setEdad(e.target.value)}
+                                value={edad}
+                                className="form-control m-1"
+                                min="0" 
+                                max="100"
+                                placeholder="Edad"
+                                ref={edadInput}
+                                autoFocus
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="email"
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                                className="form-control m-1"
+                                placeholder="Correo electrónico"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                                className="form-control m-1"
+                                placeholder="Contraseña"
+                            />
+                        </div>
+                        <button className="container-fluid btn btn-primary btn-block m-1">
+                            {editing ? "Update" : "Create"}
+                        </button>
+                    </form>
                 </div>
-                <form onSubmit={handleSubmit} className="card card-body">
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
-                            className="form-control m-1"
-                            placeholder="Nombre de usuario"
-                            ref={nameInput}
-                            autoFocus
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="number"
-                            onChange={(e) => setEdad(e.target.value)}
-                            value={edad}
-                            className="form-control m-1"
-                            min="0" 
-                            max="100"
-                            placeholder="Edad"
-                            ref={edadInput}
-                            autoFocus
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            className="form-control m-1"
-                            placeholder="Correo electrónico"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            className="form-control m-1"
-                            placeholder="Contraseña"
-                        />
-                    </div>
-                    <button className="container-fluid btn btn-primary btn-block m-1">
-                        {editing ? "Update" : "Create"}
-                    </button>
-                </form>
-            </div>
-        
+             </div>
         </div>
+        
     );  
 };  
     
