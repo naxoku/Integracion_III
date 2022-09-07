@@ -1,8 +1,11 @@
 from base64 import encode
 import email
 from email import message
+from http import HTTPStatus
+from http.client import BAD_REQUEST
 import json
 import mimetypes
+from unicodedata import name
 from bson import json_util 
 from bson.objectid import ObjectId
 from pickle import GET
@@ -13,6 +16,7 @@ from flask_cors import CORS
 from bson.json_util import loads, dumps
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
+from flask_jwt_extended import create_access_token , get_jwt_identity, jwt_required, JWTManager
 
 
 
@@ -88,6 +92,7 @@ def updateUsers(id):
         response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
     return response
 
+
 @app.errorhandler(404)
 def not_found(error = None):
     response = jsonify({
@@ -96,6 +101,34 @@ def not_found(error = None):
     })
     response.status_code = 404
     return response
+
+jwt = JWTManager(app)
+app.config["JWT_SECRET_KEY"] = "super-secret"
+app.config["CORS_HEADERS"] = "Content-Type" 
+
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+    req = request.get_json()
+    email2 = req['email2']  
+    password2 = req['password2']
+    
+    '''
+    
+    intento de verificacion de contraseña:
+     user = db.users.find_one({'email': email2}) 
+    if user and check_password_hash(user['password'], password2):
+        token = create_access_token(identity=email2)
+        return jsonify({'token' : token})
+    if not user or not check_password_hash(user['password'], password2):
+        return {'message': 'usuario o contraseña incorrectos'} 
+    borrar lo de abajo cuando se logre
+  
+    '''
+    if email2:
+      token = create_access_token(identity=email2)
+      return jsonify({'token' : token})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
