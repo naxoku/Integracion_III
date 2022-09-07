@@ -1,7 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { checkIfIsLoggedIn, removeToken } from '../utils';
 
 export const navbar = () => {
+
+    const logeado = checkIfIsLoggedIn();
+	const cerrarSesion = () => {
+		removeToken();
+		window.location = "/login";
+	}
+
 	return (
 		<div>
 			<nav class="navbar navbar-expand-lg navbar-light bg-light border">
@@ -33,10 +41,23 @@ export const navbar = () => {
                             	<a href="/" class="btn btn-primary" role="button" aria-current="page">
                                 Repositorio</a>
                         	</li>
-							<li class="nav-item me-3">
+
+                            {logeado && (
+							  <li class="nav-item me-3">
+                            	<a onClick= {cerrarSesion} href="/login" class="btn btn-primary" role="button" aria-current="page">
+                                Cerrar sesión</a>
+                        	  </li>
+                            )}
+
+							{!logeado && (
+							  <li class="nav-item me-3">
                             	<a href="/login" class="btn btn-primary" role="button" aria-current="page">
                                 Iniciar sesión</a>
-                        	</li>
+                        	  </li>
+                            )}
+
+
+
   				  	  	</ul>
   				  	  	<form class="d-flex">
   				  	  	  	<input class="form-control me-2" type="search" placeholder="Ingrese una búsqueda..." aria-label="Search"/>

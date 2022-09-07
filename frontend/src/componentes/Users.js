@@ -156,7 +156,7 @@ function Users() {
                         />
                     </div>
                     <button className="container-fluid btn btn-primary btn-block m-1">
-                        {editing ? "Update" : "Create"}
+                        { "Iniciar sesion"}
                     </button>
                 </form>
             </div>
