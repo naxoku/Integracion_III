@@ -40,26 +40,31 @@ export const Navbar = () => {
                                 Biblioteca</a>
                         	</li>
 							<li class="d-flex m-1">
-                            	<a href="/" class="btn btn-primary container-md" role="button" aria-current="page">
+                            	<a target="blank" href="https://github.com/naxoku/Integracion_III" class="btn btn-primary container-md" role="button" aria-current="page">
                                 Repositorio</a>
                         	</li>
-							<li class="d-flex m-1">
-                            	<a href="/login" class="btn btn-primary container-md" role="button" aria-current="page">
-                                Iniciar sesión</a>
-                        	</li>
+							
 							{logeado && (
-							  <li class="nav-item me-3">
-                            	<a onClick= {cerrarSesion} href="/login" class="btn btn-primary" role="button" aria-current="page">
+							  <li class="d-flex m-1">
+                            	<a onClick= {cerrarSesion} href="/login" class="btn btn-primary container-md" role="button" aria-current="page">
                                 Cerrar sesión</a>
                         	  </li>
                             )}
 
 							{!logeado && (
-							  <li class="nav-item me-3">
-                            	<a href="/login" class="btn btn-primary" role="button" aria-current="page">
+							  <li class="d-flex m-1">
+                            	<a href="/login" class="btn btn-primary container-md" role="button" aria-current="page">
                                 Iniciar sesión</a>
                         	  </li>
                             )}
+
+                            {logeado && (
+							  <li class="d-flex m-1">
+                            	<a href="/configuracion" class="btn btn-primary container-md" role="button" aria-current="page">
+                                Mi perfil</a>
+                        	  </li>
+                            )}
+							
   				  	  	</ul>
   				  	  	<form class="d-flex m-1">
   				  	  	  	<input class="form-control me-2" type="search" placeholder="Ingrese una búsqueda..." aria-label="Search"/>

@@ -6,7 +6,7 @@ from http.client import BAD_REQUEST
 import json
 import mimetypes
 from unicodedata import name
-from bson import json_util 
+from bson import *
 from bson.objectid import ObjectId
 from pickle import GET
 from urllib import response
@@ -131,4 +131,4 @@ def login():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
