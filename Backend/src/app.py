@@ -17,7 +17,7 @@ from bson.json_util import loads, dumps
 from werkzeug.security import generate_password_hash, check_password_hash
 import pymongo
 from flask_jwt_extended import create_access_token , get_jwt_identity, jwt_required, JWTManager
-
+from bson.json_util import dumps
 
 
 #data Base, in order, client = url, db = DataBase general, Colection = coleccion especifica
@@ -112,23 +112,15 @@ def login():
     req = request.get_json()
     email2 = req['email2']  
     password2 = req['password2']
-    
-    '''
-    
-    intento de verificacion de contraseña:
-     user = db.users.find_one({'email': email2}) 
-    if user and check_password_hash(user['password'], password2):
-        token = create_access_token(identity=email2)
-        return jsonify({'token' : token})
-    if not user or not check_password_hash(user['password'], password2):
-        return {'message': 'usuario o contraseña incorrectos'} 
-    borrar lo de abajo cuando se logre
-  
-    '''
-    if email2:
-      token = create_access_token(identity=email2)
-      return jsonify({'token' : token})
+    user = db.users.find_one({'email': email2}) 
+    id =  json.loads(dumps(user['_id']))
 
+    if(check_password_hash(user['password'], password2)):
+        token = create_access_token(identity=id)
+        return jsonify({'token' : token})
+
+    return {'message': 'usuario o contraseña incorrectos'} 
 
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False)
+    
