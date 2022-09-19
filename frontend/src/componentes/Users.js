@@ -38,9 +38,8 @@ function Users() {
             window.location = "/";
             return null;
            }
-           setError("Hubo un problema al ingresar, por favor intente nuevamente")
+
         } catch (e){
-            console.error(e);
             setError("El usuario y/o la contraseña son incorrecto(s)")
         }
     }
@@ -141,6 +140,9 @@ function Users() {
                             name={password2}
                         />
                     </div>
+
+                    <div>{error}</div>
+                    
                     <button className="container-fluid btn btn-primary btn-block m-1">
                         { "Iniciar sesion"}
                     </button>
