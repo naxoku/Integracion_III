@@ -23,12 +23,11 @@ function Users() {
     
     let [users, setUsers] = useState([]);
 
-
     const login = async (e) => {
         e.preventDefault();
         removeToken();
         try {
-         const response = await axios.post(`${API}/login`,{
+         const response = await axios.post(`${API}/users/login`,{
             email2,
             password2
          });
@@ -107,19 +106,6 @@ function Users() {
         }
     };
 
-    const editUser = async (id) => {
-        const res = await fetch(`${API}/user/${id}`);
-        const data = await res.json();
-    
-        setEditing(true);
-        setId(id);
-    
-        // Reset
-        setName(data.name);
-        setEmail(data.email);
-        setPassword(data.password);
-        nameInput.current.focus();
-    };
 
     useEffect(() => {
         getUsers();

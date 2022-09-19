@@ -40,6 +40,6 @@ export const getLoggedInUserId = () => {
     if(!token){
         return "";
     }
-
-    return jwt(token, { complete : true}).sub;
+    const id = jwt(token, { complete : true}).sub['$oid'];
+    return id;
 }

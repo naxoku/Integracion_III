@@ -28,7 +28,7 @@ users = db.users
 #Flask config
 app = Flask(__name__)
 
-CORS(app)
+CORS(app, resources={r"/users/*": {"origins": "*"}})
 
 #routes
 
@@ -69,7 +69,7 @@ def getUsers():
 @app.route('/users/<id>', methods=['GET'])
 def getUser(id):
     user = db.users.find_one({'_id': ObjectId(id)})
-    response = json_util.dumps(user)
+    response = dumps(user)
     return Response(response, mimetype="application/json")
 
 @app.route('/users/<id>', methods=['DELETE'])
@@ -77,21 +77,39 @@ def deleteUsers(id):
     db.users.delete_one({'_id': ObjectId(id)})
     return jsonify({'msg': 'Usuario eleiminado'})
 
-@app.route('/users/<id>', methods=['PUT'])
+@app.route('/users/nombre/<id>', methods=['PUT'])
 def updateUsers(id):
-    name = request.json['name']
-    email = request.json['email']
-    password = request.json['password']
-    if name and email and password:
-        hashed = generate_password_hash(password)
+    req = request.get_json()
+    name = req['nuevoUsuario']
+    if name:
         db.users.update_one({'_id': ObjectId(id)}, {'$set': {
-            'name': name,
-            'email': email,
-            'password': hashed
+            'name': name
         }})
         response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
     return response
 
+@app.route('/users/correo/<id>', methods=['PUT'])
+def updateCorreo(id):
+    req = request.get_json()
+    correo = req['nuevoCorreo']
+    if correo:
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'email': correo
+        }})
+        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    return response
+
+@app.route('/users/password/<id>', methods=['PUT'])
+def updatePassword(id):
+    req = request.get_json()
+    password = req['nuevaContrasena']
+    if password:
+        hashed = generate_password_hash(password)
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'password': hashed
+        }})
+        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    return response
 
 @app.errorhandler(404)
 def not_found(error = None):
@@ -107,7 +125,7 @@ app.config["JWT_SECRET_KEY"] = "super-secret"
 app.config["CORS_HEADERS"] = "Content-Type" 
 
 
-@app.route('/login',methods=['GET','POST'])
+@app.route('/users/login',methods=['GET','POST'])
 def login():
     req = request.get_json()
     email2 = req['email2']  

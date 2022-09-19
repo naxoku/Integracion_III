@@ -1,13 +1,61 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react';
+import {checkIfIsLoggedIn, getLoggedInUserId}  from "../utils";
+import axios from 'axios'; 
+const API = process.env.REACT_APP_API;
 
 const Perfil = () => {
-    let usuario = "Usuario89";
-    let correo = "test@example.com";
-    let contraseña = "Password"
+    const [usuario, setNombre] = useState("");
+    const [correo, setCorreo] = useState("");
+    const [contrasena, setPwd] = useState("");
+    const [nuevoUsuario, setnNombre] = useState("");
+    const [nuevoCorreo, setnCorreo] = useState("");
+    const [nuevaContrasena, setnPwd] = useState("");
     let instagram = "Usuario89_edo"
     let facebook = "Nombre Genérico"
     let twitter = "Usuario89_edo"
+    const idUser = getLoggedInUserId();
+    
+    const getUser = async () => {
 
+        const res = await axios.get(`${API}/users/${idUser}`, {
+            mode: "no-cors",
+            });
+       
+        const data = res.data;
+        
+        setNombre(data['name']);
+        setCorreo(data['email']);
+        setPwd(data['password']);
+
+        };
+
+    const editUser = async (id) => {
+        await axios.put(`${API}/users/nombre/${idUser}`, {
+               nuevoUsuario
+            });
+        window.location = "/configuracion";
+        };
+    
+    const editCorreo = async (id) => {
+        await axios.put(`${API}/users/correo/${idUser}`, {
+                nuevoCorreo
+            });
+        window.location = "/configuracion";
+        };
+
+    const editContrasena = async (id) => {
+        await axios.put(`${API}/users/password/${idUser}`, {
+                nuevaContrasena
+            });
+        window.location = "/configuracion";
+        };
+
+    useEffect(() => {
+          getUser();
+    }, []);
+    
+ 
     return (
         <div className='container-md mt-2'>
             <div className='row'>
@@ -35,7 +83,7 @@ const Perfil = () => {
                     </div>
                     <h6>Contraseña</h6>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Contraseña" value={contraseña} aria-describedby="button-addon2" disabled/>
+                        <input type="password" class="form-control" placeholder="Contraseña" value={contrasena} aria-describedby="button-addon2" disabled/>
                         <button type="button" class="btn bg-primary text-white"  
                         data-bs-toggle="modal" 
                         data-bs-target="#modalContraseña"
@@ -129,13 +177,13 @@ const Perfil = () => {
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Usuario nuevo</label>
-                                    <input type="text" class="form-control" id="recipient-name"/>
+                                    <input onChange={(e) => setnNombre(e.target.value)} type="text" class="form-control" id="recipient-name"/>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-primary" onClick={(e) => editUser(idUser)}>Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -157,13 +205,13 @@ const Perfil = () => {
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Correo nuevo</label>
-                                    <input type="email" class="form-control" id="recipient-name"/>
+                                    <input onChange={(e) => setnCorreo(e.target.value)}  type="email" class="form-control" id="recipient-name"/>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-primary" onClick={(e) => editCorreo(idUser)}>Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -181,11 +229,11 @@ const Perfil = () => {
                             <form>
                                 <div class="mb-1">
                                     <label for="recipient-name" class="col-form-label">Contraseña actual</label>
-                                    <input type="password" class="form-control" placeholder="Contraseña" value={contraseña} aria-describedby="button-addon2" disabled/>
+                                    <input type="password" class="form-control" placeholder="Contraseña" value={contrasena} aria-describedby="button-addon2" disabled/>
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Contraseña nueva</label>
-                                    <input type="password" class="form-control" id="recipient-name"/>
+                                    <input onChange={(e) => setnPwd(e.target.value)}  type="password" class="form-control" id="recipient-name"/>
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Repetir contraseña</label>
@@ -195,7 +243,7 @@ const Perfil = () => {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-primary" onClick={(e) => editContrasena(idUser)}>Guardar</button>
                         </div>
                     </div>
                 </div>
