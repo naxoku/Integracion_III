@@ -9,6 +9,10 @@ from unicodedata import name
 from bson import *
 from bson.objectid import ObjectId
 from pickle import GET
+import os
+import base64
+import gridfs
+from werkzeug.utils import secure_filename
 from urllib import response
 from flask import Flask, request, jsonify, Response
 from flask_pymongo import PyMongo, ObjectId
@@ -24,9 +28,14 @@ from bson.json_util import dumps
 client = pymongo.MongoClient("mongodb+srv://Kuroned:20622732-kJose@cluster0.ecy5yb3.mongodb.net/?retryWrites=true&w=majority")
 db = client.Kow_bib
 users = db.users
+fs = gridfs.GridFS(db)
 
 #Flask config
 app = Flask(__name__)
+
+app.config['UPLOAD_FOLDER'] = r"D:\Universidad\Tercer Año\6to semestre\Integracion_III\Backend\Archivos"
+
+
 
 CORS(app, resources={r"/users/*": {"origins": "*"}})
 
@@ -76,6 +85,41 @@ def getUser(id):
 def deleteUsers(id):
     db.users.delete_one({'_id': ObjectId(id)})
     return jsonify({'msg': 'Usuario eleiminado'})
+
+
+#ruta de subida archivo (es de prueba para veriicar que funciona)
+@app.route('/Libro',methods=['GET'])
+def libro():
+    return '''
+        <form method="POST" action="/create" enctype="multipart/form-data">
+            <input type="text" name="Username">
+            <input type="file" name="file">
+            <input type="submit">
+        </form>
+    
+    '''
+
+#creacion de los archivos y enrutamientos a mongoDB
+
+@app.route('/create', methods=['POST'])
+def create():
+    f = request.files['file']
+    filename = secure_filename(f.filename)
+    print(filename)
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    with open(filename, "rb") as f:
+        encoded_string = base64.b64encode(f.read())
+    fileid = fs.put(encoded_string, filename=filename)
+    db.Libros.insert_one({"filename":filename,"fileid":fileid})
+    
+    return 'DONE!'
+
+
+#Renderiza el archivo pdf alojado en la carpeta desiganda arriba
+@app.route('/file/<filename>')
+def file(filename):
+    return send_file(os.path.join(app.config['UPLOAD_FOLDER']+"\\"+filename),mimetype="application/pdf")
+
 
 @app.route('/users/nombre/<id>', methods=['PUT'])
 def updateUsers(id):
