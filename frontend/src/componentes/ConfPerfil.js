@@ -59,7 +59,7 @@ const Perfil = () => {
     return (
         <div className='container-md mt-2'>
             <div className='row'>
-                <div className='col'>
+                <div className='col-sm'>
                     <h4>Configuración de la cuenta</h4>
 
                     <h6>Nombre de usuario</h6>
@@ -70,7 +70,7 @@ const Perfil = () => {
                         data-bs-toggle="modal" 
                         data-bs-target="#modalUsuario"
                         data-bs-whatever="@mdo">
-                            Edit</button>
+                            Editar</button>
                     </div>
                     <h6>Correo electrónico</h6>
                     <div class="input-group mb-3">
@@ -79,7 +79,7 @@ const Perfil = () => {
                         data-bs-toggle="modal" 
                         data-bs-target="#modalCorreo"
                         data-bs-whatever="@mdo">
-                            Edit</button>
+                            Editar</button>
                     </div>
                     <h6>Contraseña</h6>
                     <div class="input-group mb-3">
@@ -88,7 +88,7 @@ const Perfil = () => {
                         data-bs-toggle="modal" 
                         data-bs-target="#modalContraseña"
                         data-bs-whatever="@mdo">
-                            Edit</button>
+                            Editar</button>
                     </div>
 
                     <h4>Redes sociales</h4>
@@ -101,7 +101,7 @@ const Perfil = () => {
                         data-bs-toggle="modal" 
                         data-bs-target="#modalInstagram"
                         data-bs-whatever="@mdo">
-                            Edit</button>
+                            Editar</button>
                     </div>
                     <h6>Twitter:</h6>
                     <div class="input-group mb-3">
@@ -111,7 +111,7 @@ const Perfil = () => {
                         data-bs-toggle="modal" 
                         data-bs-target="#modalTwitter"
                         data-bs-whatever="@mdo">
-                            Edit</button>
+                            Editar</button>
                     </div>
                     <h6>Facebook:</h6>
                     <div class="input-group mb-3">
@@ -121,11 +121,23 @@ const Perfil = () => {
                         data-bs-toggle="modal" 
                         data-bs-target="#modalFacebook"
                         data-bs-whatever="@mdo">
-                            Edit</button>
+                            Editar</button>
+                    </div>
+
+                    <h4>Configuración de privacidad</h4>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el historial de lectura al público</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar redes sociales al público</label>
                     </div>
                 </div>
                 
-                <div className='col'>
+                {/* Columna derecha */}
+                <div className='col-sm'>
                     <h4>Presentación al público</h4>
 
                     <h6>Foto de perfil</h6>

@@ -111,99 +111,106 @@ function Users() {
     }, []);
 
     return (
-        
-        <div className="row">
-        
-            <div className="col-md-4">
-                <div className="m-3">
-                    <h4>Iniciar sesión</h4>
-                </div>
-                <form method = "POST" onSubmit={login} className="card card-body">
-                    
-                    <div className="form-group">
-                        <input
-                            type="email"
-                            onChange={(e) => setEmail2(e.target.value)}
-                            value={email2}
-                            className="form-control m-1"
-                            placeholder="Correo electrónico"
-                            name={email2}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="password"
-                            onChange={(e) => setPassword2(e.target.value)}
-                            value={password2}
-                            className="form-control m-1"
-                            placeholder="Contraseña"
-                            name={password2}
-                        />
-                    </div>
+        <div className="container-md mt-2">
+            <div className="row justify-content-center container">
 
-                    <div>{error}</div>
-                    
-                    <button className="container-fluid btn btn-primary btn-block m-1">
-                        { "Iniciar sesion"}
-                    </button>
-                </form>
-            </div>
+                {/* Columna login */}
+                <div className="col-sm-5">
+
+                    <h4>Iniciar sesión</h4>
+                    <form method = "POST" onSubmit={login} className="card card-body">
+                        
+                        <div className="form-group">
+                            <input
+                                type="email"
+                                onChange={(e) => setEmail2(e.target.value)}
+                                value={email2}
+                                className="form-control m-1"
+                                placeholder="Correo electrónico"
+                                name={email2}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="password"
+                                onChange={(e) => setPassword2(e.target.value)}
+                                value={password2}
+                                className="form-control m-1"
+                                placeholder="Contraseña"
+                                name={password2}
+                                     />
+                                 </div>
         
-      
-            <div className="col-md-4">
-                <div className="m-3">
-                    <h4>Crear cuenta de usuario</h4>
+                        <div>{error}</div>
+                        
+                        <button className="container-fluid btn btn-primary btn-block m-1">
+                            { "Iniciar sesion"}
+                        </button>
+                    </form>
+                    <div>
+                        <h6 className="text-center text-secondary">¿No tienes una cuenta? <a href="/login">Crea una aquí</a></h6>
+                    </div>
                 </div>
-                <form onSubmit={handleSubmit} className="card card-body">
-                    <div className="form-group">
-                        <input
-                            type="text"
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
-                            className="form-control m-1"
-                            placeholder="Nombre de usuario"
-                            ref={nameInput}
-                            autoFocus
-                        />
+                
+                <div> <hr></hr> </div>
+
+                {/* Columna register */}
+                <div className="col-sm-5">
+                    <h4>Crear cuenta de usuario</h4>
+                    <form onSubmit={handleSubmit} className="card card-body">
+                        <div className="form-group">
+                            <input
+                                type="text"
+                                onChange={(e) => setName(e.target.value)}
+                                value={name}
+                                className="form-control m-1"
+                                placeholder="Nombre de usuario"
+                                ref={nameInput}
+                                autoFocus
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="number"
+                                onChange={(e) => setEdad(e.target.value)}
+                                value={edad}
+                                className="form-control m-1"
+                                min="0" 
+                                max="100"
+                                placeholder="Edad"
+                                ref={edadInput}
+                                autoFocus
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="email"
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                                className="form-control m-1"
+                                placeholder="Correo electrónico"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                                className="form-control m-1"
+                                placeholder="Contraseña"
+                            />
+                        </div>
+                        <button className="container-fluid btn btn-primary btn-block m-1">
+                            {editing ? "Update" : "Create"}
+                        </button>
+                    </form>
+                    <div>
+                        <h6 className="text-center text-secondary">¿Ya tienes una cuenta? <a href="/">Inicia sesión</a></h6>
                     </div>
-                    <div className="form-group">
-                        <input
-                            type="number"
-                            onChange={(e) => setEdad(e.target.value)}
-                            value={edad}
-                            className="form-control m-1"
-                            min="0" 
-                            max="100"
-                            placeholder="Edad"
-                            ref={edadInput}
-                            autoFocus
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            value={email}
-                            className="form-control m-1"
-                            placeholder="Correo electrónico"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <input
-                            type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            className="form-control m-1"
-                            placeholder="Contraseña"
-                        />
-                    </div>
-                    <button className="container-fluid btn btn-primary btn-block m-1">
-                        {editing ? "Update" : "Create"}
-                    </button>
-                </form>
+                </div>
             </div>
-        
         </div>
+        
     );  
 };  
     

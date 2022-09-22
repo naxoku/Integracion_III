@@ -5,15 +5,18 @@ import  Principal  from "./componentes/Principal";
 import Navbar from './componentes/Navbar';
 import Proyecto from "./componentes/Proyecto";
 import ConfPerfil from "./componentes/ConfPerfil";
-import bibloteca from "./componentes/bibloteca";
+import Biblioteca from "./componentes/Biblioteca";
+import Navbar2 from "./componentes/Navbar2";
+import PerfilUser from "./componentes/PerfilUser"
 
 function App() {
     return (
         <Router>
-            <Navbar/>
+            <Navbar2/>
+            {/* <Navbar/> */}
                 <Routes>
                     <Route path="/" element={<Principal/>}/>
-                    <Route path="/bibloteca" element={<Bibloteca/>}/>
+                    <Route path="/biblioteca" element={<Biblioteca/>}/>
                     <Route path="/login" element={<Users/>} />
                     {/* <Route path="/Navbar" element={<Navbar/>}/> */}
 
@@ -22,6 +25,9 @@ function App() {
 
                     {/* Acá está el componente de perfil de configuración del perfil de usuario */}
                     <Route path="/configuracion" element={<ConfPerfil/>}/>
+
+                    {/* Acá está el componente perfil de usuario */}
+                    <Route path="/perfil" element={<PerfilUser/>}/>
                 </Routes>
         </Router>
     );
