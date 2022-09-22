@@ -4,6 +4,7 @@ import { checkIfIsLoggedIn, removeToken } from '../utils';
 
 export const Navbar2 = () => {
 
+	// Cerrar TOKEN de la sesión en curso
     const logeado = checkIfIsLoggedIn();
 	const cerrarSesion = () => {
 		removeToken();

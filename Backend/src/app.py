@@ -36,7 +36,7 @@ app.config['UPLOAD_FOLDER'] = r"D:\Universidad\Tercer Año\6to semestre\Integrac
 
 CORS(app, resources={r"/users/*": {"origins": "*"}})
 
-# CREACIÓN DE RUTAS GENERALES
+# ================ CREACIÓN DE RUTAS GENERALES ================
 
 # Ruta para crear los usuarios
 @app.route('/users', methods=['POST'])
@@ -162,7 +162,7 @@ def login():
 
     return {'message': 'Usuario y/o contraseña incorrectos'} 
 
-# =============== EN DESARROLLO ==================
+# ================ EN DESARROLLO ================
 
 # Ruta de subida archivo (es de prueba para veriicar que funciona)
 @app.route('/Libro',methods=['GET'])

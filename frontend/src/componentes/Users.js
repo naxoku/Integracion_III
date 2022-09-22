@@ -6,6 +6,8 @@ import axios from "axios";
 const API = process.env.REACT_APP_API;
 
 function Users() {
+
+    // Para modificar y guardar variables
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,6 +26,7 @@ function Users() {
     
     let [users, setUsers] = useState([]);
 
+    // Cuando se inicia sesión se envían los datos del formulario
     const login = async (e) => {
         e.preventDefault();
         removeToken();
@@ -45,7 +48,8 @@ function Users() {
         }
     }
     
-    const handleSubmit = async (e) => {
+    // Cuando se crear una cuenta se envían los datos del formulario
+    const crearCuenta = async (e) => {
         e.preventDefault();
         try {
             const res = await fetch(`${API}/users/${id}`, {
@@ -74,29 +78,19 @@ function Users() {
         nameInput.current.focus();
     };  
     
-    const getUsers = async () => {
-        const res = await fetch(`${API}/users`);
-        const data = await res.json();
-        setUsers(data);
-    };
-
-    const deleteUser = async (id) => {
-        const userResponse = window.confirm("Are you sure you want to delete it?");
-        if (userResponse) {
-            const res = await fetch(`${API}/users/${id}`, {
-                method: "DELETE",
-            });
+    // Para borrar un usuario ()
+    // const deleteUser = async (id) => {
+    //     const userResponse = window.confirm("Are you sure you want to delete it?");
+    //     if (userResponse) {
+    //         const res = await fetch(`${API}/users/${id}`, {
+    //             method: "DELETE",
+    //         });
             
-            const data = await res.json();
-            console.log(data);
-            await getUsers();
-        }
-    };
-
-
-    useEffect(() => {
-        getUsers();
-    }, []);
+    //         const data = await res.json();
+    //         console.log(data);
+    //         await getUsers();
+    //     }
+    // };
 
     return (
         <div className="container-md mt-2">
@@ -145,7 +139,7 @@ function Users() {
                 {/* Columna register */}
                 <div className="col-sm-5">
                     <h4>Crear cuenta de usuario</h4>
-                    <form onSubmit={handleSubmit} className="card card-body">
+                    <form onSubmit={crearCuenta} className="card card-body">
                         <div className="form-group">
                             <input
                                 type="text"
@@ -192,31 +186,10 @@ function Users() {
                             {editing ? "Update" : "Create"}
                         </button>
                     </form>
-                    <div>
-                        <h6 className="text-center text-secondary">¿Ya tienes una cuenta? <a href="/">Inicia sesión</a></h6>
-                    </div>
-<<<<<<< Updated upstream
                 </div>
-=======
-                    <div className="form-group">
-                        <input
-                            type="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            className="form-control m-1"
-                            placeholder="Contraseña"
-                        />
-                    </div>
-                    <div>{error2}</div>
-                    <button className="container-fluid btn btn-primary btn-block m-1">
-                        {editing ? "Update" : "Create"}
-                    </button>
-                </form>
->>>>>>> Stashed changes
             </div>
         </div>
-        
     );  
 };  
-    
+
 export default Users;

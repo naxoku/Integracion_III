@@ -5,6 +5,8 @@ import axios from 'axios';
 const API = process.env.REACT_APP_API;
 
 const Perfil = () => {
+
+     // Para modificar y guardar variables
     const [usuario, setNombre] = useState("");
     const [correo, setCorreo] = useState("");
     const [contrasena, setPwd] = useState("");
@@ -16,6 +18,7 @@ const Perfil = () => {
     let twitter = "Usuario89_edo"
     const idUser = getLoggedInUserId();
     
+    // Obtener la información del usuario
     const getUser = async () => {
 
         const res = await axios.get(`${API}/users/${idUser}`, {
@@ -29,7 +32,8 @@ const Perfil = () => {
         setPwd(data['password']);
 
         };
-
+    
+    // Editar el nombre del usuario
     const editUser = async (id) => {
         await axios.put(`${API}/users/nombre/${idUser}`, {
                nuevoUsuario
@@ -37,25 +41,22 @@ const Perfil = () => {
         window.location = "/configuracion";
         };
     
+    // Editar el correo del usuario
     const editCorreo = async (id) => {
         await axios.put(`${API}/users/correo/${idUser}`, {
                 nuevoCorreo
             });
         window.location = "/configuracion";
         };
-
+    
+    // Editar la contraseña del usuario
     const editContrasena = async (id) => {
         await axios.put(`${API}/users/password/${idUser}`, {
                 nuevaContrasena
             });
         window.location = "/configuracion";
         };
-
-    useEffect(() => {
-          getUser();
-    }, []);
     
- 
     return (
         <div className='container-md mt-2'>
             <div className='row'>
