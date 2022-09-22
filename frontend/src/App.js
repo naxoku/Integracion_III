@@ -5,6 +5,7 @@ import  Principal  from "./componentes/Principal";
 import Navbar from './componentes/Navbar';
 import Proyecto from "./componentes/Proyecto";
 import ConfPerfil from "./componentes/ConfPerfil";
+import bibloteca from "./componentes/bibloteca";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
             <Navbar/>
                 <Routes>
                     <Route path="/" element={<Principal/>}/>
+                    <Route path="/bibloteca" element={<Bibloteca/>}/>
                     <Route path="/login" element={<Users/>} />
                     {/* <Route path="/Navbar" element={<Navbar/>}/> */}
 
