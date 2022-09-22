@@ -17,6 +17,7 @@ function Users() {
     const [id, setId] = useState("");
 
     const [error, setError] = useState("");
+    const [error2, setError2] = useState("");
     
     const nameInput = useRef(null);
     const edadInput = useRef(null);
@@ -46,21 +47,7 @@ function Users() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!editing) {
-            const res = await fetch(`${API}/users`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  name,
-                  email,
-                  edad,
-                  password,
-                }),
-            });
-            await res.json();
-        } else {
+        try {
             const res = await fetch(`${API}/users/${id}`, {
                 method: "PUT",
                 headers: {
@@ -76,8 +63,9 @@ function Users() {
             console.log(data);
             setEditing(false);
             setId("");
+        }catch(e){
+            setError2("Correo ya existe")
         }
-        await getUsers();
         
         setName("");
         setEmail("");
@@ -207,7 +195,24 @@ function Users() {
                     <div>
                         <h6 className="text-center text-secondary">¿Ya tienes una cuenta? <a href="/">Inicia sesión</a></h6>
                     </div>
+<<<<<<< Updated upstream
                 </div>
+=======
+                    <div className="form-group">
+                        <input
+                            type="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            className="form-control m-1"
+                            placeholder="Contraseña"
+                        />
+                    </div>
+                    <div>{error2}</div>
+                    <button className="container-fluid btn btn-primary btn-block m-1">
+                        {editing ? "Update" : "Create"}
+                    </button>
+                </form>
+>>>>>>> Stashed changes
             </div>
         </div>
         

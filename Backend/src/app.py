@@ -46,16 +46,24 @@ def createUsers():
     password = request.json['password']
 
     if name and email and password:
+
+        user = db.users.find_one({'email': email})
+
+        if(user):
+            return  {'message': 'correo ya existe'} 
+
         hashed = generate_password_hash(password)
         id = db.users.insert_one(
             {'name': name, 'email': email, 'password' : hashed}
         )
+    
         response = {
             'id' : str(id),
             'name': name,
             'email': email,
             'password': hashed
         }
+        
         return response
     else:
         return not_found()
@@ -85,7 +93,7 @@ def getUser(id):
 @app.route('/users/<id>', methods=['DELETE'])
 def deleteUsers(id):
     db.users.delete_one({'_id': ObjectId(id)})
-    return jsonify({'msg': 'Usuario eleiminado'})
+    return jsonify({'msg': 'Usuario eliminado'})
 
 # Renderiza el archivo PDF alojado en la carpeta desiganda arriba
 @app.route('/file/<filename>')
