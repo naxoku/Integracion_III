@@ -50,7 +50,7 @@ def createUsers():
         user = db.users.find_one({'email': email})
 
         if(user):
-            return  {'message': 'correo ya existe'} 
+            return  not_found()
 
         hashed = generate_password_hash(password)
         id = db.users.insert_one(

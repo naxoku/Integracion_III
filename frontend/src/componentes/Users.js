@@ -6,8 +6,6 @@ import axios from "axios";
 const API = process.env.REACT_APP_API;
 
 function Users() {
-
-    // Para modificar y guardar variables
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -26,11 +24,12 @@ function Users() {
     
     let [users, setUsers] = useState([]);
 
-    // Cuando se inicia sesión se envían los datos del formulario
+
+    // FUNCION PARA INICIAR SESION AL ENVIAR EL FORMULARIO
     const login = async (e) => {
         e.preventDefault();
         removeToken();
-        try {
+        try{
          const response = await axios.post(`${API}/users/login`,{
             email2,
             password2
@@ -41,35 +40,54 @@ function Users() {
             setToken(response.data.token);
             window.location = "/";
             return null;
+           }else{
+            setError("El usuario y/o la contraseña son incorrecto(s)")
            }
 
         } catch (e){
-            setError("El usuario y/o la contraseña son incorrecto(s)")
+            
+            console.log(e);
         }
     }
-    
-    // Cuando se crear una cuenta se envían los datos del formulario
+
+    // FUNCION PARA CREAR CUENTA AL ENVIAR EL FORMULARIO
     const crearCuenta = async (e) => {
         e.preventDefault();
-        try {
-            const res = await fetch(`${API}/users/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    password,
-                }),
-            });
-            const data = await res.json();
-            console.log(data);
+       try{ 
+        const res = await fetch(`${API}/users`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              edad,
+              password,
+            }),
+        });
+
+        if (res.status === 200){
+            setError2("Cuenta creada")
+
+
+        }else{
+            setError2("Correo ya existe")
+            console.log(res)
+        }
+
+    }catch(e){
+
+
+        setError2("Correo ya existe")
+
+    }
+      
+
+    
             setEditing(false);
             setId("");
-        }catch(e){
-            setError2("Correo ya existe")
-        }
+        
         
         setName("");
         setEmail("");
@@ -77,20 +95,19 @@ function Users() {
         setPassword("");
         nameInput.current.focus();
     };  
-    
-    // Para borrar un usuario ()
-    // const deleteUser = async (id) => {
-    //     const userResponse = window.confirm("Are you sure you want to delete it?");
-    //     if (userResponse) {
-    //         const res = await fetch(`${API}/users/${id}`, {
-    //             method: "DELETE",
-    //         });
+
+/**     const deleteUser = async (id) => {
+        const userResponse = window.confirm("Are you sure you want to delete it?");
+        if (userResponse) {
+            const res = await fetch(`${API}/users/${id}`, {
+                method: "DELETE",
+            });
             
-    //         const data = await res.json();
-    //         console.log(data);
-    //         await getUsers();
-    //     }
-    // };
+            const data = await res.json();
+            console.log(data);
+            await getUsers();
+        }
+    };*/
 
     return (
         <div className="container-md mt-2">
@@ -182,14 +199,19 @@ function Users() {
                                 placeholder="Contraseña"
                             />
                         </div>
+                        <div>{error2}</div>
                         <button className="container-fluid btn btn-primary btn-block m-1">
-                            {editing ? "Update" : "Create"}
+                            {"Crear cuenta"}
                         </button>
                     </form>
+                    <div>
+                        <h6 className="text-center text-secondary">¿Ya tienes una cuenta? <a href="/">Inicia sesión</a></h6>
+                    </div>
                 </div>
             </div>
         </div>
+        
     );  
 };  
-
+    
 export default Users;
