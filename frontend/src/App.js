@@ -27,7 +27,7 @@ function App() {
                     <Route path="/configuracion" element={<ConfPerfil/>}/>
 
                     {/* Acá está el componente perfil de usuario */}
-                    <Route path="/perfil" element={<PerfilUser/>}/>
+                    <Route path="/perfil/:unnombre" element={<PerfilUser/>}/>
                 </Routes>
         </Router>
     );

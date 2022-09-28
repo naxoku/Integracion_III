@@ -35,6 +35,9 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = r"D:\Universidad\Tercer Año\6to semestre\Integracion_III\Backend\Archivos"
 
 CORS(app, resources={r"/users/*": {"origins": "*"}})
+jwt = JWTManager(app)
+app.config["JWT_SECRET_KEY"] = "no-borrar-esto"
+app.config["CORS-HEADERS"] = 'Content-Type'
 
 # ================ CREACIÓN DE RUTAS GENERALES ================
 
@@ -50,6 +53,11 @@ def createUsers():
         user = db.users.find_one({'email': email})
 
         if(user):
+            return  not_found()
+
+        user2 = db.users.find_one({'email': name})
+
+        if(user2):
             return  not_found()
 
         hashed = generate_password_hash(password)
@@ -86,6 +94,13 @@ def getUsers():
 @app.route('/users/<id>', methods=['GET'])
 def getUser(id):
     user = db.users.find_one({'_id': ObjectId(id)})
+    response = dumps(user)
+    return Response(response, mimetype="application/json")
+
+# Mostrar usuario en específico por nombre de usuario en formato JSON
+@app.route('/users/a/<nombre>', methods=['GET'])
+def getUser2(nombre):
+    user = db.users.find_one({ 'name': nombre})
     response = dumps(user)
     return Response(response, mimetype="application/json")
 

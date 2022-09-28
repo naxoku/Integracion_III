@@ -56,6 +56,13 @@ const Perfil = () => {
             });
         window.location = "/configuracion";
         };
+
+
+    // mostrar datos actuales del usuario al cargar la pagina
+    useEffect(() => {
+      getUser();
+        });
+        
     
     return (
         <div className='container-md mt-2'>

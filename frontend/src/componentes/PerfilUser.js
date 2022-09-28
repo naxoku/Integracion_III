@@ -1,4 +1,9 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { getLoggedInUserId } from '../utils';
+const API = process.env.REACT_APP_API;
 
 function PerfilUser() {
 
@@ -9,13 +14,38 @@ function PerfilUser() {
         
     // });
 
-    let usuario = "Usuario89";
+    const [usuario, setNombre] = useState("");
+    const [correo, setCorreo] = useState("");
+    const [contrasena, setPwd] = useState("");
     let instagram = "Usuario89_edo"
     let facebook = "Nombre Genérico"
     let twitter = "Usuario89_edo"
     let random1 = "randomasd1"
     let random2 = "random1231"
     let descipcion = "Soy un estudiante de Ingeniería Civil en Informática el cual se ha encargado de la parte artística del proyecto que están usando 😎"
+
+    // Obtener la información del usuario
+    let { unnombre } = useParams();
+    const elnombre = {unnombre}.unnombre;
+
+        const getUser = async () => {
+
+        const res = await axios.get(API+"/users/a/"+elnombre, {
+            mode: "no-cors",
+            });
+       
+        const data = res.data;
+        
+        setNombre(data['name']);
+        setCorreo(data['email']);
+        setPwd(data['password']);
+
+        };
+
+        useEffect(() => {
+            getUser();
+              });
+              
 
     return (
         <div className='container-md mt-3'>
