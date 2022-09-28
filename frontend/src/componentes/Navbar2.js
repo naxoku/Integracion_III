@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { checkIfIsLoggedIn, removeToken } from '../utils';
+import { useState } from 'react';
 
 export const Navbar2 = () => {
 
@@ -10,6 +11,14 @@ export const Navbar2 = () => {
 		removeToken();
 		window.location = "/login";
 	}
+
+	const [search, setSearch] = useState("");
+	
+	const redir = (search) => {
+		console.log(search);
+        window.location= "/Busquedas/"+search+"";
+    }
+
 
 	return (
 		<div>
@@ -39,8 +48,8 @@ export const Navbar2 = () => {
 						{/* Lista de botones */}
 			    	  	<div class="offcanvas-body">
 							<form class="d-flex" role="search">
-			    	    	  	<input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search"/>
-			    	    	  	<button class="btn btn-outline-primary" type="submit">Buscar</button>
+			    	    	  	<input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search" onChange={event => setSearch(event.target.value)}/>
+								 <button class="btn btn-outline-primary" type="submit" onClick={e => e.preventDefault() || redir(search)}>Buscar</button>
 			    	    	</form>
 
 			    	    	<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">

@@ -8,6 +8,7 @@ import ConfPerfil from "./componentes/ConfPerfil";
 import Biblioteca from "./componentes/Biblioteca";
 import Navbar2 from "./componentes/Navbar2";
 import PerfilUser from "./componentes/PerfilUser"
+import Busquedas from "./componentes/Busquedas";
 
 function App() {
     return (
@@ -28,6 +29,11 @@ function App() {
 
                     {/* Acá está el componente perfil de usuario */}
                     <Route path="/perfil/:unnombre" element={<PerfilUser/>}/>
+
+                    <Route path="/Busquedas/:buscado" element={<Busquedas/>}/>
+
+                    <Route path="/navbar" element={<Navbar2/>}/>
+
                 </Routes>
         </Router>
     );
