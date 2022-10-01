@@ -10,12 +10,19 @@ const Perfil = () => {
     const [usuario, setNombre] = useState("");
     const [correo, setCorreo] = useState("");
     const [contrasena, setPwd] = useState("");
+    const [instagram, setIntagram] = useState("");
+    const [facebook, setFacebook] = useState("");
+    const [twitter, setTwitter] = useState("");
+    const [biografía, setBiografia] = useState("");
+
     const [nuevoUsuario, setnNombre] = useState("");
     const [nuevoCorreo, setnCorreo] = useState("");
     const [nuevaContrasena, setnPwd] = useState("");
-    let instagram = "Usuario89_edo"
-    let facebook = "Nombre Genérico"
-    let twitter = "Usuario89_edo"
+    const [nuevoInstagram, setnInstagram] = useState("");
+    const [nuevoFacebook, setnFacebook] = useState("");
+    const [nuevoTwitter, setnTwitter] = useState("");
+    const [nuevoBiografia, setnBiografia] = useState("");
+
     const idUser = getLoggedInUserId();
     
     // Obtener la información del usuario
@@ -30,6 +37,10 @@ const Perfil = () => {
         setNombre(data['name']);
         setCorreo(data['email']);
         setPwd(data['password']);
+        setIntagram(data['instagram']);
+        setTwitter(data['twitter']);
+        setFacebook(data['facebook']);
+        setBiografia(data['biografia'])
 
         };
     
@@ -57,6 +68,38 @@ const Perfil = () => {
         window.location = "/configuracion";
         };
 
+    // Editar el Instagram del usuario
+    const editInstagram = async (id) => {
+        await axios.put(`${API}/users/Instagram/${idUser}`, {
+                nuevoInstagram
+            });
+        window.location = "/configuracion";
+        };
+    
+
+    // Editar el Twitter del usuario
+    const editTwitter = async (id) => {
+        await axios.put(`${API}/users/Twitter/${idUser}`, {
+                nuevoTwitter
+            });
+        window.location = "/configuracion";
+        };
+
+    // Editar el Facebook del usuario
+    const editFacebook = async (id) => {
+        await axios.put(`${API}/users/Facebook/${idUser}`, {
+                nuevoFacebook
+            });
+        window.location = "/configuracion";
+        };
+
+    // Editar el Biografia del usuario
+    const editBiografia = async (id) => {
+        await axios.put(`${API}/users/Biografia/${idUser}`, {
+                nuevoBiografia
+            });
+        window.location = "/configuracion";
+        };
 
     // mostrar datos actuales del usuario al cargar la pagina
     useEffect(() => {
@@ -285,13 +328,13 @@ const Perfil = () => {
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Cambiar usuario de Instagram</label>
-                                    <input type="text" class="form-control" id="recipient-name"/>
+                                    <input onChange={(e) => setnInstagram(e.target.value)} type="text" class="form-control" id="recipient-name"/>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-primary" onClick={(e) => editInstagram(idUser)}>Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -313,13 +356,13 @@ const Perfil = () => {
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Cambiar usuario de Twitter</label>
-                                    <input type="text" class="form-control" id="recipient-name"/>
+                                    <input onChange={(e) => setnTwitter(e.target.value)} type="text" class="form-control" id="recipient-name"/>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-primary" onClick={(e) => editTwitter(idUser)}>Guardar</button>
                         </div>
                     </div>
                 </div>
@@ -341,13 +384,13 @@ const Perfil = () => {
                                 </div>
                                 <div class="mb-3">
                                     <label for="message-text" class="col-form-label">Cambiar perfil de Facebook</label>
-                                    <input type="text" class="form-control" id="recipient-name"/>
+                                    <input onChange={(e) => setnFacebook(e.target.value)} type="text" class="form-control" id="recipient-name"/>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
+                            <button type="button" class="btn btn-primary" onClick={(e) => editFacebook(idUser)}>Guardar</button>
                         </div>
                     </div>
                 </div>

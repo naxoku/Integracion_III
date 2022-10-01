@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Users from "./componentes/Users";
 import  Principal  from "./componentes/Principal";
-import Navbar from './componentes/Navbar';
 import Proyecto from "./componentes/Proyecto";
 import ConfPerfil from "./componentes/ConfPerfil";
 import Biblioteca from "./componentes/Biblioteca";

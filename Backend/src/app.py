@@ -62,9 +62,8 @@ def createUsers():
 
         hashed = generate_password_hash(password)
         id = db.users.insert_one(
-            {'name': name, 'email': email, 'password' : hashed}
+            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "" }
         )
-    
         response = {
             'id' : str(id),
             'name': name,
@@ -115,6 +114,9 @@ def deleteUsers(id):
 def file(filename):
     return send_file(os.path.join(app.config['UPLOAD_FOLDER']+"\\"+filename),mimetype="application/pdf")
 
+
+#======================= RUTAS PARA ACTUALIZACION DE DATOS ===============================#
+
 # Ruta para actualizar el usuario
 @app.route('/users/nombre/<id>', methods=['PUT'])
 def updateUsers(id):
@@ -151,6 +153,57 @@ def updatePassword(id):
         }})
         response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
     return response
+
+# Ruta para actualizar el Instragram
+@app.route('/users/Instagram/<id>', methods=['PUT'])
+def updateInstagram(id):
+    req = request.get_json()
+    instagram = req['nuevoInstagram']
+    if instagram:
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'instagram': instagram
+        }})
+        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    return response
+
+# Ruta para actualizar el Twitter
+@app.route('/users/Twitter/<id>', methods=['PUT'])
+def updateTwitter(id):
+    req = request.get_json()
+    twitter = req['nuevoTwitter']
+    if twitter:
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'twitter': twitter
+        }})
+        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    return response
+
+# Ruta para actualizar el Facebook
+@app.route('/users/Facebook/<id>', methods=['PUT'])
+def updateFacebook(id):
+    req = request.get_json()
+    Facebook = req['nuevoFacebook']
+    if Facebook:
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'facebook': Facebook
+        }})
+        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    return response
+
+# Ruta para actualizar la Biografia
+@app.route('/users/Biografia/<id>', methods=['PUT'])
+def updateBiografia(id):
+    req = request.get_json()
+    Biografia = req['nuevoBiografia']
+    if Biografia:
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'biografia': Biografia
+        }})
+        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    return response
+
+
+#================================================================================================#
 
 # Manejador de errores en caso de no encontrar la ruta
 @app.errorhandler(404)
@@ -206,5 +259,5 @@ def create():
     return 'DONE!'
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)
+    app.run(debug=True)
     
