@@ -9,10 +9,6 @@ function PerfilUser() {
 
     // VARIABLES DE TRABAJO
     let listaLibros = ["Libro_1", "Libro_2", "Libro_3", "Libro_4", "Libro_5"];
-    
-    // array.forEach(element => {
-        
-    // });
 
     const [usuario, setNombre] = useState("");
     const [correo, setCorreo] = useState("");
@@ -21,6 +17,9 @@ function PerfilUser() {
     const [facebook, setFb] = useState("");
     const [twitter, setTw] = useState("");
     const [descripcion, setDesc] = useState("");
+    const [historial, setHistorial] = useState("");
+    const [redes, setRedes] = useState("");
+    
 
     let random1 = "randomasd1"
     let random2 = "random1231"
@@ -29,7 +28,7 @@ function PerfilUser() {
     let { unnombre } = useParams();
     const elnombre = {unnombre}.unnombre;
 
-        const getUser = async () => {
+    const getUser = async () => {
 
         const res = await axios.get(API+"/users/a/"+elnombre, {
             mode: "no-cors",
@@ -44,12 +43,15 @@ function PerfilUser() {
         setFb(data['facebook']);
         setTw(data['twitter']);
         setDesc(data['biografia']);
+        setHistorial(data['mostrarHistorial']);
+        setRedes(data['mostrarRedes']);
 
-        };
+    };
 
-        useEffect(() => {
+
+    useEffect(() => {
             getUser();
-              });
+    });
               
 
     return (
@@ -100,7 +102,8 @@ function PerfilUser() {
             <div className='row mt-2'>
 
                 {/* Historial de lectura */}
-                <div className='col-sm'>
+                <div className='col-sm' >
+                {historial==="True" &&<>
                     <h4>Historial de lectura</h4>
                     <table class="table table-hover table-sm">
                         <thead>
@@ -124,6 +127,9 @@ function PerfilUser() {
                         </tbody>
                     </table>
                     
+                    </>
+                  }  
+                 
                 </div>
 
                 {/* Libros publicados por el usuario */}

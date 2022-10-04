@@ -12,7 +12,7 @@ const Busquedas = () => {
     const { buscado } = useParams();
     const busqueda = {buscado}.buscado;
     
-    const peticion = async () => {
+    const peticionUsuarios = async () => {
        const res = await fetch(`${API}/users`);
        const data = await res.json();
        setTablaUsuarios(data);
@@ -37,16 +37,17 @@ const Busquedas = () => {
 
     
      useEffect(()=>{
-       peticion();    
+       peticionUsuarios
+       ();    
        filtrar(busqueda);
        },[busqueda,tablaUsuarios])
 
     return (
         <div className='container-md border-danger'>
             <h4 class="fw-bold mt-3">Resultados relacionados a {busqueda}</h4>
-               <h2>Usuarios/Autores</h2>
+             
                <div>
-                      
+                   <h2>Usuarios/Autores</h2>  
                    <div>
                    {usuarios && 
                       usuarios.map((usuario)=>(
@@ -56,18 +57,13 @@ const Busquedas = () => {
                          <p>{usuario.email}</p>
                          </div></div>
                          ))}
-                    
-                
-              
-                    
+                 
                     </div>
                     <div>
                     {!usuarios &&
-                 <p> No hay usuarios relacionados a tu busqueda</p>
-            }
+                        <p> No hay usuarios relacionados a tu busqueda</p>
+                        }
                     </div>
-                
-
                </div>
                <h2>Libros</h2>
 

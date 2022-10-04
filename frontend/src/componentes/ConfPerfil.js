@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {checkIfIsLoggedIn, getLoggedInUserId}  from "../utils";
 import axios from 'axios'; 
+
 const API = process.env.REACT_APP_API;
 
 const Perfil = () => {
@@ -14,6 +15,8 @@ const Perfil = () => {
     const [facebook, setFb] = useState("");
     const [twitter, setTw] = useState("");
     const [descripcion, setDesc] = useState("");
+    const [historial, setHistorial] = useState("");
+    const [redes, setRedes] = useState("");
 
     const [nuevoUsuario, setnNombre] = useState("");
     const [nuevoCorreo, setnCorreo] = useState("");
@@ -22,6 +25,8 @@ const Perfil = () => {
     const [nuevoFb, setnFb] = useState("");
     const [nuevoTw, setnTw] = useState("");
     const [nuevaDesc, setnDesc] = useState("");
+    const [nmostrarHistorial,setnMostrarHistorial] = useState("");
+    const referencia = useRef();
 
     const idUser = getLoggedInUserId();
     
@@ -41,9 +46,35 @@ const Perfil = () => {
         setFb(data['facebook']);
         setTw(data['twitter']);
         setDesc(data['descripcion']);
+        setHistorial(data['mostrarHistorial']);
+        setRedes(data['mostrarRedes']);
 
+        if(historial==="True"){
+            referencia.current.checked = true ;
+        }else{
+            referencia.current.checked = false ;
+            }
         };
+   
+    async function mhistorial(e) {
+        e.preventDefault();
+        const isChecked = referencia.current.checked;
+    
+        if (isChecked){
+        setnMostrarHistorial("True")    
+        await axios.put(`${API}/users/historial/${idUser}`, {
+             nmostrarHistorial
+         });
+        }
+        if (!isChecked){
+        setnMostrarHistorial("False")
+        await axios.put(`${API}/users/historial/${idUser}`, {
+                 nmostrarHistorial
+         });
+        }
+      //window.location = "/configuracion";
 
+    }
 
     // Editar algo del usuario
     const editFb = async () => {
@@ -176,11 +207,11 @@ const Perfil = () => {
                     <h4>Configuración de privacidad</h4>
 
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                        <input class="form-check-input" type="checkbox" ref={referencia} role="switch" id="flexSwitchCheckDefault" defaultChecked={false} onChange={(e) => mhistorial(e)}/>
                         <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el historial de lectura al público</label>
                     </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
                         <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar redes sociales al público</label>
                     </div>
                 </div>
