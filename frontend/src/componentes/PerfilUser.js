@@ -17,12 +17,13 @@ function PerfilUser() {
     const [usuario, setNombre] = useState("");
     const [correo, setCorreo] = useState("");
     const [contrasena, setPwd] = useState("");
-    let instagram = "Usuario89_edo"
-    let facebook = "Nombre Genérico"
-    let twitter = "Usuario89_edo"
+    const [instagram, setIg] = useState("");
+    const [facebook, setFb] = useState("");
+    const [twitter, setTw] = useState("");
+    const [descripcion, setDesc] = useState("");
+
     let random1 = "randomasd1"
     let random2 = "random1231"
-    let descipcion = "Soy un estudiante de Ingeniería Civil en Informática el cual se ha encargado de la parte artística del proyecto que están usando 😎"
 
     // Obtener la información del usuario
     let { unnombre } = useParams();
@@ -37,8 +38,12 @@ function PerfilUser() {
         const data = res.data;
         
         setNombre(data['name']);
+        setIg(data['instagram'])
         setCorreo(data['email']);
         setPwd(data['password']);
+        setFb(data['facebook']);
+        setTw(data['twitter']);
+        setDesc(data['biografia']);
 
         };
 
@@ -62,7 +67,7 @@ function PerfilUser() {
                         <h4> {usuario} </h4>
                     </div>
                     <div className='mt-2'>
-                        <h6> {descipcion} </h6>
+                        <h6> {descripcion} </h6>
                     </div>
                 </div>
 

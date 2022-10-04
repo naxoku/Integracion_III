@@ -68,7 +68,11 @@ def createUsers():
             'id' : str(id),
             'name': name,
             'email': email,
-            'password': hashed
+            'password': hashed,
+            'biografia': '',
+            'instagram' : '',
+            'facebook': '',
+            'twitter': ''
         }
         
         return response
@@ -85,7 +89,12 @@ def getUsers():
             '_id': str(ObjectId(doc['_id'])),
             'name': doc['name'],
             'email': doc['email'],
-            'password': doc['password']
+            'password': doc['password'],
+            'instagram' : doc['instagram'], 
+            'twitter': doc['twitter'],
+            'facebook': doc['facebook'],
+            'biografia': doc['biografia']
+           
         })
     return jsonify(users)
 
@@ -155,10 +164,10 @@ def updatePassword(id):
     return response
 
 # Ruta para actualizar el Instragram
-@app.route('/users/Instagram/<id>', methods=['PUT'])
+@app.route('/users/instagram/<id>', methods=['PUT'])
 def updateInstagram(id):
     req = request.get_json()
-    instagram = req['nuevoInstagram']
+    instagram = req['nuevoIg']
     if instagram:
         db.users.update_one({'_id': ObjectId(id)}, {'$set': {
             'instagram': instagram
@@ -167,10 +176,10 @@ def updateInstagram(id):
     return response
 
 # Ruta para actualizar el Twitter
-@app.route('/users/Twitter/<id>', methods=['PUT'])
+@app.route('/users/twitter/<id>', methods=['PUT'])
 def updateTwitter(id):
     req = request.get_json()
-    twitter = req['nuevoTwitter']
+    twitter = req['nuevoTw']
     if twitter:
         db.users.update_one({'_id': ObjectId(id)}, {'$set': {
             'twitter': twitter
@@ -179,10 +188,10 @@ def updateTwitter(id):
     return response
 
 # Ruta para actualizar el Facebook
-@app.route('/users/Facebook/<id>', methods=['PUT'])
+@app.route('/users/facebook/<id>', methods=['PUT'])
 def updateFacebook(id):
     req = request.get_json()
-    Facebook = req['nuevoFacebook']
+    Facebook = req['nuevoFb']
     if Facebook:
         db.users.update_one({'_id': ObjectId(id)}, {'$set': {
             'facebook': Facebook
@@ -191,10 +200,10 @@ def updateFacebook(id):
     return response
 
 # Ruta para actualizar la Biografia
-@app.route('/users/Biografia/<id>', methods=['PUT'])
+@app.route('/users/biografia/<id>', methods=['PUT'])
 def updateBiografia(id):
     req = request.get_json()
-    Biografia = req['nuevoBiografia']
+    Biografia = req['nuevaDesc']
     if Biografia:
         db.users.update_one({'_id': ObjectId(id)}, {'$set': {
             'biografia': Biografia
