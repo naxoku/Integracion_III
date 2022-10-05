@@ -33,6 +33,19 @@ const Perfil = () => {
     const redesSociales = useRef();
 
     const idUser = getLoggedInUserId();
+
+    const deleteUser = async (e) => {
+        const userResponse = window.confirm("Are you sure you want to delete it?");
+        if (userResponse) {
+
+            await axios.delete(`${API}/users/${idUser}`,{
+                idUser
+            });
+
+            window.location= "/registro";
+            
+        }
+    };
     
     // Obtener la información del usuario
     const getUser = async () => {
@@ -453,6 +466,9 @@ const Perfil = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+               <button onClick={(e) => deleteUser(e)}>eliminar la cuenta</button> 
             </div>
         </div>
     )

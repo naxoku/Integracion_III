@@ -67,7 +67,7 @@ export const Navbar2 = () => {
             	            	    		<a href="/login" class="nav-link container-sm" role="button" aria-current="page">Iniciar sesión</a>
                      	   		  		</li>
 										 <li class="nav-item">
-            	            	    		<a href="/login" class="nav-link container-sm" role="button" aria-current="page">Crear cuenta</a>
+            	            	    		<a href="/registro" class="nav-link container-sm" role="button" aria-current="page">Crear cuenta</a>
                      	   		  		</li>
 									</>
                      	   	    )}
