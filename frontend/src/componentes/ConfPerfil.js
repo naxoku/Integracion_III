@@ -18,6 +18,8 @@ const Perfil = () => {
     const [historial, setHistorial] = useState("");
     const [redes, setRedes] = useState("");
 
+    const cadenaABooleano = cadena => cadena === "True";
+
     const [nuevoUsuario, setnNombre] = useState("");
     const [nuevoCorreo, setnCorreo] = useState("");
     const [nuevaContrasena, setnPwd] = useState("");
@@ -26,7 +28,9 @@ const Perfil = () => {
     const [nuevoTw, setnTw] = useState("");
     const [nuevaDesc, setnDesc] = useState("");
     const [nmostrarHistorial,setnMostrarHistorial] = useState("");
-    const referencia = useRef();
+    const [nmostrarRedes, setnMostrarRedes] = useState("");
+    const refhistorial = useRef();
+    const redesSociales = useRef();
 
     const idUser = getLoggedInUserId();
     
@@ -49,31 +53,57 @@ const Perfil = () => {
         setHistorial(data['mostrarHistorial']);
         setRedes(data['mostrarRedes']);
 
-        if(historial==="True"){
-            referencia.current.checked = true ;
+        if(cadenaABooleano(historial)){
+            refhistorial.current.checked = true ;
         }else{
-            referencia.current.checked = false ;
+            refhistorial.current.checked = false ;
             }
-        };
-   
+      
+        if(cadenaABooleano(redes)){
+            redesSociales.current.checked = true ;
+        }else{
+            redesSociales.current.checked = false ;
+            }
+        
+    };
+
+
+    // mostrar/esconder historial de lectura
     async function mhistorial(e) {
         e.preventDefault();
-        const isChecked = referencia.current.checked;
+        const isChecked = refhistorial.current.checked;
     
         if (isChecked){
-        setnMostrarHistorial("True")    
+        setnMostrarHistorial("True");
         await axios.put(`${API}/users/historial/${idUser}`, {
              nmostrarHistorial
          });
         }
         if (!isChecked){
-        setnMostrarHistorial("False")
+        setnMostrarHistorial("False");
         await axios.put(`${API}/users/historial/${idUser}`, {
                  nmostrarHistorial
          });
         }
-      //window.location = "/configuracion";
+    }
 
+    // mostrar/esconder redes sociales
+    async function mredes(e) {
+        e.preventDefault();
+        const isChecked = redesSociales.current.checked;
+    
+        if (isChecked){
+        setnMostrarRedes("True");   
+        await axios.put(`${API}/users/redes/${idUser}`, {
+             nmostrarRedes
+         });
+        }
+        if (!isChecked){
+        setnMostrarRedes("False");
+        await axios.put(`${API}/users/redes/${idUser}`, {
+                 nmostrarRedes
+         });
+        }
     }
 
     // Editar algo del usuario
@@ -207,11 +237,11 @@ const Perfil = () => {
                     <h4>Configuración de privacidad</h4>
 
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" ref={referencia} role="switch" id="flexSwitchCheckDefault" defaultChecked={false} onChange={(e) => mhistorial(e)}/>
+                        <input class="form-check-input" type="checkbox" ref={refhistorial} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(historial)} onChange={(e) => mhistorial(e)}/>
                         <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el historial de lectura al público</label>
                     </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+                        <input class="form-check-input" type="checkbox" ref={redesSociales} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(redes)} onChange={(e) => mredes(e)}/>
                         <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar redes sociales al público</label>
                     </div>
                 </div>

@@ -231,7 +231,7 @@ def mostrarHistorial(id):
 @app.route('/users/redes/<id>', methods=['PUT'])
 def mostrarRedes(id):
     req = request.get_json()
-    desicion = req['mostrarRedes']
+    desicion = req['nmostrarRedes']
     if desicion:
         db.users.update_one({'_id': ObjectId(id)}, {'$set': {
             'mostrarRedes': desicion

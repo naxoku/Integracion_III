@@ -74,7 +74,8 @@ function PerfilUser() {
                 </div>
 
                 {/* Tabla de redes sociales */}
-                <div className='col'>    
+                <div className='col'> 
+                {redes==="True" &&<>
                     <div className='mt-2'>
                         <h4>Redes sociales</h4>
                     </div>
@@ -96,9 +97,12 @@ function PerfilUser() {
                             </tbody>
                         </table>
                     </div>
+                    </>}
                 </div>
+       
             </div>
-        
+    
+
             <div className='row mt-2'>
 
                 {/* Historial de lectura */}
