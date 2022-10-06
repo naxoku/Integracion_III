@@ -62,7 +62,7 @@ const Perfil = () => {
         setPwd(data['password']);
         setFb(data['facebook']);
         setTw(data['twitter']);
-        setDesc(data['descripcion']);
+        setDesc(data['biografia']);
         setHistorial(data['mostrarHistorial']);
         setRedes(data['mostrarRedes']);
 
@@ -272,7 +272,7 @@ const Perfil = () => {
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <h5 class="card-title">{usuario}</h5>
-                                    <p class="card-text">Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.</p>
+                                    <p class="card-text">{descripcion}</p>
                                     
                                 </div>
                             </div>
