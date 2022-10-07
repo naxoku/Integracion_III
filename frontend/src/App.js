@@ -9,7 +9,7 @@ import Navbar2 from "./componentes/Navbar2";
 import PerfilUser from "./componentes/PerfilUser"
 import Busquedas from "./componentes/Busquedas";
 import LogIn from "./componentes/LogIn";
-
+import Libro from "./componentes/Libro";
 function App() {
     return (
         <Router>
@@ -20,6 +20,7 @@ function App() {
                     <Route path="/biblioteca" element={<Biblioteca/>}/>
                     <Route path="/login" element={<LogIn/>}/>
                     <Route path="/registro" element={<Users/>}/>
+                    <Route path="/Libro" element={<Libro/>}/> 
                     {/* <Route path="/Navbar" element={<Navbar/>}/> */}
 
                     {/* Acá va el editor de texto, pero hay que arreglarlo porque está algo bug*/}
