@@ -127,7 +127,11 @@ def deleteUsers(id):
 def file(filename):
     return send_file(os.path.join(app.config['UPLOAD_FOLDER']+"\\"+filename),mimetype="application/pdf")
 
-
+@app.route('/Libros/<id>', methods=['GET'])
+def getUser(id):
+    book = db.Libros.find_one({'_id': ObjectId(id)})
+    response = dumps(book)
+    return Response(response, mimetype="application/json")
 #======================= RUTAS PARA ACTUALIZACION DE DATOS ===============================#
 
 # Ruta para actualizar el usuario
