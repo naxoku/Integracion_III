@@ -1,9 +1,10 @@
+from json import dumps
 from bson import *
 import os
 import base64
 
 from werkzeug.utils import secure_filename
-from flask import  request, send_file, Blueprint
+from flask import  Response, request, send_file, Blueprint
 
 from app import app
 from app import db
@@ -23,6 +24,11 @@ def libro():
         </form>
     
     '''
+@app.route('/users/Libros/<id>', methods=['GET'])
+def getBook(id):
+    book = db.Libros.find_one({'_id': ObjectId(id)})
+    response = dumps(book)
+    return Response(response, mimetype="application/json")
 
 # Creacion de los archivos y enrutamientos a MongoDB
 @app.route('/create', methods=['POST'])

@@ -1,10 +1,35 @@
 import React from "react"
-const Biblioteca = () => {
+
+
+
+const API = process.env.REACT_APP_API;
+
+const Biblioteca= ()=>  {
+   
     return (
-        <div className='container-md border-danger'>
-            <h4 class="fw-bold mt-3">esta es la bibloteca</h4>
-        </div>
+        <table className="table table-striped">
+            <thead>
+                    <tr>
+                    <th scope="col">#
+                    </th>
+                    
+                  
+                    <th scope="col">Libro</th>
+                    
+                    
+                   
+                    <th scope="col">Autor</th>
+                   
+                    
+                    <th scope="col">Perfil</th>
+                    </tr>
+                    <th>
+                    
+                    </th>
+                
+            </thead>
+        </table>
     )
-}
+    }
 
 export default Biblioteca;
