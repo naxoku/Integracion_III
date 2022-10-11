@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
+const API = process.env.REACT_APP_API;
 
 export const Busquedas = () => {
 
@@ -56,7 +57,7 @@ export const Busquedas = () => {
 
                             <div class="p-4 mb-4 bg-light border rounded-4" onClick={e => e.preventDefault() || redir(usuario.name)}>
                              
-                                <img src="http://localhost:3000/pan.png" height="100" width="100" class="img-fluid rounded-start" alt="fotoPerfil"/>
+                                <img src= {API+"/file/"+usuario._id} height="100" width="100" class="img-fluid rounded-start" alt="fotoPerfil"/>
                                 <h3>{usuario.name}</h3>
                                 <p>{usuario.biografia}</p>
                             </div>

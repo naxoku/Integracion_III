@@ -36,7 +36,7 @@ def createUsers():
 
         hashed = generate_password_hash(password)
         id = db.users.insert_one(
-            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil." }
+            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.", "mostrarHistorial":"False","mostrarRedes":"False"}
         )
         response = {
             'id' : str(id),
@@ -46,7 +46,9 @@ def createUsers():
             'biografia': '',
             'instagram' : '',
             'facebook': '',
-            'twitter': ''
+            'twitter': '',
+            "mostrarHistorial" : "False",
+            "mostrarRedes" : "False"
         }
         
         return response

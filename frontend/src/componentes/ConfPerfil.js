@@ -21,6 +21,7 @@ const Perfil = () => {
     const cadenaABooleano = cadena => cadena === "True";
 
     const [nuevoUsuario, setnNombre] = useState("");
+    const [nuevaFoto, setnFoto] = useState("");
     const [nuevoCorreo, setnCorreo] = useState("");
     const [nuevaContrasena, setnPwd] = useState("");
     const [nuevoIg, setnIg] = useState("");
@@ -141,7 +142,9 @@ const Perfil = () => {
             });
         window.location = "/configuracion";
         };
-    
+
+
+
     const editNombre = async () => {
     
         await axios.put(`${API}/users/nombre/${idUser}`, {
@@ -176,6 +179,7 @@ const Perfil = () => {
     // mostrar datos actuales del usuario al cargar la pagina
     useEffect(() => {
       getUser();
+ 
         });
         
     
@@ -267,7 +271,7 @@ const Perfil = () => {
                     <div class="card mb-3">
                         <div class="row g-0">
                             <div class="col-md-4">
-                              < img src="pan.png" class="img-fluid rounded-start" alt="fotoPerfil"/>
+                              < img src={API+"/file/"+idUser} class="img-fluid rounded-start" alt="fotoPerfil"/>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
@@ -280,10 +284,11 @@ const Perfil = () => {
                     </div>
                     <div class="mb-3">
                         <h6>Cambiar foto de perfil</h6>
-                        <div class="input-group">
-                            <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
-                            <button class="btn bg-primary text-white" type="button" id="inputGroupFileAddon04">Subir</button>
-                        </div>
+                        <form action={API+"/users/foto/"+idUser} method='POST' enctype="multipart/form-data"  class="input-group">
+                            
+                            <input type="file" name='file' class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
+                            <button class="btn bg-primary text-white" type="submit" value="Upload"  id="inputGroupFileAddon04"> Subir</button>  
+                        </form>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label"><h6>Editar biografía</h6></label>

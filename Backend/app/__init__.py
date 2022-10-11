@@ -13,16 +13,21 @@ db = client.Kow_bib
 users = db.users
 fs = gridfs.GridFS(db)
 
+
 #Flask config
+UPLOADER_FOLDER = "D:/Universidad/Tercer Año/6to semestre/Integracion/Integracion_III/Backend/app/archivos"
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = r"D:\Universidad\Tercer Año\6to semestre\Integracion_III\Backend\Archivos"
 
 CORS(app, resources={r"/users/*": {"origins": "*"}})
 
 jwt = JWTManager(app)
 app.config["JWT_SECRET_KEY"] = "no-borrar-esto"
 app.config["CORS-HEADERS"] = 'Content-Type'
+app.config['UPLOAD_FOLDER'] = UPLOADER_FOLDER
+app.secret_key = 'super secret key'
 
 #Ruta de error
 
