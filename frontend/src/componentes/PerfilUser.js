@@ -11,6 +11,7 @@ function PerfilUser() {
     let listaLibros = ["Libro_1", "Libro_2", "Libro_3", "Libro_4", "Libro_5"];
 
     const [usuario, setNombre] = useState("");
+    const [id, setID] = useState("");
     const [correo, setCorreo] = useState("");
     const [contrasena, setPwd] = useState("");
     const [instagram, setIg] = useState("");
@@ -36,6 +37,7 @@ function PerfilUser() {
        
         const data = res.data;
         
+        setID(data['_id']['$oid']);
         setNombre(data['name']);
         setIg(data['instagram'])
         setCorreo(data['email']);
@@ -45,6 +47,7 @@ function PerfilUser() {
         setDesc(data['biografia']);
         setHistorial(data['mostrarHistorial']);
         setRedes(data['mostrarRedes']);
+        
 
     };
 
@@ -60,7 +63,8 @@ function PerfilUser() {
 
                 {/* Foto */}
                 <div className='col-sm-2 mt-2'>
-                    <img className='img-fluid rounded-circle border d-flex mx-auto ' src='./pan.png' width="200" alt='fotoPerfil.png'/>
+                 
+                    <img className='img-fluid rounded-circle border d-flex mx-auto ' src={API+"/img/"+id} width="200" alt='fotoPerfil.png'/>
                 </div>
 
                 {/* Usuario y descripción */}
@@ -72,7 +76,6 @@ function PerfilUser() {
                         <h6> {descripcion} </h6>
                     </div>
                 </div>
-
                 {/* Tabla de redes sociales */}
                 <div className='col'> 
                 {redes==="True" &&<>

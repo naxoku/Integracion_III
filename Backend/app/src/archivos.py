@@ -15,9 +15,10 @@ from app import db
 from app import fs
 
 ALLOWED_EXTENSIONS_PERFIL = {'png', 'jpg', 'jpeg'}
+ALLOWED_EXTENSIONS_FILES = {'.pdf'}
 REACT = config("REACT")
 
-def allowed_file(filename):
+def allowed_img(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_PERFIL
 
@@ -47,30 +48,63 @@ def getBook(id):
     response = dumps(book)
     return Response(response, mimetype="application/json")
 
+#============== MANEJO DE ARCHIVOS =============================
 
 
-
-@app.route('/users/foto/<id>', methods=['POST'])
-def upload_file(id):
-    print(id)
-    if request.method == 'POST':
-        # check if the post request has the file part
+# Creacion de los archivos y enrutamientos a MongoDB
+@app.route('/file/admin/<psw>', methods=['POST'])
+def upload_file(psw):
+    if psw in config("ADMIN"):
         if 'file' not in request.files:
             flash('No file part')
-            return redirect(request.url)
+            return "ERROR!!"
         file = request.files['file']
+        filename = secure_filename(file.filename)
+    
         if file.filename == '':
             flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            name = "perfil_"
-            ext = ".jpg"
-            file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/imagenes_perfil", name+id+ext))
-            return  redirect(REACT+"/configuracion")
+            return "ERROR!!"
 
+        else:
+            file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/libros", filename))
+
+            encoded_string = base64.b64encode(file.read())
+            fileid = fs.put(encoded_string, filename=filename)
+            db.Libros.insert_one({"filename":filename,"fileid":fileid, "Popularidad": 0})
+        
+            return "GUARDADO!!"
+    return "NADAAA"
+
+# Renderiza el archivo PDF alojado en la carpeta desiganda arriba
+@app.route('/file/<filename>')
+def download_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER']+"/libros/", filename)
+
+
+
+
+
+#===========MANEJO DE IMAGENES PERFIL=====================
+
+@app.route('/users/img/<id>', methods=['POST'])
+def upload_img(id):
+    print(id)
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(REACT+"/configuracion")
+    file = request.files['file']
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(REACT+"/configuracion")
+    if file and allowed_img(file.filename):
+        name = "perfil_"
+        ext = ".jpg"
+        file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/imagenes_perfil", name+id+ext))
+        return  redirect(REACT+"/configuracion")
+    return redirect(REACT+"/configuracion")
     
-@app.route('/file/<id>', methods=['GET'])
-def download_file(id):
+@app.route('/img/<id>', methods=['GET'])
+def download_img(id):
     if exists(app.config['UPLOAD_FOLDER']+"/imagenes_perfil/perfil_"+id+".jpg"):
         return send_from_directory(app.config['UPLOAD_FOLDER']+"/imagenes_perfil", "perfil_"+id+".jpg")
     else:

@@ -15,7 +15,7 @@ export const Principal = () => {
                         <div class="card mb-3">
                             <div class="row">
                                 <div class="col-md-2">
-                                  <a href="/configuracion"><img src="pan.png" class="img-fluid rounded-start" alt="fotoPerfil"/></a>
+                                  <a href="/Libro"><img src="pan.png" class="img-fluid rounded-start" alt="fotoPerfil"/></a>
                                 </div>
                                 <div class="col-md-2">
                                   <a href="/configuracion"><img src="pan.png" class="img-fluid rounded-start" alt="fotoPerfil"/></a>

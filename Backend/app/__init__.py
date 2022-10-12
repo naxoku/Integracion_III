@@ -21,7 +21,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
 
 
-CORS(app, resources={r"/users/*": {"origins": "*"}})
+CORS(app, resources={r"*": {"origins": "*"}})
 
 jwt = JWTManager(app)
 app.config["JWT_SECRET_KEY"] = "no-borrar-esto"

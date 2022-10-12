@@ -57,7 +57,7 @@ export const Busquedas = () => {
 
                             <div class="p-4 mb-4 bg-light border rounded-4" onClick={e => e.preventDefault() || redir(usuario.name)}>
                              
-                                <img src= {API+"/file/"+usuario._id} height="100" width="100" class="img-fluid rounded-start" alt="fotoPerfil"/>
+                                <img src= {API+"/img/"+usuario._id} height="100" width="100" class="img-fluid rounded-start" alt="fotoPerfil"/>
                                 <h3>{usuario.name}</h3>
                                 <p>{usuario.biografia}</p>
                             </div>

@@ -26,7 +26,7 @@ export const Navbar2 = () => {
 			  	<div class="container-sm">
 			  		<div>
 						<Link to="/">
-							<img className='me-2' src='./libroIcon.png' width="50" alt='PageLogo.png'/>
+							<img className='me-2' src='/libroIcon.png' width="50" alt='PageLogo.png'/>
 						</Link>
 					</div>
 					<h4 className='mt-2 me-2'>Biblioteca Kowloon</h4>
