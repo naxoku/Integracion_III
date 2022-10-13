@@ -84,9 +84,17 @@ export const Navbar2 = () => {
 										<li class="nav-item">
 											<a href="/perfil" class="nav-link container-sm" role="button" aria-current="page">Perfil</a>
 										</li>
+
+
+                                 
+									   <>
 										<li class="nav-item">
 											<a href="/configuracion" class="nav-link container-sm" role="button" aria-current="page">Configuración de la cuenta</a>
 										</li>
+										</>
+									
+
+
 										<li class="nav-item">
 											<div className='bg-danger'>
 												<a onClick= {cerrarSesion} href="/login" class="nav-link ms-3" role="button" aria-current="page">

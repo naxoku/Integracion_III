@@ -34,6 +34,7 @@ const Perfil = () => {
     const redesSociales = useRef();
 
     const idUser = getLoggedInUserId();
+    const logeado = checkIfIsLoggedIn();
 
     const deleteUser = async (e) => {
         const userResponse = window.confirm("Are you sure you want to delete it?");
@@ -67,18 +68,7 @@ const Perfil = () => {
         setHistorial(data['mostrarHistorial']);
         setRedes(data['mostrarRedes']);
 
-        if(cadenaABooleano(historial)){
-            refhistorial.current.checked = true ;
-        }else{
-            refhistorial.current.checked = false ;
-            }
-      
-        if(cadenaABooleano(redes)){
-            redesSociales.current.checked = true ;
-        }else{
-            redesSociales.current.checked = false ;
-            }
-        
+    
     };
 
 
@@ -92,13 +82,16 @@ const Perfil = () => {
         await axios.put(`${API}/users/historial/${idUser}`, {
              nmostrarHistorial
          });
+ 
         }
         if (!isChecked){
         setnMostrarHistorial("False");
         await axios.put(`${API}/users/historial/${idUser}`, {
                  nmostrarHistorial
          });
+      
         }
+      
     }
 
     // mostrar/esconder redes sociales
@@ -179,12 +172,29 @@ const Perfil = () => {
     // mostrar datos actuales del usuario al cargar la pagina
     useEffect(() => {
       getUser();
+
+      if(cadenaABooleano(historial)){
+        refhistorial.current.checked = true ;
+    }else{
+        refhistorial.current.checked = false ;
+        }
+  
+    if(cadenaABooleano(redes)){
+        redesSociales.current.checked = true ;
+    }else{
+        redesSociales.current.checked = false ;
+        }
+    
  
         });
         
     
     return (
+
         <div className='container-md mt-2'>
+
+        {logeado && <>
+    
             <div className='row'>
                 <div className='col-sm'>
                     <h4>Configuración de la cuenta</h4>
@@ -261,6 +271,7 @@ const Perfil = () => {
                         <input class="form-check-input" type="checkbox" ref={redesSociales} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(redes)} onChange={(e) => mredes(e)}/>
                         <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar redes sociales al público</label>
                     </div>
+                    
                 </div>
                 
                 {/* Columna derecha */}
@@ -475,8 +486,16 @@ const Perfil = () => {
             <div>
                <button onClick={(e) => deleteUser(e)}>eliminar la cuenta</button> 
             </div>
-        </div>
+    
+                
+         </>}
+
+      
+
+    </div>
+
     )
-}
+
+        }
 
 export default Perfil;
