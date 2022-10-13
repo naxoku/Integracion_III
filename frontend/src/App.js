@@ -10,6 +10,8 @@ import PerfilUser from "./componentes/PerfilUser"
 import Busquedas from "./componentes/Busquedas";
 import LogIn from "./componentes/LogIn";
 import Libro from "./componentes/Libro";
+import CrearProyecto from "./componentes/CrearProyecto";
+
 function App() {
     return (
         <Router>
@@ -25,6 +27,7 @@ function App() {
 
                     {/* Acá va el editor de texto, pero hay que arreglarlo porque está algo bug*/}
                     <Route path="/proyecto" element={<Proyecto/>}/> 
+                    <Route path="/proyecto/crear" element={<CrearProyecto/>}/> 
 
                     {/* Acá está el componente de perfil de configuración del perfil de usuario */}
                     <Route path="/configuracion" element={<ConfPerfil/>}/>

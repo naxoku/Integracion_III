@@ -188,314 +188,332 @@ const Perfil = () => {
  
         });
         
-    
     return (
-
         <div className='container-md mt-2'>
+        
+        {logeado && ( 
+            <>
+                <div className='row'>
+                    <div className='col-sm'>
+                        <h4>Configuración de la cuenta</h4>
 
-        {logeado && <>
-    
-            <div className='row'>
-                <div className='col-sm'>
-                    <h4>Configuración de la cuenta</h4>
+                        <h6>Nombre de usuario</h6>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder={usuario} aria-describedby="button-addon2" disabled/>
+                            {/* Boton del Modal */}
+                            <button type="button" class="btn bg-primary text-white" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalUsuario"
+                            data-bs-whatever="@mdo">
+                                Editar</button>
+                        </div>
+                        <h6>Correo electrónico</h6>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder={correo} aria-describedby="button-addon2" disabled/>
+                            <button type="button" class="btn bg-primary text-white"  
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalCorreo"
+                            data-bs-whatever="@mdo">
+                                Editar</button>
+                        </div>
+                        <h6>Contraseña</h6>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" placeholder="Contraseña" value={contrasena} aria-describedby="button-addon2" disabled/>
+                            <button type="button" class="btn bg-primary text-white"  
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalContraseña"
+                            data-bs-whatever="@mdo">
+                                Editar</button>
+                        </div>
 
-                    <h6>Nombre de usuario</h6>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder={usuario} aria-describedby="button-addon2" disabled/>
-                        {/* Boton del Modal */}
-                        <button type="button" class="btn bg-primary text-white" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalUsuario"
-                        data-bs-whatever="@mdo">
-                            Editar</button>
-                    </div>
-                    <h6>Correo electrónico</h6>
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder={correo} aria-describedby="button-addon2" disabled/>
-                        <button type="button" class="btn bg-primary text-white"  
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalCorreo"
-                        data-bs-whatever="@mdo">
-                            Editar</button>
-                    </div>
-                    <h6>Contraseña</h6>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Contraseña" value={contrasena} aria-describedby="button-addon2" disabled/>
-                        <button type="button" class="btn bg-primary text-white"  
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalContraseña"
-                        data-bs-whatever="@mdo">
-                            Editar</button>
+                        <h4>Redes sociales</h4>
+
+                        <h6>Instagram</h6>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <input type="text" class="form-control" placeholder={instagram} aria-describedby="button-addon2" disabled/>
+                            <button type="button" class="btn bg-primary text-white" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalInstagram"
+                            data-bs-whatever="@mdo">
+                                Editar</button>
+                        </div>
+                        <h6>Twitter:</h6>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <input type="text" class="form-control" placeholder={twitter} aria-describedby="button-addon2" disabled/>
+                            <button type="button" class="btn bg-primary text-white" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalTwitter"
+                            data-bs-whatever="@mdo">
+                                Editar</button>
+                        </div>
+                        <h6>Facebook:</h6>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <input type="text" class="form-control" placeholder={facebook} aria-describedby="button-addon2" disabled/>
+                            <button type="button" class="btn bg-primary text-white" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#modalFacebook"
+                            data-bs-whatever="@mdo">
+                                Editar</button>
+                        </div>
+
+                        <h4>Configuración de privacidad</h4>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" ref={refhistorial} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(historial)} onChange={(e) => mhistorial(e)}/>
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el historial de lectura al público</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" ref={redesSociales} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(redes)} onChange={(e) => mredes(e)}/>
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar redes sociales al público</label>
+                        </div>
+
                     </div>
 
-                    <h4>Redes sociales</h4>
+                    {/* Columna derecha */}
+                    <div className='col-sm'>
+                        <h4>Presentación al público</h4>
 
-                    <h6>Instagram</h6>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">@</span>
-                        <input type="text" class="form-control" placeholder={instagram} aria-describedby="button-addon2" disabled/>
-                        <button type="button" class="btn bg-primary text-white" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalInstagram"
-                        data-bs-whatever="@mdo">
-                            Editar</button>
-                    </div>
-                    <h6>Twitter:</h6>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">@</span>
-                        <input type="text" class="form-control" placeholder={twitter} aria-describedby="button-addon2" disabled/>
-                        <button type="button" class="btn bg-primary text-white" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalTwitter"
-                        data-bs-whatever="@mdo">
-                            Editar</button>
-                    </div>
-                    <h6>Facebook:</h6>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">@</span>
-                        <input type="text" class="form-control" placeholder={facebook} aria-describedby="button-addon2" disabled/>
-                        <button type="button" class="btn bg-primary text-white" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#modalFacebook"
-                        data-bs-whatever="@mdo">
-                            Editar</button>
-                    </div>
+                        <h6>Foto de perfil</h6>
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                  < img src={API+"/img/"+idUser} class="img-fluid rounded-start" alt="fotoPerfil"/>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{usuario}</h5>
+                                        <p class="card-text">{descripcion}</p>
 
-                    <h4>Configuración de privacidad</h4>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" ref={refhistorial} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(historial)} onChange={(e) => mhistorial(e)}/>
-                        <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el historial de lectura al público</label>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" ref={redesSociales} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(redes)} onChange={(e) => mredes(e)}/>
-                        <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar redes sociales al público</label>
-                    </div>
-                    
-                </div>
-                
-                {/* Columna derecha */}
-                <div className='col-sm'>
-                    <h4>Presentación al público</h4>
-
-                    <h6>Foto de perfil</h6>
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                              < img src={API+"/img/"+idUser} class="img-fluid rounded-start" alt="fotoPerfil"/>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">{usuario}</h5>
-                                    <p class="card-text">{descripcion}</p>
-                                    
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <h6>Cambiar foto de perfil</h6>
-                        <form action={API+"/users/img/"+idUser} method='POST' enctype="multipart/form-data"  class="input-group">
-                            
-                            <input type="file" name='file' class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
-                            <button class="btn bg-primary text-white" type="submit" value="Upload"  id="inputGroupFileAddon04"> Subir</button>  
-                        </form>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label"><h6>Editar biografía</h6></label>
-                        <textarea class="form-control" placeholder="Escribe tu biografía..." id="exampleFormControlTextarea1" rows="5" onChange={(e) => setnDesc(e.target.value)}></textarea>
-                    </div>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary me-md-2" type="button" onClick={(e) => editDesc(nuevaDesc)}>Actualizar</button>
-                        <button class="btn btn-primary me-md-2" type="button">Borrar</button>
-                    </div>
-                </div>
-            </div>
+                        <div class="mb-3">
+                            <h6>Cambiar foto de perfil</h6>
+                            <form action={API+"/users/img/"+idUser} method='POST' enctype="multipart/form-data"  class="input-group">
 
-            {/* Modal usuario */}
-            <div class="modal fade" id="modalUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Cambiar nombre de usuario</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">Usuario actual</label>
-                                    <input type="text" class="form-control" id="recipient-name" placeholder={usuario} disabled/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Usuario nuevo</label>
-                                    <input onChange={(e) => setnNombre(e.target.value)} type="text" class="form-control" id="recipient-name"/>
-                                </div>
+                                <input type="file" name='file' class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
+                                <button class="btn bg-primary text-white" type="submit" value="Upload"  id="inputGroupFileAddon04"> Subir</button>  
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onClick={(e) => editNombre(nuevoUsuario)}>Guardar</button>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label"><h6>Editar biografía</h6></label>
+                            <textarea class="form-control" placeholder="Escribe tu biografía..." id="exampleFormControlTextarea1" rows="5" onChange={(e) => setnDesc(e.target.value)}></textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-primary me-md-2" type="button" onClick={(e) => editDesc(nuevaDesc)}>Actualizar</button>
+                            <button class="btn btn-primary me-md-2" type="button">Borrar</button>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Modal correo */}
-            <div class="modal fade" id="modalCorreo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Cambiar correo electrónico</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="recipient-name" class="col-form-label">Correo actual</label>
-                                    <input type="email" class="form-control" id="recipient-name" placeholder={correo} disabled/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Correo nuevo</label>
-                                    <input onChange={(e) => setnCorreo(e.target.value)}  type="email" class="form-control" id="recipient-name"/>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onClick={(e) => editCorreo(nuevoCorreo)}>Guardar</button>
+                {/* Modal usuario */}
+                <div class="modal fade" id="modalUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Cambiar nombre de usuario</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">Usuario actual</label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder={usuario} disabled/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Usuario nuevo</label>
+                                        <input onChange={(e) => setnNombre(e.target.value)} type="text" class="form-control" id="recipient-name"/>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onClick={(e) => editNombre(nuevoUsuario)}>Guardar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Modal contraseña */}
-            <div class="modal fade" id="modalContraseña" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Cambiar contraseña</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-1">
-                                    <label for="recipient-name" class="col-form-label">Contraseña actual</label>
-                                    <input type="password" class="form-control" placeholder="Contraseña" value={contrasena} aria-describedby="button-addon2" disabled/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Contraseña nueva</label>
-                                    <input onChange={(e) => setnPwd(e.target.value)}  type="password" class="form-control" id="recipient-name"/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Repetir contraseña</label>
-                                    <input type="password" class="form-control" id="recipient-name"/>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onClick={(e) => editPw(nuevaContrasena)}>Guardar</button>
+                {/* Modal correo */}
+                <div class="modal fade" id="modalCorreo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Cambiar correo electrónico</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">Correo actual</label>
+                                        <input type="email" class="form-control" id="recipient-name" placeholder={correo} disabled/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Correo nuevo</label>
+                                        <input onChange={(e) => setnCorreo(e.target.value)}  type="email" class="form-control" id="recipient-name"/>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onClick={(e) => editCorreo(nuevoCorreo)}>Guardar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Modal Instagram */}
-            <div class="modal fade" id="modalInstagram" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Redes sociales</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-1">
-                                    <label for="recipient-name" class="col-form-label">Usuario de Instagram</label>
-                                    <input type="text" class="form-control" placeholder={instagram} value={instagram} aria-describedby="button-addon2" disabled/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Cambiar usuario de Instagram</label>
-                                    <input type="text" class="form-control" id="recipient-name"  onChange={(e) => setnIg(e.target.value)}/>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary"  onClick={(e) => editIg(nuevoIg)}>Guardar</button>
+                {/* Modal contraseña */}
+                <div class="modal fade" id="modalContraseña" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Cambiar contraseña</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-1">
+                                        <label for="recipient-name" class="col-form-label">Contraseña actual</label>
+                                        <input type="password" class="form-control" placeholder="Contraseña" value={contrasena} aria-describedby="button-addon2" disabled/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Contraseña nueva</label>
+                                        <input onChange={(e) => setnPwd(e.target.value)}  type="password" class="form-control" id="recipient-name"/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Repetir contraseña</label>
+                                        <input type="password" class="form-control" id="recipient-name"/>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onClick={(e) => editPw(nuevaContrasena)}>Guardar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Modal Twitter */}
-            <div class="modal fade" id="modalTwitter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Redes sociales</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-1">
-                                    <label for="recipient-name" class="col-form-label">Usuario de Twitter</label>
-                                    <input type="text" class="form-control" placeholder="Contraseña" value={twitter} aria-describedby="button-addon2" disabled/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Cambiar usuario de Twitter</label>
-                                    <input type="text" class="form-control" id="recipient-name" onChange={(e) => setnTw(e.target.value)}/>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onClick={(e) => editTw(nuevoTw)}>Guardar</button>
+                {/* Modal Instagram */}
+                <div class="modal fade" id="modalInstagram" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Redes sociales</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-1">
+                                        <label for="recipient-name" class="col-form-label">Usuario de Instagram</label>
+                                        <input type="text" class="form-control" placeholder={instagram} value={instagram} aria-describedby="button-addon2" disabled/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Cambiar usuario de Instagram</label>
+                                        <input type="text" class="form-control" id="recipient-name"  onChange={(e) => setnIg(e.target.value)}/>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary"  onClick={(e) => editIg(nuevoIg)}>Guardar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Modal Facebook */}
-            <div class="modal fade" id="modalFacebook" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Redes sociales</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="mb-1">
-                                    <label for="recipient-name" class="col-form-label">Perfil de Facebook</label>
-                                    <input type="text" class="form-control" placeholder="Contraseña" value={facebook} aria-describedby="button-addon2" disabled/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message-text" class="col-form-label">Cambiar perfil de Facebook</label>
-                                    <input type="text" class="form-control" id="recipient-name" onChange={(e) => setnFb(e.target.value)}/>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onClick={(e) => editFb(nuevoFb)}>Guardar</button>
+                {/* Modal Twitter */}
+                <div class="modal fade" id="modalTwitter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Redes sociales</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-1">
+                                        <label for="recipient-name" class="col-form-label">Usuario de Twitter</label>
+                                        <input type="text" class="form-control" placeholder="Contraseña" value={twitter} aria-describedby="button-addon2" disabled/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Cambiar usuario de Twitter</label>
+                                        <input type="text" class="form-control" id="recipient-name" onChange={(e) => setnTw(e.target.value)}/>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onClick={(e) => editTw(nuevoTw)}>Guardar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-               <button onClick={(e) => deleteUser(e)}>eliminar la cuenta</button> 
-            </div>
-    
-                
-         </>}
 
-      
+                {/* Modal Facebook */}
+                <div class="modal fade" id="modalFacebook" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Redes sociales</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-1">
+                                        <label for="recipient-name" class="col-form-label">Perfil de Facebook</label>
+                                        <input type="text" class="form-control" placeholder="Contraseña" value={facebook} aria-describedby="button-addon2" disabled/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Cambiar perfil de Facebook</label>
+                                        <input type="text" class="form-control" id="recipient-name" onChange={(e) => setnFb(e.target.value)}/>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onClick={(e) => editFb(nuevoFb)}>Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='mt-2 mb-3'>
+                   <button className='btn btn-danger' onClick={(e) => deleteUser(e)}> Eliminar la cuenta</button> 
+                </div>
+            </>
+        )}
 
-    </div>
+        {!logeado && (
+            <>
+                <div class="card text-center">
+                    <div class="card-header">
+                        Error
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Necesitas estar logueado</h5>
+                        <p class="card-text">
+                            Estás intentando acceder a un sitio exclusivo para usuarios registrados.
+                        </p>
+                        <p>
+                            Crea una cuenta para acceder a este y más beneficios.
+                        </p>
+                        
+                            <a href="#" class="btn btn-primary mb-2">Crear cuenta</a>
+                            <h6 className="text-center text-secondary">¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></h6>
 
+                    </div>
+                    <div class="card-footer text-muted">
+                        
+                    </div>
+                </div>
+            </>
+        )}
+        </div>
     )
-
-        }
+}
 
 export default Perfil;
