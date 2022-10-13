@@ -37,7 +37,7 @@ const Perfil = () => {
     const logeado = checkIfIsLoggedIn();
 
     const deleteUser = async (e) => {
-        const userResponse = window.confirm("¿Estás seguro de que quieres eliminar tu cuenta?");
+        const userResponse = window.confirm("Are you sure you want to delete it?");
         if (userResponse) {
 
             await axios.delete(`${API}/users/${idUser}`,{
@@ -73,22 +73,23 @@ const Perfil = () => {
 
 
     // mostrar/esconder historial de lectura
-    async function mhistorial(e, isChecked) {
+    async function mhistorial(e) {
         e.preventDefault();
-         // const isChecked = refhistorial.current.checked;
-
+        const isChecked = refhistorial.current.checked;
+    
         if (isChecked){
         setnMostrarHistorial("True");
         await axios.put(`${API}/users/historial/${idUser}`, {
              nmostrarHistorial
          });
  
-        }else{
-
-            setnMostrarHistorial("False");
-            await axios.put(`${API}/users/historial/${idUser}`, {
-                     nmostrarHistorial
-             });
+        }
+        if (!isChecked){
+        setnMostrarHistorial("False");
+        await axios.put(`${API}/users/historial/${idUser}`, {
+                 nmostrarHistorial
+         });
+      
         }
       
     }
@@ -103,14 +104,13 @@ const Perfil = () => {
         await axios.put(`${API}/users/redes/${idUser}`, {
              nmostrarRedes
          });
-        }else{
-
-            setnMostrarRedes("False");
-            await axios.put(`${API}/users/redes/${idUser}`, {
-                     nmostrarRedes
-             });
         }
-      
+        if (!isChecked){
+        setnMostrarRedes("False");
+        await axios.put(`${API}/users/redes/${idUser}`, {
+                 nmostrarRedes
+         });
+        }
     }
 
     // Editar algo del usuario
@@ -262,15 +262,13 @@ const Perfil = () => {
                     </div>
 
                     <h4>Configuración de privacidad</h4>
-                    <br></br>
 
                     <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" value="" ref={refhistorial} checked={cadenaABooleano(historial)}  onChange={(e) => mhistorial(e)}/>
-  <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el historial de lectura al público</label>
-   </div>
-                    <br></br>
+                        <input class="form-check-input" type="checkbox" ref={refhistorial} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(historial)} onChange={(e) => mhistorial(e)}/>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el historial de lectura al público</label>
+                    </div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" ref={redesSociales} role="switch" id="flexSwitchCheckDefault" checked={cadenaABooleano(redes)} onChange={(e) => mredes(e)}/>
+                        <input class="form-check-input" type="checkbox" ref={redesSociales} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(redes)} onChange={(e) => mredes(e)}/>
                         <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar redes sociales al público</label>
                     </div>
                     
@@ -485,7 +483,6 @@ const Perfil = () => {
                     </div>
                 </div>
             </div>
-            <br></br>
             <div>
                <button onClick={(e) => deleteUser(e)}>eliminar la cuenta</button> 
             </div>
