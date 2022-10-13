@@ -1,15 +1,39 @@
 import React from 'react'
 import { checkIfIsLoggedIn } from '../utils';
-import Editor from "./Editor";
+import EditorTexto from "./EditorTexto";
 
 const logeado = checkIfIsLoggedIn();
+let proyectoName = "La vida del programador";
 
 const CrearProyecto = () => {
     return (
-        <div className='container-md border-danger'>
+        <div className='container-md mt-2'>
             {logeado && (
                 <>
-                    <Editor/>
+                    <div>
+                        <h3>Nombre proyecto: {proyectoName}</h3>
+                    </div>
+                    <div class="d-grid gap-2 d-md-block mb-2">
+                        {/* Dropwdown */}
+                        <button type="button" class="btn btn-primary dropdown-toggle me-1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Proyecto
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Guardar proyecto</a></li>
+                            <li><a class="dropdown-item" href="#">Descargar proyecto</a></li>
+
+                            {/* Llama a un modal */}
+                            <li><a class="dropdown-item" href="#">Editar información</a></li>
+                        </ul>
+
+                        {/* Publicar */}
+                        <button type="button" className='btn btn-success ms-1'>Publicar proyecto</button>
+                    </div>
+
+                    {/* Editor de texto*/}
+                    <div className='col-sm'>
+                        <EditorTexto/>
+                    </div>
                 </>
             )}
             

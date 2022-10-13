@@ -49,7 +49,9 @@ export const Navbar2 = () => {
 			    	  	<div class="offcanvas-body">
 							<form class="d-flex" role="search">
 			    	    	  	<input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search" onChange={event => setSearch(event.target.value)}/>
-								 <button class="btn btn-outline-primary" type="submit" onClick={e => e.preventDefault() || redir(search)}>Buscar</button>
+								<button class="btn btn-outline-primary" type="submit" onClick={e => e.preventDefault() || redir(search)}>
+									<i class="bi bi-search"></i>
+								</button>
 			    	    	</form>
 
 			    	    	<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
