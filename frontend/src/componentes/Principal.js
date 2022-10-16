@@ -20,13 +20,126 @@ export const Principal = () => {
             </div>
 
             <div class="container-md">
+                <br></br>
+                {/* Carousel */}
+                <h4>Lo más leído esta semana</h4>
+                <div class="p-4 mb-4 bg-light border rounded-4">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                        {/* Indicadores carousel */}
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+
+                        {/* Contenido del carousel */}
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="card carouselSize">
+                                    <div class="row g-0 d-flex justify-content-center">
+                                        <div class="col-sm-5 d-flex justify-content-center">
+                                            <img src="portada.png" class="rounded imgSize" alt="..."/>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div className='card-body'>
+                                                <h5 class="card-title">Oui oui madam!</h5>
+                                                <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
+                                                aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
+                                                aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
+                                                <div>
+                                                    <h5 className='card-title'>Etiquetas</h5>
+                                                    <span class="badge text-bg-secondary me-1">Comedia</span>
+                                                    <span class="badge text-bg-secondary me-1">Romance</span>
+                                                    <span class="badge text-bg-secondary me-1">Novela</span>
+                                                </div>
+                                                <div>
+                                                    <br></br>
+                                                    <a className='btn btn-primary btn-sm'>Ver el libro</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="card carouselSize">
+                                    <div class="row g-0 d-flex justify-content-center">
+                                        <div class="col-sm-5 d-flex justify-content-center">
+                                            <img src="portada2.jpg" class="rounded imgSize" alt="..."/>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div className='card-body'>
+                                                <h5 class="card-title">Oui oui madam!</h5>
+                                                <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
+                                                aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
+                                                aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
+                                                <div>
+                                                    <h5 className='card-title'>Etiquetas</h5>
+                                                    <span class="badge text-bg-secondary me-1">Comedia</span>
+                                                    <span class="badge text-bg-secondary me-1">Romance</span>
+                                                    <span class="badge text-bg-secondary me-1">Novela</span>
+                                                </div>
+                                                <div>
+                                                    <br></br>
+                                                    <a className='btn btn-primary btn-sm'>Ver el libro</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="card carouselSize">
+                                    <div class="row g-0 d-flex justify-content-center">
+                                        <div class="col-sm-5 d-flex justify-content-center">
+                                            <img src="portada3.jpg" class="rounded imgSize" alt="..."/>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div className='card-body'>
+                                                <h5 class="card-title">Oui oui madam!</h5>
+                                                <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
+                                                aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
+                                                aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
+                                                <div>
+                                                    <h5 className='card-title'>Etiquetas</h5>
+                                                    <span class="badge text-bg-secondary me-1">Comedia</span>
+                                                    <span class="badge text-bg-secondary me-1">Romance</span>
+                                                    <span class="badge text-bg-secondary me-1">Novela</span>
+                                                </div>
+                                                <div>
+                                                    <br></br>
+                                                    <a className='btn btn-primary btn-sm'>Ver el libro</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Botones prev - next del carousel */}
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Secciones de libros */}
                 <h4 class="fw-bold mt-3">Lo más popular</h4>
                 <div class="p-4 mb-4 bg-light border rounded-4">
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="row row-cols-2 row-cols-md-4 g-4">
                         {/* Libro 1 */}
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="pan.png" class="card-img-top" alt="..."/>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="pan.png" class="card-img-top imgSize" alt="..."/>
+                                </div>
+
                                 <div class="card-body">
                                     <h5 class="card-title">Oui oui madam!</h5>
                                     <p class="card-text">Comedia moderna sobre una pareja bien dispareja.</p>
@@ -37,14 +150,17 @@ export const Principal = () => {
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Subido por: Ignacio</small>
+                                    <small>Subido por: Ignacio</small>
                                 </div>
                             </div>
                         </div>
                         {/* Libro 2 */}
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="portada2.jpg" class="card-img-top" alt="..."/>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="portada2.jpg" class="card-img-top imgSize" alt="..."/>
+                                </div>
+                                
                                 <div class="card-body">
                                     <h5 class="card-title">Siempre a tu lado</h5>
                                     <p class="card-text">Basada en la historia real del fiel perro japonés Hachikō.</p>
@@ -55,14 +171,16 @@ export const Principal = () => {
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Subido por: Ignacio</small>
+                                     <small>Subido por: Ignacio</small>
                                 </div>
                             </div>
                         </div>
                         {/* Libro 3 */}
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="portada3.jpg" class="card-img-top" alt="..."/>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="portada3.jpg" class="card-img-top imgSize" alt="..."/>
+                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Libro del nuevo conductor</h5>
                                     <p class="card-text">Preguntas y respuestas del examen de conducción licencia clase B.</p>
@@ -73,7 +191,47 @@ export const Principal = () => {
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Subido por: Ignacio</small>
+                                     <small>Subido por: Ignacio</small>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Libro 4 */}
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="pan.png" class="card-img-top imgSize" alt="..."/>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Oui oui madam!</h5>
+                                    <p class="card-text">Comedia moderna sobre una pareja bien dispareja.</p>
+                                    <div>
+                                        <span class="badge text-bg-secondary m-1">Comedia</span>
+                                        <span class="badge text-bg-secondary m-1">Romance</span>
+                                        <span class="badge text-bg-secondary m-1">Novela</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                     <small>Subido por: Ignacio</small>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Libro 5 */}
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="portada2.jpg" class="card-img-top imgSize" alt="..."/>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Siempre a tu lado</h5>
+                                    <p class="card-text">Basada en la historia real del fiel perro japonés Hachikō.</p>
+                                    <div>
+                                        <span class="badge text-bg-secondary m-1">Emocional</span>
+                                        <span class="badge text-bg-secondary m-1">Drama</span>
+                                        <span class="badge text-bg-secondary m-1">Hechos reales</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                     <small>Subido por: Ignacio</small>
                                 </div>
                             </div>
                         </div>
@@ -83,11 +241,14 @@ export const Principal = () => {
                 {/* Publicaciones recientes */}
                 <h4 class="fw-bold mt-3">Publicaciones recientes</h4>
                 <div class="p-4 mb-4 bg-light border rounded-4">
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="row row-cols-1 row-cols-md-4 g-4">
                         {/* Libro 1 */}
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="pan.png" class="card-img-top" alt="..."/>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="pan.png" class="card-img-top imgSize" alt="..."/>
+                                </div>
+
                                 <div class="card-body">
                                     <h5 class="card-title">Oui oui madam!</h5>
                                     <p class="card-text">Comedia moderna sobre una pareja bien dispareja.</p>
@@ -98,14 +259,17 @@ export const Principal = () => {
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Subido por: Ignacio</small>
+                                     <small>Subido por: Ignacio</small>
                                 </div>
                             </div>
                         </div>
                         {/* Libro 2 */}
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="portada2.jpg" class="card-img-top" alt="..."/>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="portada2.jpg" class="card-img-top imgSize" alt="..."/>
+                                </div>
+                                
                                 <div class="card-body">
                                     <h5 class="card-title">Siempre a tu lado</h5>
                                     <p class="card-text">Basada en la historia real del fiel perro japonés Hachikō.</p>
@@ -116,14 +280,16 @@ export const Principal = () => {
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Subido por: Ignacio</small>
+                                     <small>Subido por: Ignacio</small>
                                 </div>
                             </div>
                         </div>
                         {/* Libro 3 */}
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="portada3.jpg" class="card-img-top" alt="..."/>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="portada3.jpg" class="card-img-top imgSize" alt="..."/>
+                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Libro del nuevo conductor</h5>
                                     <p class="card-text">Preguntas y respuestas del examen de conducción licencia clase B.</p>
@@ -134,7 +300,47 @@ export const Principal = () => {
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Subido por: Ignacio</small>
+                                     <small>Subido por: Ignacio</small>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Libro 4 */}
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="pan.png" class="card-img-top imgSize" alt="..."/>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Oui oui madam!</h5>
+                                    <p class="card-text">Comedia moderna sobre una pareja bien dispareja.</p>
+                                    <div>
+                                        <span class="badge text-bg-secondary m-1">Comedia</span>
+                                        <span class="badge text-bg-secondary m-1">Romance</span>
+                                        <span class="badge text-bg-secondary m-1">Novela</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                     <small>Subido por: Ignacio</small>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Libro 5 */}
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="portada2.jpg" class="card-img-top imgSize" alt="..."/>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Siempre a tu lado</h5>
+                                    <p class="card-text">Basada en la historia real del fiel perro japonés Hachikō.</p>
+                                    <div>
+                                        <span class="badge text-bg-secondary m-1">Emocional</span>
+                                        <span class="badge text-bg-secondary m-1">Drama</span>
+                                        <span class="badge text-bg-secondary m-1">Hechos reales</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                     <small>Subido por: Ignacio</small>
                                 </div>
                             </div>
                         </div>
@@ -144,11 +350,14 @@ export const Principal = () => {
                 {/* Recomendaciones aleatorias */}
                 <h4 class="fw-bold mt-3">Recomendaciones aleatorias</h4>
                 <div class="p-4 mb-4 bg-light border rounded-4">
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="row row-cols-1 row-cols-md-4 g-4">
                         {/* Libro 1 */}
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="pan.png" class="card-img-top" alt="..."/>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="pan.png" class="card-img-top imgSize" alt="..."/>
+                                </div>
+
                                 <div class="card-body">
                                     <h5 class="card-title">Oui oui madam!</h5>
                                     <p class="card-text">Comedia moderna sobre una pareja bien dispareja.</p>
@@ -159,14 +368,17 @@ export const Principal = () => {
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Subido por: Ignacio</small>
+                                     <small>Subido por: Ignacio</small>
                                 </div>
                             </div>
                         </div>
                         {/* Libro 2 */}
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="portada2.jpg" class="card-img-top" alt="..."/>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="portada2.jpg" class="card-img-top imgSize" alt="..."/>
+                                </div>
+                                
                                 <div class="card-body">
                                     <h5 class="card-title">Siempre a tu lado</h5>
                                     <p class="card-text">Basada en la historia real del fiel perro japonés Hachikō.</p>
@@ -177,14 +389,16 @@ export const Principal = () => {
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Subido por: Ignacio</small>
+                                     <small>Subido por: Ignacio</small>
                                 </div>
                             </div>
                         </div>
                         {/* Libro 3 */}
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="portada3.jpg" class="card-img-top" alt="..."/>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="portada3.jpg" class="card-img-top imgSize" alt="..."/>
+                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title">Libro del nuevo conductor</h5>
                                     <p class="card-text">Preguntas y respuestas del examen de conducción licencia clase B.</p>
@@ -195,10 +409,50 @@ export const Principal = () => {
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small class="text-muted">Subido por: Ignacio</small>
+                                     <small>Subido por: Ignacio</small>
                                 </div>
                             </div>
-                        </div>                      
+                        </div>
+                        {/* Libro 4 */}
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="pan.png" class="card-img-top imgSize" alt="..."/>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Oui oui madam!</h5>
+                                    <p class="card-text">Comedia moderna sobre una pareja bien dispareja.</p>
+                                    <div>
+                                        <span class="badge text-bg-secondary m-1">Comedia</span>
+                                        <span class="badge text-bg-secondary m-1">Romance</span>
+                                        <span class="badge text-bg-secondary m-1">Novela</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                     <small>Subido por: Ignacio</small>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Libro 5 */}
+                        <div class="col d-flex justify-content-center">
+                            <div class="card h-100 cardSize">
+                                <div class="d-flex justify-content-center">
+                                    <img src="portada2.jpg" class="card-img-top imgSize" alt="..."/>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Siempre a tu lado</h5>
+                                    <p class="card-text">Basada en la historia real del fiel perro japonés Hachikō.</p>
+                                    <div>
+                                        <span class="badge text-bg-secondary m-1">Emocional</span>
+                                        <span class="badge text-bg-secondary m-1">Drama</span>
+                                        <span class="badge text-bg-secondary m-1">Hechos reales</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                     <small>Subido por: Ignacio</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,26 @@
+/* Clases para el carousel */
+.cardSize{
+    max-width: 240px;
+}
+
+.carouselSize{
+    max-width: 1200px;
+}
+
+/* Clases para el tamaño de las imágenes */
+.imgSize{
+    max-height: 300px;
+    max-width: 200px;
+    height: 300px;
+    width: auto;
+    margin: 20px;   
+}
+
+/* Clases de prueba */
+.fondo{
+    background-color: black;
+}
+
+.fondoD{
+    background-color: blue;
+}
