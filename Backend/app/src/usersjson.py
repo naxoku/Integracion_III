@@ -26,7 +26,10 @@ def getUsers():
             'instagram' : doc['instagram'], 
             'twitter': doc['twitter'],
             'facebook': doc['facebook'],
-            'biografia': doc['biografia']
+            'biografia': doc['biografia'],
+            "mostrarHistorial" : doc['mostrarHistorial'],
+            "mostrarRedes" : doc['mostrarRedes']
+
            
         })
     return jsonify(users)

@@ -31,7 +31,7 @@ function PerfilUser() {
 
     const getUser = async () => {
 
-        const res = await axios.get(API+"/users/a/"+elnombre, {
+        const res = await axios.get(API+"/users/"+elnombre, {
             mode: "no-cors",
             });
        
@@ -78,7 +78,7 @@ function PerfilUser() {
                 </div>
                 {/* Tabla de redes sociales */}
                 <div className='col'> 
-                {redes==="True" &&<>
+                {redes===true &&<>
                     <div className='mt-2'>
                         <h4>Redes sociales</h4>
                     </div>
@@ -110,7 +110,7 @@ function PerfilUser() {
 
                 {/* Historial de lectura */}
                 <div className='col-sm' >
-                {historial==="True" &&<>
+                {historial===true &&<>
                     <h4>Historial de lectura</h4>
                     <table class="table table-hover table-sm">
                         <thead>

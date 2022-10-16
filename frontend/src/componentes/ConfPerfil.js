@@ -3,9 +3,82 @@ import { useRef, useState } from 'react';
 import {checkIfIsLoggedIn, getLoggedInUserId}  from "../utils";
 import axios from 'axios'; 
 
+const idUser = getLoggedInUserId();
 const API = process.env.REACT_APP_API;
 
-const Perfil = () => {
+
+class Redes extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        role : "switch"
+      }
+    }
+
+    async componentDidMount(){
+      const res = await axios.get(`${API}/users/${idUser}`, {
+        mode: "no-cors",
+        }); 
+      const data = res.data;
+      this.state.defaultChecked = data['mostrarRedes'];
+    }
+
+    async mredes(event){     
+        const isChecked = event.target.checked;
+      
+        await axios.put(`${API}/users/redes/${idUser}`,{
+              isChecked
+          });
+    }     
+  
+    render() {
+      return (
+        <div>
+             <label class="form-check-label">Mostrar las redes sociales al público</label>
+             <input defaultChecked={this.state.defaultChecked} type="checkbox" class="form-check-input" onChange={this.mredes.bind(this)}/>
+             
+        </div>
+      );
+    }
+  }
+
+  class Historial extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        role : "switch"
+      }
+    }
+
+    async componentDidMount(){
+      const res = await axios.get(`${API}/users/${idUser}`, {
+        mode: "no-cors",
+        }); 
+      const data = res.data;
+      this.state.defaultChecked = data['mostrarHistorial'];
+    }
+
+    async mhistorial(event){     
+        const isChecked = event.target.checked;
+      
+        await axios.put(`${API}/users/historial/${idUser}`,{
+              isChecked
+          });
+    }     
+  
+    render() {
+      return (
+        <div>
+             <label class="form-check-label">Mostrar el historial de lectura al público</label>
+             <input defaultChecked={this.state.defaultChecked} type="checkbox" class="form-check-input" onChange={this.mhistorial.bind(this)}/>
+             
+        </div>
+      );
+    }
+  }
+
+
+const Perfil = () => { 
 
      // Para modificar y guardar variables
     const [usuario, setNombre] = useState("");
@@ -71,48 +144,6 @@ const Perfil = () => {
     
     };
 
-
-    // mostrar/esconder historial de lectura
-    async function mhistorial(e) {
-        e.preventDefault();
-        const isChecked = refhistorial.current.checked;
-    
-        if (isChecked){
-        setnMostrarHistorial("True");
-        await axios.put(`${API}/users/historial/${idUser}`, {
-             nmostrarHistorial
-         });
- 
-        }
-        if (!isChecked){
-        setnMostrarHistorial("False");
-        await axios.put(`${API}/users/historial/${idUser}`, {
-                 nmostrarHistorial
-         });
-      
-        }
-      
-    }
-
-    // mostrar/esconder redes sociales
-    async function mredes(e) {
-        e.preventDefault();
-        const isChecked = redesSociales.current.checked;
-    
-        if (isChecked){
-        setnMostrarRedes("True");   
-        await axios.put(`${API}/users/redes/${idUser}`, {
-             nmostrarRedes
-         });
-        }
-        if (!isChecked){
-        setnMostrarRedes("False");
-        await axios.put(`${API}/users/redes/${idUser}`, {
-                 nmostrarRedes
-         });
-        }
-    }
-
     // Editar algo del usuario
     const editFb = async () => {
         
@@ -167,24 +198,10 @@ const Perfil = () => {
         window.location = "/configuracion";
             };
 
-    
 
     // mostrar datos actuales del usuario al cargar la pagina
     useEffect(() => {
       getUser();
-
-      if(cadenaABooleano(historial)){
-        refhistorial.current.checked = true ;
-    }else{
-        refhistorial.current.checked = false ;
-        }
-  
-    if(cadenaABooleano(redes)){
-        redesSociales.current.checked = true ;
-    }else{
-        redesSociales.current.checked = false ;
-        }
-    
  
         });
         
@@ -261,13 +278,12 @@ const Perfil = () => {
 
                         <h4>Configuración de privacidad</h4>
 
+                      
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" ref={refhistorial} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(historial)} onChange={(e) => mhistorial(e)}/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar el historial de lectura al público</label>
+                       <Redes class="form-check-input" />
                         </div>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" ref={redesSociales} role="switch" id="flexSwitchCheckDefault" defaultChecked={cadenaABooleano(redes)} onChange={(e) => mredes(e)}/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Mostrar redes sociales al público</label>
+                       <Historial class="form-check-input" />
                         </div>
 
                     </div>

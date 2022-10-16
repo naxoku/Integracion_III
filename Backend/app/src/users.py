@@ -1,11 +1,15 @@
 
 import json
+
+
 from bson import *
 from pickle import GET
 from flask import jsonify, request, Blueprint
 from flask_jwt_extended import create_access_token
 from werkzeug.security import generate_password_hash, check_password_hash
 from bson.json_util import dumps
+from flask import Response
+from bson.objectid import ObjectId
 
 from app import app
 from app import db
@@ -35,8 +39,9 @@ def createUsers():
             return  not_found()
 
         hashed = generate_password_hash(password)
+
         id = db.users.insert_one(
-            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.", "mostrarHistorial":"False","mostrarRedes":"False"}
+            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.", "mostrarHistorial": "true" ,"mostrarRedes": "true"}
         )
         response = {
             'id' : str(id),
@@ -47,8 +52,8 @@ def createUsers():
             'instagram' : '',
             'facebook': '',
             'twitter': '',
-            "mostrarHistorial" : "False",
-            "mostrarRedes" : "False"
+            "mostrarHistorial" : "false",
+            "mostrarRedes" : "false"
         }
         
         return response
@@ -169,24 +174,24 @@ def updateBiografia(id):
 @app.route('/users/historial/<id>', methods=['PUT'])
 def mostrarHistorial(id):
     req = request.get_json()
-    decision = req['nmostrarHistorial']
-    if decision:
-        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+    decision = req['isChecked']
+    db.users.update_one({'_id': ObjectId(id)}, {'$set': {
             'mostrarHistorial': decision
         }})
     response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+
     return response
 
 # Ruta para esconder/mostrar las redes
 @app.route('/users/redes/<id>', methods=['PUT'])
 def mostrarRedes(id):
     req = request.get_json()
-    decision = req['nmostrarRedes']
-    if decision:
-        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+    decision = req['isChecked']
+    db.users.update_one({'_id': ObjectId(id)}, {'$set': {
             'mostrarRedes': decision
-        }})
-        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    }})
+    response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+
     return response
 
 #================================================================================================#
