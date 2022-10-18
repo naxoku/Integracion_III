@@ -23,10 +23,9 @@ class Redes extends React.Component {
       this.state.defaultChecked = data['mostrarRedes'];
     }
 
-    async mredes(event){     
-        const isChecked = event.target.checked;
-      
-        await axios.put(`${API}/users/redes/${idUser}`,{
+    async mredes(event){
+         const isChecked = event.target.checked;
+         await axios.put(`${API}/users/redes/${idUser}`,{
               isChecked
           });
     }     
@@ -57,6 +56,7 @@ class Redes extends React.Component {
       const data = res.data;
       this.state.defaultChecked = data['mostrarHistorial'];
     }
+
 
     async mhistorial(event){     
         const isChecked = event.target.checked;
@@ -525,6 +525,7 @@ const Perfil = () => {
                     <div class="card-footer text-muted">
                         
                     </div>
+               
                 </div>
             </>
         )}
