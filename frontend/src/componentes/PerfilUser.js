@@ -2,7 +2,6 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { getLoggedInUserId } from '../utils';
 const API = process.env.REACT_APP_API;
 
 function PerfilUser() {
@@ -13,7 +12,6 @@ function PerfilUser() {
     const [usuario, setNombre] = useState("");
     const [id, setID] = useState("");
     const [correo, setCorreo] = useState("");
-    const [contrasena, setPwd] = useState("");
     const [instagram, setIg] = useState("");
     const [facebook, setFb] = useState("");
     const [twitter, setTw] = useState("");
@@ -21,7 +19,6 @@ function PerfilUser() {
     const [historial, setHistorial] = useState("");
     const [redes, setRedes] = useState("");
     
-
     let random1 = "randomasd1"
     let random2 = "random1231"
 
@@ -32,10 +29,7 @@ function PerfilUser() {
     const getUser = async () => {
 
         const res = await axios.get(API+"/users/a/"+elnombre, {
-            mode: "no-cors",
-            headers : {
-                "Access-Control-Allow-Origin" : true                
-            }
+            mode: "no-cors"
             });
        
         const data = res.data;
@@ -44,7 +38,6 @@ function PerfilUser() {
         setNombre(data['name']);
         setIg(data['instagram'])
         setCorreo(data['email']);
-        setPwd(data['password']);
         setFb(data['facebook']);
         setTw(data['twitter']);
         setDesc(data['biografia']);
@@ -88,6 +81,10 @@ function PerfilUser() {
                     <div className='mt-2'>
                         <table class="table table-borderless table-hover table-sm ">
                             <tbody>
+                                <tr>
+                                    <th scope="row">Correo electrónico</th>
+                                    <td>{correo}</td>
+                                </tr>
                                 <tr>
                                     <th scope="row">Facebook</th>
                                     <td>{facebook}</td>

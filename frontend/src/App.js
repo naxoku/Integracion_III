@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Users from "./componentes/Users";
-import  Principal  from "./componentes/Principal";
+import Principal  from "./componentes/Principal";
 import Proyecto from "./componentes/Proyecto";
 import ConfPerfil from "./componentes/ConfPerfil";
 import Biblioteca from "./componentes/Biblioteca";
@@ -13,7 +13,9 @@ import Libro from "./componentes/Libro";
 import CrearProyecto from "./componentes/CrearProyecto";
 import EditorTexto from "./componentes/EditorTexto";
 
+
 function App() {
+
     return (
         <Router>
             <Navbar2/>

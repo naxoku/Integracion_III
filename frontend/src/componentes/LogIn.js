@@ -28,6 +28,7 @@ function LogIn() {
                 window.location = "/";
                 return null;
                }else{
+                
                 setError("El usuario y/o la contraseña son incorrecto(s)")
                }
     

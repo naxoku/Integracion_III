@@ -73,8 +73,8 @@ def login():
     if(check_password_hash(user['password'], password2)):
         token = create_access_token(identity=id)
         return jsonify({'token' : token})
-
-    return {'message': 'Usuario y/o contraseña incorrectos'} 
+    else:
+        return not_found()
 
 # Borrar un usuario en específico
 @app.route('/users/<id>', methods=['DELETE'])

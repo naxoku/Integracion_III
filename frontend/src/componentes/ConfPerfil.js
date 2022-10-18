@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {checkIfIsLoggedIn, getLoggedInUserId}  from "../utils";
 import axios from 'axios'; 
 
@@ -88,11 +88,6 @@ const Perfil = () => {
     const [facebook, setFb] = useState("");
     const [twitter, setTw] = useState("");
     const [descripcion, setDesc] = useState("");
-    const [historial, setHistorial] = useState("");
-    const [redes, setRedes] = useState("");
-
-    const cadenaABooleano = cadena => cadena === "True";
-
     const [nuevoUsuario, setnNombre] = useState("");
     const [nuevaFoto, setnFoto] = useState("");
     const [nuevoCorreo, setnCorreo] = useState("");
@@ -101,16 +96,12 @@ const Perfil = () => {
     const [nuevoFb, setnFb] = useState("");
     const [nuevoTw, setnTw] = useState("");
     const [nuevaDesc, setnDesc] = useState("");
-    const [nmostrarHistorial,setnMostrarHistorial] = useState("");
-    const [nmostrarRedes, setnMostrarRedes] = useState("");
-    const refhistorial = useRef();
-    const redesSociales = useRef();
 
     const idUser = getLoggedInUserId();
     const logeado = checkIfIsLoggedIn();
 
     const deleteUser = async (e) => {
-        const userResponse = window.confirm("Are you sure you want to delete it?");
+        const userResponse = window.confirm("Estás seguro de querer eliminar tu cuenta?");
         if (userResponse) {
 
             await axios.delete(`${API}/users/${idUser}`,{
@@ -138,8 +129,7 @@ const Perfil = () => {
         setFb(data['facebook']);
         setTw(data['twitter']);
         setDesc(data['biografia']);
-        setHistorial(data['mostrarHistorial']);
-        setRedes(data['mostrarRedes']);
+   
 
     
     };
@@ -518,7 +508,7 @@ const Perfil = () => {
                             Crea una cuenta para acceder a este y más beneficios.
                         </p>
                         
-                            <a href="#" class="btn btn-primary mb-2">Crear cuenta</a>
+                            <a href="/registro" class="btn btn-primary mb-2">Crear cuenta</a>
                             <h6 className="text-center text-secondary">¿Ya tienes una cuenta? <a href="/login">Inicia sesión</a></h6>
 
                     </div>
