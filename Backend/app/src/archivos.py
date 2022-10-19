@@ -52,28 +52,27 @@ def getBook(id):
 
 
 # Creacion de los archivos y enrutamientos a MongoDB
-@app.route('/file/admin/<psw>', methods=['POST'])
-def upload_file(psw):
-    if psw in config("ADMIN"):
-        if 'file' not in request.files:
-            flash('No file part')
-            return "ERROR!!"
-        file = request.files['file']
-        filename = secure_filename(file.filename)
-    
-        if file.filename == '':
-            flash('No selected file')
-            return "ERROR!!"
+@app.route('/file', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        flash('No file part')
+        return "ERROR!!"
+    file = request.files['file']
+    filename = secure_filename(file.filename)
 
-        else:
-            file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/libros", filename))
+    if file.filename == '':
+        flash('No selected file')
+        return "ERROR!!"
 
-            encoded_string = base64.b64encode(file.read())
-            fileid = fs.put(encoded_string, filename=filename)
-            db.Libros.insert_one({"filename":filename,"fileid":fileid, "Popularidad": 0})
+    else:
+        file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/libros", filename))
+
+        encoded_string = base64.b64encode(file.read())
+        fileid = fs.put(encoded_string, filename=filename)
+        id = db.Libros.insert_one({"filename":filename,"fileid":fileid, "Popularidad": 0, "etiquetas" : "etiqueta1,etiqueta2,etiqueta3"})
         
-            return "GUARDADO!!"
-    return "NADAAA"
+        return "GUARDADO!!"
+
 
 # Renderiza el archivo PDF alojado en la carpeta desiganda arriba
 @app.route('/file/<filename>')

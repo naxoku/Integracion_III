@@ -3,6 +3,7 @@ from bson import *
 import gridfs
 from flask_cors import CORS
 import pymongo
+import os
 from flask_jwt_extended import JWTManager
 from flask import Flask, jsonify, request
 from decouple import config
@@ -13,9 +14,13 @@ db = client.Kow_bib
 users = db.users
 fs = gridfs.GridFS(db)
 
+path_absolute = os.path.dirname(__file__)
+relative_path = "archivos"
+full_path = os.path.join(path_absolute, relative_path)
+
 
 #Flask config
-UPLOADER_FOLDER = "D:/Universidad/Tercer Año/6to semestre/Integracion/Integracion_III/Backend/app/archivos"
+UPLOADER_FOLDER = full_path
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
