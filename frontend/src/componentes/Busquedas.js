@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import Redirect from "react";
 
 const API = process.env.REACT_APP_API;
 
@@ -31,13 +32,13 @@ class Tabla extends React.Component{
      this.setState({usuarios : resultadosBusqueda});
   }
 
-   redir = (search) => {
+   redir(search){
     window.location= "../perfil/"+search;
 }
 
   componentDidMount(){
     this.filtrar(this.props.busqueda);
-    console.log(this.state);
+
   }
 
 
@@ -54,8 +55,8 @@ class Tabla extends React.Component{
                         this.state.usuarios.map((usuario, index)=>(
                     
 
-                    <div class="p-4 mb-4 bg-light border rounded-4" onClick={this.redir.bind(usuario.name)}>
-                     
+                    <div class="p-4 mb-4 bg-light border rounded-4" onClick={() => this.redir(usuario.name)}>
+                    
                         <img src= {API+"/img/"+usuario._id} height="100" width="100" class="img-fluid rounded-start" alt="fotoPerfil"/>
                         <h3>{usuario.name}</h3>
                         <p>{usuario.biografia}</p>
