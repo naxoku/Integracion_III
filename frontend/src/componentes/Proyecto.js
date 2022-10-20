@@ -84,11 +84,11 @@ const Proyecto = () => {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                <tr>
                                                         <th scope="row">1</th>
-                                                        <td>{nombreproyecto}</td>
-                                                        <td>{descripcionproyecto}</td>
-                                                        <td>
+                                                        <td>Prruebaaaaa</td>
+                                                        <td>a</td>
+                                                        <td className='d-flex align-content-md-center'>
                                                             <button type="button" class="btn btn-secondary me-1">
                                                                 <i class="bi bi-trash"></i>
                                                             </button>
@@ -110,11 +110,11 @@ const Proyecto = () => {
                                                 <h5>Nombre del proyecto</h5>
                                             </div>
                                             <div className='col mb-3'>
-                                                <input onChange={(e) => setnProyecto(e.target.value)} type="text" class="form-control" id="recipient-name"/>
+                                                <input onChange={(e) => setnProyecto(e.target.value)} type="text" class="form-control" id="recipient-name" placeholder='Nombre...'/>
                                             </div>
 
                                             <div className='col'>
-                                                <h5>Descripción</h5>
+                                                <h5>Descripción del proyecto</h5>
                                             </div>
                                             <div className='col mb-3'>
                                                 <textarea onChange={(e) => setnDescripcion(e.target.value)} class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder='Escriba aquí...'></textarea>
@@ -159,7 +159,62 @@ const Proyecto = () => {
 
                                     {/* Subir un proyecto (PDF) */}
                                     <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">
-                                        <h2>En proceso...</h2>
+                                        <h4>Subir archivo</h4>
+                                        <div class="row row-cols-2 p-4 mb-4 bg-light border rounded-2">
+                                            <div className='col'>
+                                                <h5>Nombre del libro</h5>
+                                            </div>
+                                            <div className='col mb-3'>
+                                                <input onChange={(e) => setnProyecto(e.target.value)} type="text" class="form-control" id="recipient-name" placeholder='Nombre...'/>
+                                            </div>
+
+                                            <div className='col'>
+                                                <h5>Descripción del libro</h5>
+                                            </div>
+                                            <div className='col mb-3'>
+                                                <textarea onChange={(e) => setnDescripcion(e.target.value)} class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder='Escriba aquí...'></textarea>
+                                            </div>
+
+                                            <div className='col'>
+                                                <h5>Etiquetas</h5>
+                                            </div>
+                                            <div className='col mb-3'>
+                                                <div class="input-group mb-1">
+                                                    <input type="text" class="form-control" placeholder="Separar por comas..." aria-label="Recipient's username" aria-describedby="button-addon2"/>
+                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
+                                                </div>
+                                                <span class="badge text-bg-primary m-1">Libro</span>
+                                                <span class="badge text-bg-primary m-1">Historia</span>
+                                            </div>
+
+                                            <div className='col'>
+                                                <h5>Portada</h5>
+                                            </div>
+                                            <div className='col mb-3'>
+                                                <div class="input-group mb-3">
+                                                    <input type="file" class="form-control" id="inputGroupFile01"/>
+                                                </div>
+                                            </div>
+
+                                            <div className='col'>
+                                                <h5>Autor</h5>
+                                            </div>
+                                            <div className='col mb-3'>
+                                                <h6>NOMBRE DEL USUARIO</h6>
+                                            </div>
+                                            <div className='col'>
+                                                <h5>Seleccionar libro</h5>
+                                            </div>
+                                            <div className='col mb-3'>
+                                                <div class="input-group mb-3">
+                                                    <input type="file" class="form-control" id="inputGroupFile01"/>
+                                                </div>
+                                            </div>
+                                            <div className='col'></div>
+                                            <div className='col container-sm'>
+                                                <a href="/proyecto/crear" class="mb-3 btn btn-primary container-md" type="button" id="inputGroupFileAddon04" onClick={(e) => editN(nuevoPr)}>Subir libro</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                         </div>
