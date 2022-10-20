@@ -118,8 +118,8 @@ export  function Navbar2() {
 
 										<hr></hr>
 
-										<li class="nav-item" onClick={ir}>
-										perfil
+										<li class="nav-item">
+											<a class="nav-link container-sm" role="button" aria-current="page" onClick={ir}>Perfil</a>
 										
 										</li>
 
