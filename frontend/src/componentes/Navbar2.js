@@ -1,11 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { checkIfIsLoggedIn, removeToken } from '../utils';
+import { checkIfIsLoggedIn, getLoggedInUserId, removeToken } from '../utils';
 import { useState } from 'react';
+import { Route } from 'react-router-dom';
+import axios from 'axios';
+import PerfilUser from './PerfilUser';
+
 
 export  function Navbar2() {
 
 	// Cerrar TOKEN de la sesión en curso
+	const API = process.env.REACT_APP_API;
+	const [usuario, setNombre] = useState("");
 	const logeado = checkIfIsLoggedIn();
 	const cerrarSesion = () => {
 		removeToken();
@@ -14,11 +20,40 @@ export  function Navbar2() {
 
 	const [search, setSearch] = useState("");
 
-	const redir = (search) => {
-		console.log(search);
-		window.location = "/Busquedas/" + search + "";
-	};
+	function redir(nombre){
+        window.location= "../perfil/"+nombre;
+    }
 
+	const getUser = async () => {
+
+        const idUser = getLoggedInUserId();
+        const res = await axios.get(`${API}/users/${idUser}`, {
+            mode: "no-cors",
+            });
+       
+        const data = res.data;
+        
+        setNombre(data['name']);
+  
+    };
+
+	const ir = async () => {
+    
+        const idUser = getLoggedInUserId();
+        const res = await axios.get(`${API}/users/${idUser}`, {
+            mode: "no-cors",
+            });
+       
+        const data =  res.data;
+		await data;
+
+		setNombre(data['name']);
+		console.log(usuario);
+		   window.location= '../perfil/'+data['name'];
+		
+        
+    };
+    
 
 	return (
 		<div>
@@ -83,11 +118,10 @@ export  function Navbar2() {
 
 										<hr></hr>
 
-										<li class="nav-item">
-											<a href="/perfil" class="nav-link container-sm" role="button" aria-current="page">Perfil</a>
+										<li class="nav-item" onClick={ir}>
+										perfil
+										
 										</li>
-
-
 
 										<>
 											<li class="nav-item">
