@@ -1,17 +1,38 @@
-import React from 'react'
-import { checkIfIsLoggedIn } from '../utils';
+import React, { useEffect } from 'react'
+import { checkIfIsLoggedIn, getLoggedInUserId  } from '../utils';
 import EditorTexto from "./EditorTexto";
+import { useState } from 'react';
+import axios from 'axios'; 
 
 const logeado = checkIfIsLoggedIn();
-let proyectoName = "La vida del programador";
+const idUser = getLoggedInUserId();
+const API = process.env.REACT_APP_API;
+
 
 const CrearProyecto = () => {
+    const [nombreproyecto,  setProyecto] = useState("");
+
+    const getUser = async () => {
+
+        const res = await axios.get(`${API}/users/${idUser}`, {
+            mode: "no-cors",
+            });
+       
+        const data = res.data;
+        
+        setProyecto(data['nombreproyecto']);
+    };
+    useEffect(() => {
+        getUser();
+    
+          });
+
     return (
         <div className='container-md mt-2'>
             {logeado && (
                 <>
                     <div>
-                        <h3>Nombre proyecto: {proyectoName}</h3>
+                        <h3>{nombreproyecto}</h3>
                     </div>
                     <div class="d-grid gap-2 d-md-block mb-2">
                         {/* Dropwdown */}

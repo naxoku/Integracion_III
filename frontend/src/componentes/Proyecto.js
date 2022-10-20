@@ -1,10 +1,49 @@
-import React from 'react'
-import { checkIfIsLoggedIn } from '../utils';
+import { checkIfIsLoggedIn, getLoggedInUserId } from '../utils';
 import Editor from "./Editor";
+import React, { useEffect } from 'react'
+import { useState } from 'react';
+import axios from 'axios'; 
 
 const logeado = checkIfIsLoggedIn();
+const idUser = getLoggedInUserId();
+const API = process.env.REACT_APP_API;
 
 const Proyecto = () => {
+    const [nuevoPr,  setnProyecto] = useState("");
+    const [nuevaDe,  setnDescripcion] = useState("");
+    const [nombreproyecto,  setProyecto] = useState("");
+    const [descripcionproyecto,  setDescripcion] = useState("");
+
+    const getUser = async () => {
+
+        const res = await axios.get(`${API}/users/${idUser}`, {
+            mode: "no-cors",
+            });
+       
+        const data = res.data;
+        
+        setProyecto(data['nombreproyecto']);
+        setDescripcion(data['descripcionproyecto']);
+    };
+    const editN = async () => {
+        
+        await axios.put(`${API}/users/nuevoproyecto/${idUser}`, {
+                nuevoPr
+            });
+        window.location = "/proyecto";
+        };
+    const editDe = async () => {
+    
+        await axios.put(`${API}/users/descripcionproyecto/${idUser}`, {
+                nuevaDe
+            });
+        window.location = "/proyecto";
+        };    
+    
+    useEffect(() => {
+        getUser();
+    
+          });
     return (
         <div className='container-md'>
             {logeado && (
@@ -47,34 +86,8 @@ const Proyecto = () => {
                                                 <tbody>
                                                     <tr>
                                                         <th scope="row">1</th>
-                                                        <td>Proyecto 1</td>
-                                                        <td>Esto es un proyecto de prueba</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-secondary me-1">
-                                                                <i class="bi bi-trash"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-secondary ms-1">
-                                                                <i class="bi bi-pencil"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>Proyecto 2</td>
-                                                        <td>ASDASD AS Das as</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-secondary me-1">
-                                                                <i class="bi bi-trash"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-secondary ms-1">
-                                                                <i class="bi bi-pencil"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">3</th>
-                                                        <td>Prruebaaaaa</td>
-                                                        <td>a</td>
+                                                        <td>{nombreproyecto}</td>
+                                                        <td>{descripcionproyecto}</td>
                                                         <td>
                                                             <button type="button" class="btn btn-secondary me-1">
                                                                 <i class="bi bi-trash"></i>
@@ -97,14 +110,14 @@ const Proyecto = () => {
                                                 <h5>Nombre del proyecto</h5>
                                             </div>
                                             <div className='col mb-3'>
-                                                <input class="form-control" type="text" placeholder="Escriba aquí..." aria-label="default input example"/>
+                                                <input onChange={(e) => setnProyecto(e.target.value)} type="text" class="form-control" id="recipient-name"/>
                                             </div>
 
                                             <div className='col'>
                                                 <h5>Descripción</h5>
                                             </div>
                                             <div className='col mb-3'>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder='Escriba aquí...'></textarea>
+                                                <textarea onChange={(e) => setnDescripcion(e.target.value)} class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder='Escriba aquí...'></textarea>
                                             </div>
 
                                             <div className='col'>
@@ -137,7 +150,9 @@ const Proyecto = () => {
 
                                             <div className='col'></div>
                                             <div className='col container-sm'>
-                                                <a href="/proyecto/crear" class="mb-3 btn btn-primary container-md" type="button" id="inputGroupFileAddon04">Crear proyecto</a>
+                                                <button type="button" class="btn btn-success"  onClick={(e) => editN(nuevoPr)}>Guardar nombre</button>
+                                                <button type="button" class="btn btn-success"  onClick={(e) => editDe(nuevaDe)}>Guardar descripcion</button>
+                                                <a href="/proyecto/crear" class="mb-3 btn btn-primary container-md" type="button" id="inputGroupFileAddon04" onClick={(e) => editN(nuevoPr)}>Crear proyecto</a>
                                             </div>
                                         </div>
                                     </div>

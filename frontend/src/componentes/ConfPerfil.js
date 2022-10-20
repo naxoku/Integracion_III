@@ -81,7 +81,7 @@ class Redes extends React.Component {
 const Perfil = () => { 
 
      // Para modificar y guardar variables
-    const [usuario, setNombre] = useState("");
+    const [usuario,  setNombre] = useState("");
     const [correo, setCorreo] = useState("");
     const [contrasena, setPwd] = useState("");
     const [instagram, setIg] = useState("");
@@ -129,9 +129,6 @@ const Perfil = () => {
         setFb(data['facebook']);
         setTw(data['twitter']);
         setDesc(data['biografia']);
-   
-
-    
     };
 
     // Editar algo del usuario

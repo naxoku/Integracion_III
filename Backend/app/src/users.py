@@ -41,7 +41,7 @@ def createUsers():
         hashed = generate_password_hash(password)
 
         id = db.users.insert_one(
-            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.", "mostrarHistorial": "true" ,"mostrarRedes": "true"}
+            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.", "mostrarHistorial": "true" ,"mostrarRedes": "true", "nombreproyecto":"Aqui el usuario asignara su proyecto(De momento es un proyecto por usuario)", "descripcionproyecto":"Aqui el usuario asignara la descripcion de su proyecto a crear"}
         )
         response = {
             'id' : str(id),
@@ -53,7 +53,9 @@ def createUsers():
             'facebook': '',
             'twitter': '',
             "mostrarHistorial" : "false",
-            "mostrarRedes" : "false"
+            "mostrarRedes" : "false",
+            "nombreproyecto": '',
+            "descripcionproyecto": ''
         }
         
         return response
@@ -196,4 +198,27 @@ def mostrarRedes(id):
 
 #================================================================================================#
 
+# Ruta para actualizar el Facebook
+@app.route('/users/nuevoproyecto/<id>', methods=['PUT'])
+def nombreProyecto(id):
+    req = request.get_json()
+    nProyecto = req['nuevoPr']
+    if nProyecto:
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'nombreproyecto': nProyecto
+        }})
+        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    return response
 
+
+
+@app.route('/users/descripcionproyecto/<id>', methods=['PUT'])
+def descProyecto(id):
+    req = request.get_json()
+    dProyecto = req['nuevaDe']
+    if dProyecto:
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'descripcionproyecto': dProyecto
+        }})
+        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+    return response
