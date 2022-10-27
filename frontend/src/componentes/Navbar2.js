@@ -21,7 +21,7 @@ export  function Navbar2() {
 	const [search, setSearch] = useState("");
 
 	function redir(nombre){
-        window.location= "../perfil/"+nombre;
+        window.location= "../Busquedas/"+nombre;
     }
 
 	const getUser = async () => {

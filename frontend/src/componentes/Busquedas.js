@@ -21,7 +21,7 @@ class Tabla extends React.Component{
         const data = await res.json();
         var resultadosBusqueda = data.filter((elemento)=>{  
 
-        if (elemento.name.toString().toLowerCase().includes(busqueda.toLowerCase()) || elemento.email.toString().toLowerCase().includes(busqueda.toLowerCase())) {
+        if (elemento.name.toString().toLowerCase().includes(busqueda.toLowerCase())) {
             return elemento;
 
         }else{

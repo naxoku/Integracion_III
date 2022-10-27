@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { checkIfIsLoggedIn, getLoggedInUserId, getToken } from '../utils';
 const API = process.env.REACT_APP_API;
 
 function PerfilUser() {
@@ -18,6 +19,7 @@ function PerfilUser() {
     const [descripcion, setDesc] = useState("");
     const [historial, setHistorial] = useState("");
     const [redes, setRedes] = useState("");
+    const [nuevoComentario, setComentario] = useState("");
     
     let random1 = "randomasd1"
     let random2 = "random1231"
@@ -47,9 +49,43 @@ function PerfilUser() {
 
     };
 
+    const getComentarios = async () => {
+                     
+        await axios.get(`/comentarios/perfil/${id}`, {
+            headers : {
+                authorization : `Bearer ${getToken()}`
+            },
+            mode: "no-cors",
+            }); 
+
+    }
+
+    const agregarComentario = async () => {
+
+        if(checkIfIsLoggedIn()){
+
+        await axios.post(`/comentarios/perfil/${id}`, {  
+             headers : {
+                authorization : `Bearer ${getToken()}`
+            },
+            mode: "no-cors",
+            body: {
+                nuevoComentario
+            }
+          
+            }); 
+        }else{
+            window.confirm("Para añadir un comentario debes estar logueado");
+    
+        }
+    
+    }
+
 
     useEffect(() => {
             getUser();
+            getComentarios();
+            
     });
               
 
@@ -171,6 +207,18 @@ function PerfilUser() {
                     </table>
                 </div>
             </div>
+
+
+    
+                    <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label"><h6>Añadir comentario</h6></label>
+                            <textarea class="form-control" placeholder="Escribe tu comentario..." id="exampleFormControlTextarea1" rows="5" onChange={(e) => setComentario(e.target.value)}></textarea>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-primary me-md-2" type="button" onClick={(e) => agregarComentario(nuevoComentario)}>Comentar</button>
+                        </div>
+
+
         </div>
     )
 }
