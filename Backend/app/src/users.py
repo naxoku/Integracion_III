@@ -249,7 +249,7 @@ def agregar_comentario(id):
 @app.route("/users/comentarios/perfil/<id>",methods=['GET'])
 def obtener_comentarios(id):
     comentarios = []
-    for doc in db.Comentarios.find():
+    for doc in db.Comentarios.find({'receptor': id}):
         comentarios.append({
             'emisor': doc['emisor'], 
             'receptor': doc['receptor'], 
@@ -259,8 +259,8 @@ def obtener_comentarios(id):
 
 
 # ruta para eliminar el comentario en la bd
-@app.route("/users/comentarios/perfil/<id>",methods=['POST'])
+@app.route("/users/comentarios/perfil/<id>",methods=['DELETE'])
 @jwt_required()
 def eliminar_comentario(id):
-   # user = get_jwt_identity()
-    return 1
+    db.Comentarios.delete_one({'_id': ObjectId(id)})
+    return "Eliminar"

@@ -14,6 +14,21 @@ class Comentarios extends React.Component{
         this.state = {
         }
     }
+    async eliminar(id){
+        const userResponse = window.confirm("¿Estás seguro de querer eliminar este comentario?");
+            if (userResponse) {
+    
+                axios.delete(`/users/comentarios/perfil/${id}`, {
+                    headers : {
+                        authorization : `Bearer ${getToken()}`
+                    },
+                    mode: "no-cors",
+                    }); 
+        
+   
+            }
+
+    }
 
     async getComentarios(){
    
@@ -55,8 +70,14 @@ class Comentarios extends React.Component{
                                         <p>{comentario.contenido}</p>
                                     </div>
                                 </div>
+
+                                <div>{(checkIfIsLoggedIn() && getLoggedInUserId()===comentario.receptor) && <>
+                                <button onClick={(e) => this.eliminar(comentario.receptor)}>Eliminar este comentario de mi perfil</button>
+                                </>  }</div>
                             </div>
+                          
                             ))
+
                         }   
                         </>
                         :
@@ -119,25 +140,22 @@ function PerfilUser() {
 
         if(checkIfIsLoggedIn()){
 
+            if(nuevoComentario){
         await axios.post(`/users/comentarios/perfil/${id}`,{nuevoComentario}, {  
             headers : {
                 authorization : `Bearer ${getToken()}`
             },
             mode: "no-cors",
-           }); 
+           }); }
         }else{
             window.confirm("Para añadir un comentario debes estar logueado");
-    
         }
-    
     }
-
 
     useEffect(() => {
             getUser();
             
-    });
-              
+    });         
 
     return (
         <div className='container-md mt-3'>
