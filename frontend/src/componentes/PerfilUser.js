@@ -5,6 +5,72 @@ import axios from 'axios';
 import { checkIfIsLoggedIn, getLoggedInUserId, getToken } from '../utils';
 const API = process.env.REACT_APP_API;
 
+
+class Comentarios extends React.Component{
+
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+        }
+    }
+
+    async getComentarios(){
+   
+        const res2 = await axios.get(API+"/users/a/"+this.props.elnombre, {
+            mode: "no-cors"
+            });
+       
+        const id = res2.data['_id']['$oid'];
+
+        const res = await axios.get(`/users/comentarios/perfil/${id}`, {
+            headers : {
+                authorization : `Bearer ${getToken()}`
+            },
+            mode: "no-cors",
+            }); 
+
+        this.setState({comentarios : res.data});
+
+    }
+
+    componentDidMount(){
+        this.getComentarios();
+    }
+
+    render(){
+        return(
+            <div className='container-md'>
+                <div>
+                    <h4>Comentarios:</h4>
+                    {this.state.comentarios ? 
+                        <> {
+                            this.state.comentarios.map((comentario, index)=>(
+                            <div class="p-4 mb-4 bg-light border rounded-4">
+                                <div className="row">
+                                    <div className="col-sm-1">
+                                    </div>
+                                    <div className="col">
+                                        <h3>{comentario.emisor}</h3>
+                                        <p>{comentario.contenido}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            ))
+                        }   
+                        </>
+                        :
+                        <>                  
+                            <p> No se encontraron comentarios</p>
+                        </>
+                    }
+               </div>
+                
+            </div>
+        );
+    }
+}
+
 function PerfilUser() {
 
     // VARIABLES DE TRABAJO
@@ -49,31 +115,16 @@ function PerfilUser() {
 
     };
 
-    const getComentarios = async () => {
-                     
-        await axios.get(`/comentarios/perfil/${id}`, {
+    const agregarComentario = async (nuevoComentario) => {
+
+        if(checkIfIsLoggedIn()){
+
+        await axios.post(`/users/comentarios/perfil/${id}`,{nuevoComentario}, {  
             headers : {
                 authorization : `Bearer ${getToken()}`
             },
             mode: "no-cors",
-            }); 
-
-    }
-
-    const agregarComentario = async () => {
-
-        if(checkIfIsLoggedIn()){
-
-        await axios.post(`/comentarios/perfil/${id}`, {  
-             headers : {
-                authorization : `Bearer ${getToken()}`
-            },
-            mode: "no-cors",
-            body: {
-                nuevoComentario
-            }
-          
-            }); 
+           }); 
         }else{
             window.confirm("Para añadir un comentario debes estar logueado");
     
@@ -84,7 +135,6 @@ function PerfilUser() {
 
     useEffect(() => {
             getUser();
-            getComentarios();
             
     });
               
@@ -207,16 +257,17 @@ function PerfilUser() {
                     </table>
                 </div>
             </div>
-
-
-    
-                    <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label"><h6>Añadir comentario</h6></label>
-                            <textarea class="form-control" placeholder="Escribe tu comentario..." id="exampleFormControlTextarea1" rows="5" onChange={(e) => setComentario(e.target.value)}></textarea>
+           
+            <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label"><h6>Escribe un comentario</h6></label>
+                            <textarea class="form-control" placeholder="Escribe tu biografía..." id="exampleFormControlTextarea1" rows="5" onChange={(e) => setComentario(e.target.value)}></textarea>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button class="btn btn-primary me-md-2" type="button" onClick={(e) => agregarComentario(nuevoComentario)}>Comentar</button>
                         </div>
+        
+            <Comentarios elnombre={elnombre}/>
+               
 
 
         </div>

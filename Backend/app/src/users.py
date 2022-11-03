@@ -5,7 +5,7 @@ import json
 from bson import *
 from pickle import GET
 from flask import jsonify, request, Blueprint
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token , jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 from bson.json_util import dumps
 from flask import Response
@@ -229,3 +229,38 @@ def descProyecto(id):
         }})
         response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
     return response
+
+# ruta para ingresar el comentario en la bd
+@app.route("/users/comentarios/perfil/<id>",methods=['POST'])
+@jwt_required()
+def agregar_comentario(id):
+    contenido = request.json['nuevoComentario']
+
+    user = db.users.find_one({'_id': ObjectId(get_jwt_identity()["$oid"])})
+
+    db.Comentarios.insert_one(
+       {    'emisor': user['name'], 
+            'receptor': id, 
+            'contenido': contenido         
+        })
+    return 200
+
+# ruta para obtener los comentarios de la bd 
+@app.route("/users/comentarios/perfil/<id>",methods=['GET'])
+def obtener_comentarios(id):
+    comentarios = []
+    for doc in db.Comentarios.find():
+        comentarios.append({
+            'emisor': doc['emisor'], 
+            'receptor': doc['receptor'], 
+            'contenido': doc['contenido']           
+        })
+    return jsonify(comentarios)
+
+
+# ruta para eliminar el comentario en la bd
+@app.route("/users/comentarios/perfil/<id>",methods=['POST'])
+@jwt_required()
+def eliminar_comentario(id):
+   # user = get_jwt_identity()
+    return 1

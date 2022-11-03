@@ -29,7 +29,8 @@ app = Flask(__name__)
 CORS(app, resources={r"*": {"origins": "*"}})
 
 jwt = JWTManager(app)
-app.config["JWT_SECRET_KEY"] = "no-borrar-esto"
+app.config['JWT_TOKEN_LOCATION'] = ['headers', 'query_string']
+app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
 app.config["CORS-HEADERS"] = 'Content-Type'
 app.config['UPLOAD_FOLDER'] = UPLOADER_FOLDER
 app.secret_key = 'super secret key'
