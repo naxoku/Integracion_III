@@ -41,7 +41,7 @@ def createUsers():
         hashed = generate_password_hash(password)
 
         id = db.users.insert_one(
-            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.", "mostrarHistorial": "true" ,"mostrarRedes": "true", "nombreproyecto":"Aqui el usuario asignara su proyecto(De momento es un proyecto por usuario)", "descripcionproyecto":"Aqui el usuario asignara la descripcion de su proyecto a crear"}
+            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.", "mostrarHistorial": "true" ,"mostrarRedes": "true", "nombreproyecto":"Aqui el usuario asignara su proyecto(De momento es un proyecto por usuario)", "descripcionproyecto":"Aqui el usuario asignara la descripcion de su proyecto a crear",'libro1': "Libro 1 a crear del usuario",'desc1': "Descripcion de Libro1", 'libro2': "Libro 2 a crear del usuario",'desc2': "Descripcion de Libro1", 'libro3' : "Libro 3 a crear del usuario",'desc3': "Descripcion de Libro1"}
         )
         response = {
             'id' : str(id),
@@ -55,7 +55,13 @@ def createUsers():
             "mostrarHistorial" : "false",
             "mostrarRedes" : "false",
             "nombreproyecto": '',
-            "descripcionproyecto": ''
+            "descripcionproyecto": '',
+            'libro1' : '',
+            'desc1' : '',
+            'libro2': '',
+            'desc2' : '',
+            'libro3': '',
+            'desc3' : ''
         }
         
         return response
@@ -197,15 +203,16 @@ def mostrarRedes(id):
     return response
 
 #================================================================================================#
+# Ruta para crear los libros(maximo 3(se puede editar))
 
-# Ruta para actualizar el Facebook
+# Ruta para actualizar el libro
 @app.route('/users/nuevoproyecto/<id>', methods=['PUT'])
 def nombreProyecto(id):
     req = request.get_json()
     nProyecto = req['nuevoPr']
     if nProyecto:
         db.users.update_one({'_id': ObjectId(id)}, {'$set': {
-            'nombreproyecto': nProyecto
+            'libro1': nProyecto,
         }})
         response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
     return response
@@ -218,7 +225,7 @@ def descProyecto(id):
     dProyecto = req['nuevaDe']
     if dProyecto:
         db.users.update_one({'_id': ObjectId(id)}, {'$set': {
-            'descripcionproyecto': dProyecto
+            'desc1': dProyecto
         }})
         response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
     return response

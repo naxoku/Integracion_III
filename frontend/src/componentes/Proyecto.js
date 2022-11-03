@@ -11,8 +11,15 @@ const API = process.env.REACT_APP_API;
 const Proyecto = () => {
     const [nuevoPr,  setnProyecto] = useState("");
     const [nuevaDe,  setnDescripcion] = useState("");
-    const [nombreproyecto,  setProyecto] = useState("");
-    const [descripcionproyecto,  setDescripcion] = useState("");
+
+    const [libro1,  setProyecto] = useState("");
+    const [desc1,  setDescripcion] = useState("");
+
+    const [libro2,  setProyecto2] = useState("");
+    const [desc2,  setDescripcion2] = useState("");
+
+    const [libro3,  setProyecto3] = useState("");
+    const [desc3,  setDescripcion3] = useState("");
 
     const getUser = async () => {
 
@@ -22,24 +29,24 @@ const Proyecto = () => {
        
         const data = res.data;
         
-        setProyecto(data['nombreproyecto']);
-        setDescripcion(data['descripcionproyecto']);
+        setProyecto(data['libro1']);
+        setDescripcion(data['desc1']);
+
+        setProyecto2(data['libro2']);
+        setDescripcion2(data['desc2']);
+
+        setProyecto3(data['libro3']);
+        setDescripcion3(data['desc3']);
     };
-    const editN = async () => {
-        
+    const editNyD = async () => {
         await axios.put(`${API}/users/nuevoproyecto/${idUser}`, {
                 nuevoPr
             });
-        window.location = "/proyecto";
-        };
-    const editDe = async () => {
-    
         await axios.put(`${API}/users/descripcionproyecto/${idUser}`, {
-                nuevaDe
-            });
-        window.location = "/proyecto";
-        };    
-    
+            nuevaDe
+        });
+        window.location = "/proyecto/crear";
+        };
     useEffect(() => {
         getUser();
     
@@ -86,14 +93,58 @@ const Proyecto = () => {
                                                 <tbody>
                                                 <tr>
                                                         <th scope="row">1</th>
-                                                        <td>Prruebaaaaa</td>
-                                                        <td>a</td>
+                                                        <td>{libro1}</td>
+                                                        <td>{desc1}</td>
                                                         <td className='d-flex align-content-md-center'>
                                                             <button type="button" class="btn btn-secondary me-1">
                                                                 <i class="bi bi-trash"></i>
                                                             </button>
-                                                            <button type="button" class="btn btn-secondary ms-1">
-                                                                <i class="bi bi-pencil"></i>
+                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target="#modalLibro1"
+                                                                    data-bs-whatever="@mdo">
+                                                                <i class="bi bi-pencil"><div class="input-group mb-3"> 
+                                                                </div>
+                                                                </i>
+                                                                
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">2</th>
+                                                        <td>{libro2}</td>
+                                                        <td>{desc2}</td>
+                                                        <td className='d-flex align-content-md-center'>
+                                                            <button type="button" class="btn btn-secondary me-1">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target="#modalLibro1"
+                                                                    data-bs-whatever="@mdo">
+                                                                <i class="bi bi-pencil"><div class="input-group mb-3"> 
+                                                                </div>
+                                                                </i>
+                                                                
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">3</th>
+                                                        <td>{libro3}</td>
+                                                        <td>{desc3}</td>
+                                                        <td className='d-flex align-content-md-center'>
+                                                            <button type="button" class="btn btn-secondary me-1">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target="#modalLibro1"
+                                                                    data-bs-whatever="@mdo">
+                                                                <i class="bi bi-pencil"><div class="input-group mb-3"> 
+                                                                </div>
+                                                                </i>
+                                                                
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -101,7 +152,26 @@ const Proyecto = () => {
                                             </table>
                                         </div>
                                     </div>
-
+                                       {/* Modal usuario */}
+                                    <div class="modal fade" id="modalLibro1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Editar informacion de Libro</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form>
+                                                        {/* Creacion de formulario y redimensionar el tamano del modal para hacer la edicion posible */}
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="button" class="btn btn-primary" onClick={(e) => editNyD(nuevoPr)}>Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     {/* Crear un proyecto */}
                                     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
                                         <h4>Crear un proyecto</h4>
@@ -149,11 +219,11 @@ const Proyecto = () => {
                                             </div>
 
                                             <div className='col'></div>
-                                            <div className='col container-sm'>
-                                                <button type="button" class="btn btn-success"  onClick={(e) => editN(nuevoPr)}>Guardar nombre</button>
-                                                <button type="button" class="btn btn-success"  onClick={(e) => editDe(nuevaDe)}>Guardar descripcion</button>
-                                                <a href="/proyecto/crear" class="mb-3 btn btn-primary container-md" type="button" id="inputGroupFileAddon04" onClick={(e) => editN(nuevoPr)}>Crear proyecto</a>
-                                            </div>
+                                           
+                                                <div className='col container-sm'>
+                                                    <button type="button" class="btn btn-success"  onClick={(e) => editNyD(nuevoPr)}>Crear Proyecto</button>
+                                                </div>
+
                                         </div>
                                     </div>
 
@@ -212,7 +282,7 @@ const Proyecto = () => {
                                             </div>
                                             <div className='col'></div>
                                             <div className='col container-sm'>
-                                                <a href="/proyecto/crear" class="mb-3 btn btn-primary container-md" type="button" id="inputGroupFileAddon04" onClick={(e) => editN(nuevoPr)}>Subir libro</a>
+                                                <a href="/proyecto/crear" class="mb-3 btn btn-primary container-md" type="button" id="inputGroupFileAddon04" onClick={(e) => editNyD(nuevoPr)}>Subir libro</a>
                                             </div>
                                         </div>
                                     </div>

@@ -10,7 +10,7 @@ const API = process.env.REACT_APP_API;
 
 
 const CrearProyecto = () => {
-    const [nombreproyecto,  setProyecto] = useState("");
+    const [libro1,  setProyecto] = useState("");
 
     const getUser = async () => {
 
@@ -20,7 +20,7 @@ const CrearProyecto = () => {
        
         const data = res.data;
         
-        setProyecto(data['nombreproyecto']);
+        setProyecto(data['libro1']);
     };
     useEffect(() => {
         getUser();
@@ -32,7 +32,7 @@ const CrearProyecto = () => {
             {logeado && (
                 <>
                     <div>
-                        <h3>{nombreproyecto}</h3>
+                        <h3>{libro1}</h3>
                     </div>
                     <div class="d-grid gap-2 d-md-block mb-2">
                         {/* Dropwdown */}
