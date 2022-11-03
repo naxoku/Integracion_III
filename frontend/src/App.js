@@ -12,6 +12,7 @@ import LogIn from "./componentes/LogIn";
 import Libro from "./componentes/Libro";
 import CrearProyecto from "./componentes/CrearProyecto";
 import EditorTexto from "./componentes/EditorTexto";
+import InfoLibro from "./componentes/InfoLibro";
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
 
                     <Route path="/Busquedas/:buscado" element={<Busquedas/>}/>
 
-                    <Route path="/navbar" element={<Navbar2/>}/>
+                    <Route path="/biblioteca/info/" element={<InfoLibro/>}/>
 
                 </Routes>
         </Router>
