@@ -13,39 +13,41 @@ import Libro from "./componentes/Libro";
 import CrearProyecto from "./componentes/CrearProyecto";
 import EditorTexto from "./componentes/EditorTexto";
 import InfoLibro from "./componentes/InfoLibro";
-
+import Footer from "./componentes/Footer";
+import AcercaDe from "./componentes/AcercaDe";
 
 function App() {
 
     return (
         <Router>
-            <Navbar2/>
-            {/* <Navbar/> */}
-                <Routes>
-                    <Route path="/" element={<Principal/>}/>
-                    <Route path="/biblioteca" element={<Biblioteca/>}/>
-                    <Route path="/login" element={<LogIn/>}/>
-                    <Route path="/registro" element={<Users/>}/>
-                    <Route path="/Libro" element={<Libro/>}/> 
-                    {/* <Route path="/Navbar" element={<Navbar/>}/> */}
+            {/* Navbar de la página */}
+            <Navbar2/>  
 
-                    {/* Acá va el editor de texto, pero hay que arreglarlo porque está algo bug*/}
-                    <Route path="/proyecto" element={<Proyecto/>}/> 
-                    <Route path="/proyecto/crear" element={<CrearProyecto/>}/>
-                    <Route path="/EditorTexto" element={<EditorTexto/>}/>
-
-                    {/* Acá está el componente de perfil de configuración del perfil de usuario */}
-                    <Route path="/configuracion" element={<ConfPerfil/>}/>
-
-                    {/* Acá está el componente perfil de usuario */}
-                    <Route path="/perfil/:unnombre" element={<PerfilUser/>}/>
-
-                    <Route path="/Busquedas/:buscado" element={<Busquedas/>}/>
-
-                    <Route path="/biblioteca/info/" element={<InfoLibro/>}/>
-
-                </Routes>
+            {/* Rutas de la página */}
+            <Routes>
+                <Route path="/" element={<Principal/>}/>
+                <Route path="/biblioteca" element={<Biblioteca/>}/>
+                <Route path="/login" element={<LogIn/>}/>
+                <Route path="/registro" element={<Users/>}/>
+                <Route path="/Libro" element={<Libro/>}/> 
+                {/* <Route path="/Navbar" element={<Navbar/>}/> */}
+                {/* Acá va el editor de texto, pero hay que arreglarlo porque está algo bug*/}
+                <Route path="/proyecto" element={<Proyecto/>}/> 
+                <Route path="/proyecto/crear" element={<CrearProyecto/>}/>
+                <Route path="/EditorTexto" element={<EditorTexto/>}/>
+                {/* Acá está el componente de perfil de configuración del perfil de usuario */}
+                <Route path="/configuracion" element={<ConfPerfil/>}/>
+                {/* Acá está el componente perfil de usuario */}
+                <Route path="/perfil/:unnombre" element={<PerfilUser/>}/>
+                <Route path="/Busquedas/:buscado" element={<Busquedas/>}/>
+                <Route path="/biblioteca/info/" element={<InfoLibro/>}/>
+                <Route path="/acerca-de/" element={<AcercaDe/>}/>
+            </Routes>
+            
+            {/* Footer de la página */}
+            <Footer/>
         </Router>
+
     );
 }
 

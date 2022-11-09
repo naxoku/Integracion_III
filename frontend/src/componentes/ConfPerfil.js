@@ -198,7 +198,8 @@ const Perfil = () => {
         {logeado && ( 
             <>
                 <div className='row'>
-                    <div className='col-sm'>
+                     {/* Columna izquierda */}
+                    <div className='col-md'>
                         <h4>Configuración de la cuenta</h4>
 
                         <h6>Nombre de usuario</h6>
@@ -276,7 +277,7 @@ const Perfil = () => {
                     </div>
 
                     {/* Columna derecha */}
-                    <div className='col-sm'>
+                    <div className='col-md'>
                         <h4>Presentación al público</h4>
 
                         <h6>Foto de perfil</h6>

@@ -38,19 +38,24 @@ const Proyecto = () => {
         setProyecto3(data['libro3']);
         setDescripcion3(data['desc3']);
     };
+
     const editNyD = async () => {
         await axios.put(`${API}/users/nuevoproyecto/${idUser}`, {
                 nuevoPr
             });
+            
         await axios.put(`${API}/users/descripcionproyecto/${idUser}`, {
             nuevaDe
         });
+
         window.location = "/proyecto/crear";
         };
+        
     useEffect(() => {
         getUser();
     
-          });
+        });
+
     return (
         <div className='container-md'>
             {logeado && (

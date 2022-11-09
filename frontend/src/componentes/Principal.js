@@ -4,32 +4,27 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 const API = process.env.REACT_APP_API;
 
-
 export const Principal = () => {
 
     const [books, setBooks] = useState("");
+    let { unbook } = useParams();
+    const elbook = {unbook}.unbook;
 
-
-        let { unbook } = useParams();
-        const elbook = {unbook}.unbook;
-
-        const getBooks = async () => {
-
-         const res = await axios.get(API+"/users/"+elbook, {
+    const getBooks = async () => {
+        
+        const res = await axios.get(API+"/users/"+elbook, {
             mode: "no-cors"
-            });
-            
-         const data = res.data;
+        });
+        
+        const data = res.data;
 
+        setBooks(data['filename']);   
+    };        
 
-
-         setBooks(data['filename']);   
-        };        
-
-
-     useEffect(() => {
+    useEffect(() => {
         getBooks(); 
      });     
+
     return (
         <div>
             <div className='container-md mt-3'>
