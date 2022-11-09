@@ -1,9 +1,35 @@
 import React from 'react'
-import { checkIfIsLoggedIn} from '../utils';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { checkIfIsLoggedIn, getToken } from '../utils';
 
 const logeado = checkIfIsLoggedIn();
 
+const agregarComentario = async (nuevoComentario,idlibro) => {
+
+    if(checkIfIsLoggedIn()){
+
+    if(nuevoComentario){
+      await axios.post(`/comentarios/libro/${idlibro}`,{nuevoComentario}, {  
+        headers : {
+            authorization : `Bearer ${getToken()}`
+        },
+        mode: "no-cors",
+       }); 
+    }
+    }else{
+        window.confirm("Para añadir un comentario debes estar logueado");
+    }
+}
+
 const InfoLibro = () => {
+    
+    const [nuevoComentario, setComentario] = useState("");
+    let { idLibro } = useParams();
+    const idlibro = {idLibro}.idLibro;
+    console.log(idlibro);
+
     return (
         <div className='container-md'>
             <div class="p-4 mt-4 mb-4 bg-light border rounded-4">
@@ -79,7 +105,10 @@ const InfoLibro = () => {
                     {logeado && (
                         <>
                             <h4>Haz un comentario</h4>
-                            <textarea class="form-control" id="validationTextarea" placeholder="Haz un comentario..." required></textarea>
+                            <textarea class="form-control" id="validationTextarea" placeholder="Haz un comentario..." onChange={(e) => setComentario(e.target.value)} required></textarea>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-primary me-md-2" type="button" onClick={(e) => agregarComentario(nuevoComentario,idlibro)}>Comentar</button>
+                        </div>
                         </>
                     )}
 

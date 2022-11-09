@@ -18,13 +18,12 @@ class Comentarios extends React.Component{
         const userResponse = window.confirm("¿Estás seguro de querer eliminar este comentario?");
             if (userResponse) {
     
-                axios.delete(`/users/comentarios/perfil/${id}`, {
+               await axios.delete(API+"/users/comentarios/perfil/"+id, {
                     headers : {
                         authorization : `Bearer ${getToken()}`
-                    },
-                    mode: "no-cors",
+                    }
                     }); 
-        
+                window.location.reload();
    
             }
 
@@ -61,18 +60,21 @@ class Comentarios extends React.Component{
                     {this.state.comentarios ? 
                         <> {
                             this.state.comentarios.map((comentario, index)=>(
+                        
                             <div class="p-4 mb-4 bg-light border rounded-4">
                                 <div className="row">
                                     <div className="col-sm-1">
                                     </div>
                                     <div className="col">
                                         <h3>{comentario.emisor}</h3>
+            
                                         <p>{comentario.contenido}</p>
+                                  
                                     </div>
                                 </div>
 
                                 <div>{(checkIfIsLoggedIn() && getLoggedInUserId()===comentario.receptor) && <>
-                                <button onClick={(e) => this.eliminar(comentario.receptor)}>Eliminar este comentario de mi perfil</button>
+                                <button onClick={(e) => this.eliminar(comentario._id)}>Eliminar este comentario de mi perfil</button>
                                 </>  }</div>
                             </div>
                           
@@ -146,7 +148,8 @@ function PerfilUser() {
                 authorization : `Bearer ${getToken()}`
             },
             mode: "no-cors",
-           }); }
+           }); 
+        }
         }else{
             window.confirm("Para añadir un comentario debes estar logueado");
         }

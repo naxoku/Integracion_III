@@ -51,7 +51,9 @@ def not_found(error = None):
 from app.src.usersjson import user_jsonBp
 from app.src.users import usersBp
 from app.src.archivos import archivosBp
+from app.src.comentarios import comentariosBp
 
 app.register_blueprint(user_jsonBp)
 app.register_blueprint(usersBp)
 app.register_blueprint(archivosBp)
+app.register_blueprint(comentariosBp)

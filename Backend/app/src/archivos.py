@@ -22,6 +22,10 @@ def allowed_img(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_PERFIL
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_FILES
+
 
 
 #Importaciones para modulacion
@@ -81,8 +85,6 @@ def download_file(filename):
 
 
 
-
-
 #===========MANEJO DE IMAGENES PERFIL=====================
 
 @app.route('/users/img/<id>', methods=['POST'])
@@ -108,6 +110,7 @@ def download_img(id):
         return send_from_directory(app.config['UPLOAD_FOLDER']+"/imagenes_perfil", "perfil_"+id+".jpg")
     else:
         return send_from_directory(app.config['UPLOAD_FOLDER']+"/archivos_estaticos/", "pan.png")
+
 
     
 

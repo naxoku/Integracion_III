@@ -87,6 +87,7 @@ def login():
 # Borrar un usuario en específico
 @app.route('/users/<id>', methods=['DELETE'])
 def deleteUsers(id):
+    print(id)
     db.users.delete_one({'_id': ObjectId(id)})
     return jsonify({'msg': 'Usuario eliminado'})
 
@@ -218,7 +219,6 @@ def nombreProyecto(id):
     return response
 
 
-
 @app.route('/users/descripcionproyecto/<id>', methods=['PUT'])
 def descProyecto(id):
     req = request.get_json()
@@ -229,38 +229,3 @@ def descProyecto(id):
         }})
         response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
     return response
-
-# ruta para ingresar el comentario en la bd
-@app.route("/users/comentarios/perfil/<id>",methods=['POST'])
-@jwt_required()
-def agregar_comentario(id):
-    contenido = request.json['nuevoComentario']
-
-    user = db.users.find_one({'_id': ObjectId(get_jwt_identity()["$oid"])})
-
-    db.Comentarios.insert_one(
-       {    'emisor': user['name'], 
-            'receptor': id, 
-            'contenido': contenido         
-        })
-    return 200
-
-# ruta para obtener los comentarios de la bd 
-@app.route("/users/comentarios/perfil/<id>",methods=['GET'])
-def obtener_comentarios(id):
-    comentarios = []
-    for doc in db.Comentarios.find({'receptor': id}):
-        comentarios.append({
-            'emisor': doc['emisor'], 
-            'receptor': doc['receptor'], 
-            'contenido': doc['contenido']           
-        })
-    return jsonify(comentarios)
-
-
-# ruta para eliminar el comentario en la bd
-@app.route("/users/comentarios/perfil/<id>",methods=['DELETE'])
-@jwt_required()
-def eliminar_comentario(id):
-    db.Comentarios.delete_one({'_id': ObjectId(id)})
-    return "Eliminar"
