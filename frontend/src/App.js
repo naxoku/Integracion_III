@@ -29,7 +29,7 @@ function App() {
                 <Route path="/biblioteca" element={<Biblioteca/>}/>
                 <Route path="/login" element={<LogIn/>}/>
                 <Route path="/registro" element={<Users/>}/>
-                <Route path="/Libro/:nombreLibro" element={<Libro/>}/> 
+                <Route path="/Libro/:idLibro/:nombreLibro" element={<Libro/>}/> 
                 {/* <Route path="/Navbar" element={<Navbar/>}/> */}
                 {/* Acá va el editor de texto, pero hay que arreglarlo porque está algo bug*/}
                 <Route path="/proyecto" element={<Proyecto/>}/> 

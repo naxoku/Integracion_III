@@ -6,23 +6,6 @@ import { checkIfIsLoggedIn, getToken } from '../utils';
 
 const logeado = checkIfIsLoggedIn();
 
-const agregarComentario = async (nuevoComentario,idlibro) => {
-
-    if(checkIfIsLoggedIn()){
-
-    if(nuevoComentario){
-      await axios.post(`/comentarios/libro/${idlibro}`,{nuevoComentario}, {  
-        headers : {
-            authorization : `Bearer ${getToken()}`
-        },
-        mode: "no-cors",
-       }); 
-    }
-    }else{
-        window.confirm("Para añadir un comentario debes estar logueado");
-    }
-}
-
 const InfoLibro = () => {
     
     const [nuevoComentario, setComentario] = useState("");
@@ -30,8 +13,27 @@ const InfoLibro = () => {
     const [etiquetas, setEtiquetas] = useState("");
     const [autor, setAutor] = useState("");
     const [descripcion, setDescripcion] = useState("");
+    const [filename, setFileName] = useState("");
+    const [ID, setID] = useState("");
     let { idLibro } = useParams();
     const idlibro = {idLibro}.idLibro;
+
+    const agregarComentario = async (nuevoComentario,idlibro) => {
+
+        if(checkIfIsLoggedIn()){
+    
+        if(nuevoComentario){
+          await axios.post(`/users/comentarios/libro/${idlibro}`,{nuevoComentario}, {  
+            headers : {
+                authorization : `Bearer ${getToken()}`
+            },
+            mode: "no-cors",
+           }); 
+        }
+        }else{
+            window.confirm("Para añadir un comentario debes estar logueado");
+        }
+    }
 
     const obtenerLibro = async (idlibro) => {
 
@@ -39,16 +41,19 @@ const InfoLibro = () => {
             mode: "no-cors"
            }); 
     
+        setID(libro.data['_id']['$oid']);
         setTitulo(libro.data['Titulo']);
         setEtiquetas(libro.data['etiquetas'].split(","));
         setAutor(libro.data['autor']);  
-        setDescripcion(libro.data['descripcion']);     
+        setDescripcion(libro.data['descripcion']);    
+        setFileName(libro.data['filename']);     
 
     }
     
     useEffect(() => {
         obtenerLibro(idlibro);
     });
+
            
     return (
         <div className='container-md'>
@@ -120,7 +125,7 @@ const InfoLibro = () => {
 
                                 </div>
                                 <div>
-                                    <a className='btn btn-primary mt-3'>Leer el libro</a>
+                                    <button className='btn btn-primary mt-3' >Leer el libro</button>
                                 </div>
                             </div>
                         </div>
