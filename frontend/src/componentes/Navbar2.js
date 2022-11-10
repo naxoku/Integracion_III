@@ -49,7 +49,7 @@ export  function Navbar2() {
 
 		setNombre(data['name']);
 		console.log(usuario);
-		   window.location= '../perfil/'+data['name'];
+		   window.location= '/perfil/'+data['name'];
 		
         
     };
@@ -90,20 +90,20 @@ export  function Navbar2() {
 							</form>
 
 							<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-								<li class="nav-item d-flex">
+								<li class="nav-item d-flex ms-3">
 									<a href="/" class="nav-link container-sm" role="button" aria-current="page">Inicio</a>
 								</li>
-								<li class="nav-item">
+								<li class="nav-item ms-3">
 									<a href="/biblioteca" class="nav-link container-sm" role="button" aria-current="page">Biblioteca</a>
 								</li>
 
 								{/* Usuario QUE NO ESTÁ logueado */}
 								{!logeado && (
 									<>
-										<li class="nav-item">
+										<li class="nav-item ms-3">
 											<a href="/login" class="nav-link container-sm" role="button" aria-current="page">Iniciar sesión</a>
 										</li>
-										<li class="nav-item">
+										<li class="nav-item ms-3">
 											<a href="/registro" class="nav-link container-sm" role="button" aria-current="page">Crear cuenta</a>
 										</li>
 									</>
@@ -112,26 +112,26 @@ export  function Navbar2() {
 								{/* Usuario QUE ESTÁ logueado */}
 								{logeado && (
 									<>
-										<li class="nav-item">
+										<li class="nav-item ms-3">
 											<a href="/proyecto" class="nav-link container-sm" role="button" aria-current="page">Crear libro</a>
 										</li>
 
 										<hr></hr>
 
-										<li class="nav-item">
+										<li class="nav-item ms-3">
 											<a class="nav-link container-sm" role="button" aria-current="page" onClick={ir}>Perfil</a>
 										
 										</li>
 
 										<>
-											<li class="nav-item">
+											<li class="nav-item ms-3">
 												<a href="/configuracion" class="nav-link container-sm" role="button" aria-current="page">Configuración de la cuenta</a>
 											</li>
 										</>
 
 
 
-										<li class="nav-item">
+										<li class="nav-item ms-3">
 											<div className='bg-danger'>
 												<a onClick={cerrarSesion} href="/login" class="nav-link ms-3" role="button" aria-current="page">
 													Cerrar sesión</a>

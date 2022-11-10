@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
 
 import {Document, Page} from 'react-pdf/dist/esm/entry.webpack';
-
+import { useParams } from 'react-router-dom';
 
 function Libro() {
 
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
+    let { nombreLibro } = useParams();
+    const nombrelibro = {nombreLibro}.nombreLibro;
 
     function onDocumentLoadSuccess({ numPages: nextNumPages }) {
         setNumPages(nextNumPages);
@@ -39,9 +41,8 @@ function Libro() {
                 <center>
                     <div id='documento'>
                         <Document
-                            file={{url : "http://localhost:5000/file/Material_Referencial_1.pdf"}}
+                            file={{url : "http://localhost:5000/file/"+nombrelibro}}
                             onLoadSuccess={onDocumentLoadSuccess}
-                            className="fondoD"
                             >
                             <Page 
                                 pageNumber={pageNumber}

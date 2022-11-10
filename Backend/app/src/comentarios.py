@@ -47,12 +47,12 @@ def eliminar_comentario(id):
 
 
 # ruta para ingresar el comentario del libro en la bd
-@app.route("/comentarios/libro/<id>",methods=['POST'])
+@app.route("/users/comentarios/libro/<id>",methods=['POST'])
 @jwt_required()
 def agregar_comentario_libro(id):
     contenido = request.json['nuevoComentario']
 
-    user = db.Libros.find_one({'Libro': id})
+    user = db.Libros.find_one({'_id': ObjectId(id)})
 
     db.ComentariosLibros.insert_one(
        {    'emisor': user['name'], 
@@ -62,7 +62,7 @@ def agregar_comentario_libro(id):
     return 200
 
 # ruta para obtener los comentarios de libro especifico desde la bd 
-@app.route("/comentarios/libro/<id>",methods=['GET'])
+@app.route("/users/comentarios/libro/<id>",methods=['GET'])
 def obtener_comentarios_libro(id):
     comentarios = []
     for doc in db.ComentariosLibros.find({'Libro': id}):
@@ -76,7 +76,7 @@ def obtener_comentarios_libro(id):
 
 
 # ruta para eliminar el comentario de libro en la bd
-@app.route('/comentarios/libro/<id>',methods=['DELETE'])
+@app.route('/users/comentarios/libro/<id>',methods=['DELETE'])
 @jwt_required()
 def eliminar_comentario_libro(id):
     db.ComentariosLibros.delete_one({'_id': ObjectId(id)})

@@ -190,7 +190,7 @@ const Perfil = () => {
     useEffect(() => {
       getUser();
  
-        });
+    });
         
     return (
         <div className='container-md mt-2'>
@@ -297,7 +297,7 @@ const Perfil = () => {
                         </div>
                         <div class="mb-3">
                             <h6>Cambiar foto de perfil</h6>
-                            <form action={API+"/users/img/"+idUser} method='POST' enctype="multipart/form-data"  class="input-group">
+                            <form action={API+"/file"} method='POST' enctype="multipart/form-data"  class="input-group">
 
                                 <input type="file" name='file' class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
                                 <button class="btn bg-primary text-white" type="submit" value="Upload"  id="inputGroupFileAddon04"> Subir</button>  

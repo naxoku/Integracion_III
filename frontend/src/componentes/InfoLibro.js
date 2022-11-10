@@ -6,30 +6,55 @@ import { checkIfIsLoggedIn, getToken } from '../utils';
 
 const logeado = checkIfIsLoggedIn();
 
-const agregarComentario = async (nuevoComentario,idlibro) => {
-
-    if(checkIfIsLoggedIn()){
-
-    if(nuevoComentario){
-      await axios.post(`/comentarios/libro/${idlibro}`,{nuevoComentario}, {  
-        headers : {
-            authorization : `Bearer ${getToken()}`
-        },
-        mode: "no-cors",
-       }); 
-    }
-    }else{
-        window.confirm("Para añadir un comentario debes estar logueado");
-    }
-}
-
 const InfoLibro = () => {
     
     const [nuevoComentario, setComentario] = useState("");
+    const [Titulo, setTitulo] = useState("");
+    const [etiquetas, setEtiquetas] = useState("");
+    const [autor, setAutor] = useState("");
+    const [descripcion, setDescripcion] = useState("");
+    const [filename, setFileName] = useState("");
+    const [ID, setID] = useState("");
     let { idLibro } = useParams();
     const idlibro = {idLibro}.idLibro;
-    console.log(idlibro);
 
+    const agregarComentario = async (nuevoComentario,idlibro) => {
+
+        if(checkIfIsLoggedIn()){
+    
+        if(nuevoComentario){
+          await axios.post(`/users/comentarios/libro/${idlibro}`,{nuevoComentario}, {  
+            headers : {
+                authorization : `Bearer ${getToken()}`
+            },
+            mode: "no-cors",
+           }); 
+        }
+        }else{
+            window.confirm("Para añadir un comentario debes estar logueado");
+        }
+    }
+
+    const obtenerLibro = async (idlibro) => {
+
+        const libro = await axios.get(`/users/Libros/${idlibro}`, {  
+            mode: "no-cors"
+           }); 
+    
+        setID(libro.data['_id']['$oid']);
+        setTitulo(libro.data['Titulo']);
+        setEtiquetas(libro.data['etiquetas'].split(","));
+        setAutor(libro.data['autor']);  
+        setDescripcion(libro.data['descripcion']);    
+        setFileName(libro.data['filename']);     
+
+    }
+    
+    useEffect(() => {
+        obtenerLibro(idlibro);
+    });
+
+           
     return (
         <div className='container-md'>
             <div class="p-4 mt-4 mb-4 bg-light border rounded-4">
@@ -40,15 +65,20 @@ const InfoLibro = () => {
                         </div>
                         <div class="col-md-5">
                             <div className='card-body'>
-                                <h5 class="card-title">Oui oui madam!</h5>
-                                <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
-                                aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
-                                aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
+                                <h5 class="card-title">{Titulo}</h5>
+                                <p class="card-text">{descripcion}</p>
                                 <div>
                                     <h5 className='card-title'>Etiquetas</h5>
-                                    <span class="badge text-bg-secondary me-1">Comedia</span>
-                                    <span class="badge text-bg-secondary me-1">Romance</span>
-                                    <span class="badge text-bg-secondary me-1">Novela</span>
+                                    {etiquetas && <>
+                                      
+                                          {etiquetas.map((index) => (
+
+                                 <span class="badge text-bg-secondary me-1">{index}</span>
+                                           )
+                                           )
+                                            }
+
+                                    </>}
                                 </div>
 
                                 {/* Calificación del libro */}
@@ -95,7 +125,7 @@ const InfoLibro = () => {
 
                                 </div>
                                 <div>
-                                    <a className='btn btn-primary mt-3'>Leer el libro</a>
+                                    <button className='btn btn-primary mt-3' >Leer el libro</button>
                                 </div>
                             </div>
                         </div>

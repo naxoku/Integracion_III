@@ -16,6 +16,11 @@
     margin: 20px;   
 }
 
+.imgProfSize{
+    display: block;
+    margin: auto;
+}
+
 /* ======== Clases de prueba ======== */
 .fondo{
     background-color: black;
