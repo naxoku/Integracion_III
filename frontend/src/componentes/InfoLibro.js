@@ -18,6 +18,13 @@ const InfoLibro = () => {
     let { idLibro } = useParams();
     const idlibro = {idLibro}.idLibro;
 
+
+    const redireccionar = async (e) => {
+
+        window.location = "/Libro/"+ID+"/"+filename;
+    
+    }
+
     const agregarComentario = async (nuevoComentario,idlibro) => {
 
         if(checkIfIsLoggedIn()){
@@ -125,7 +132,7 @@ const InfoLibro = () => {
 
                                 </div>
                                 <div>
-                                    <button className='btn btn-primary mt-3' >Leer el libro</button>
+                                    <button className='btn btn-primary mt-3' onClick={(e) => redireccionar(e)}>Leer el libro</button>
                                 </div>
                             </div>
                         </div>

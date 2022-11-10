@@ -1,24 +1,25 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 const API = process.env.REACT_APP_API;
 
 export const Principal = () => {
 
     const [books, setBooks] = useState("");
-    let { unbook } = useParams();
-    const elbook = {unbook}.unbook;
+
+    const redireccionar = async (ide) => {
+        window.location = "/biblioteca/info/"+ide;
+    }
 
     const getBooks = async () => {
         
-        const res = await axios.get(API+"/users/"+elbook, {
+        const res = await axios.get(API+"/users/Libros", {
             mode: "no-cors"
         });
         
         const data = res.data;
 
-        setBooks(data['filename']);   
+        setBooks(data);
     };        
 
     useEffect(() => {
@@ -157,108 +158,56 @@ export const Principal = () => {
                 <h4 class="fw-bold mt-3">Lo más popular</h4>
                 <div class="p-4 mb-4 bg-light border rounded-4">
                     <div class="row row-cols-1 row-cols-md-4 g-4">
-                        {/* Libro 1 */}
-                        <div class="col d-flex justify-content-center">
+
+
+                    {books ? 
+                        <> {
+                            books.map((libro)=>(
+                            <div class="p-4 mb-4 bg-light border rounded-4" >
+
+                             <div class="col d-flex justify-content-center">
                             <div class="card h-100 cardSize">
                                 <div class="d-flex justify-content-center">
                                     <img src="pan.png" class="card-img-top imgSize" alt="..."/>
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Oui oui madam!</h5>
-                                    <p class="card-text">Comedia moderna sobre una pareja bien dispareja.</p>
+                                    <h5 class="card-title">{libro.titulo}</h5>
+                                    <p class="card-text">{libro.descripcion}</p>
                                     <div>
-                                        <span class="badge text-bg-secondary m-1">Comedia</span>
-                                        <span class="badge text-bg-secondary m-1">Romance</span>
-                                        <span class="badge text-bg-secondary m-1">Novela</span>
+                    
+
+                                        {libro.etiquetas && <>
+                                      
+                                      {libro.etiquetas.split(",").map((index) => (
+
+                             <span class="badge text-bg-secondary me-1">{index}</span>
+                                       )
+                                       )
+                                        }
+
+                                </>}
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small>Subido por: Ignacio</small>
+                                    <small>Subido por: {libro.autor}</small>
+                                    <button onClick={() => redireccionar(libro._id)}>Ver más</button>
                                 </div>
                             </div>
                         </div>
-                        {/* Libro 2 */}
-                        <div class="col d-flex justify-content-center">
-                            <div class="card h-100 cardSize">
-                                <div class="d-flex justify-content-center">
-                                    <img src="portada2.jpg" class="card-img-top imgSize" alt="..."/>
-                                </div>
-                                
-                                <div class="card-body">
-                                    <h5 class="card-title">Siempre a tu lado</h5>
-                                    <p class="card-text">Basada en la historia real del fiel perro japonés Hachikō.</p>
-                                    <div>
-                                        <span class="badge text-bg-secondary m-1">Emocional</span>
-                                        <span class="badge text-bg-secondary m-1">Drama</span>
-                                        <span class="badge text-bg-secondary m-1">Hechos reales</span>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                     <small>Subido por: Ignacio</small>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Libro 3 */}
-                        <div class="col d-flex justify-content-center">
-                            <div class="card h-100 cardSize">
-                                <div class="d-flex justify-content-center">
-                                    <img src="portada3.jpg" class="card-img-top imgSize" alt="..."/>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Libro del nuevo conductor</h5>
-                                    <p class="card-text">Preguntas y respuestas del examen de conducción licencia clase B.</p>
-                                    <div>
-                                        <span class="badge text-bg-secondary m-1">Utilidad</span>
-                                        <span class="badge text-bg-secondary m-1">Estudio</span>
-                                        <span class="badge text-bg-secondary m-1">Instructico</span>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                     <small>Subido por: Ignacio</small>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Libro 4 */}
-                        <div class="col d-flex justify-content-center">
-                            <div class="card h-100 cardSize">
-                                <div class="d-flex justify-content-center">
-                                    <img src="pan.png" class="card-img-top imgSize" alt="..."/>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Oui oui madam!</h5>
-                                    <p class="card-text">Comedia moderna sobre una pareja bien dispareja.</p>
-                                    <div>
-                                        <span class="badge text-bg-secondary m-1">Comedia</span>
-                                        <span class="badge text-bg-secondary m-1">Romance</span>
-                                        <span class="badge text-bg-secondary m-1">Novela</span>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                     <small>Subido por: Ignacio</small>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Libro 5 */}
-                        <div class="col d-flex justify-content-center">
-                            <div class="card h-100 cardSize">
-                                <div class="d-flex justify-content-center">
-                                    <img src="portada2.jpg" class="card-img-top imgSize" alt="..."/>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Siempre a tu lado</h5>
-                                    <p class="card-text">Basada en la historia real del fiel perro japonés Hachikō.</p>
-                                    <div>
-                                        <span class="badge text-bg-secondary m-1">Emocional</span>
-                                        <span class="badge text-bg-secondary m-1">Drama</span>
-                                        <span class="badge text-bg-secondary m-1">Hechos reales</span>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                     <small>Subido por: Ignacio</small>
-                                </div>
-                            </div>
-                        </div>
+                              
+                             </div>
+                         
+                            ))
+                        }   
+                        </>
+                        :
+                        <>                  
+                            <p> No se encontraron usuarios</p>
+                        </>
+                    }
+                        
+                    
                     </div>
                 </div>
 

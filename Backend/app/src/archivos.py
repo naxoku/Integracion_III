@@ -1,19 +1,14 @@
-from genericpath import exists
-from bson.json_util import dumps
-from bson import *
-from decouple import config
-import os
 import base64
+import os
+
+from app import app, db, fs
+from bson import *
+from bson.json_util import dumps
 from bson.objectid import ObjectId
-
+from decouple import config
+from flask import Blueprint, Response, flash, jsonify, redirect, request, send_file, send_from_directory, url_for
+from genericpath import exists
 from werkzeug.utils import secure_filename
-from flask import  Response, flash, redirect, request, send_file, Blueprint, send_from_directory, url_for
-
-
-from app import app
-from app import db
-from app import fs
-from flask import redirect
 
 ALLOWED_EXTENSIONS_PERFIL = {'png', 'jpg', 'jpeg'}
 ALLOWED_EXTENSIONS_FILES = {'.pdf'}
@@ -50,6 +45,22 @@ def getBook(id):
     book = db.Libros.find_one({'_id': ObjectId(id)})
     response = dumps(book)
     return Response(response, mimetype="application/json")
+
+@app.route('/users/Libros', methods=['GET'])
+def getBooks():
+    libros = []
+    for doc in db.Libros.find():
+        libros.append({
+            '_id':  str(ObjectId(doc['_id'])),
+            'Popularidad': doc['Popularidad'],
+            'etiquetas': doc['etiquetas'],
+            'autor': doc['autor'],
+            'Titulo' : doc['Titulo'], 
+            'descripcion': doc['descripcion'],
+            'fileid': doc['fileid'],
+            'filename': doc['filename']
+        })
+    return dumps(libros)
 
 #============== MANEJO DE ARCHIVOS =============================
 
