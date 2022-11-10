@@ -206,26 +206,6 @@ def mostrarRedes(id):
 #================================================================================================#
 # Ruta para crear los libros(maximo 3(se puede editar))
 
-# Ruta para actualizar el libro
-@app.route('/users/nuevoproyecto/<id>', methods=['PUT'])
-def nombreProyecto(id):
-    req = request.get_json()
-    nProyecto = req['nuevoPr']
-    if nProyecto:
-        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
-            'libro1': nProyecto,
-        }})
-        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
-    return response
 
 
-@app.route('/users/descripcionproyecto/<id>', methods=['PUT'])
-def descProyecto(id):
-    req = request.get_json()
-    dProyecto = req['nuevaDe']
-    if dProyecto:
-        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
-            'desc1': dProyecto
-        }})
-        response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
-    return response
+
