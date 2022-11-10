@@ -1,11 +1,29 @@
 import React from "react"
-
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 
 const API = process.env.REACT_APP_API;
-
 const Biblioteca= ()=>  {
-   
+    const [books, setBooks] = useState("");
+    let { unbook } = useParams();
+    const elbook = {unbook}.unbook;
+
+    const getBooks = async () => {
+        
+        const res = await axios.get(API+"/Libros/"+elbook, {
+            mode: "no-cors"
+        });
+        
+        const data = res.data;
+
+        setBooks(data['filename']);   
+    };        
+
+    useEffect(() => {
+        getBooks(); 
+     });     
     return (
         <div className="container-md">
             {/* Maqueta filtrado */}
