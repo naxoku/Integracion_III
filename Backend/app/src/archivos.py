@@ -1,5 +1,5 @@
 from genericpath import exists
-from json import dumps
+from bson.json_util import dumps
 from bson import *
 from decouple import config
 import os
@@ -13,6 +13,7 @@ from flask import  Response, flash, redirect, request, send_file, Blueprint, sen
 from app import app
 from app import db
 from app import fs
+from flask import redirect
 
 ALLOWED_EXTENSIONS_PERFIL = {'png', 'jpg', 'jpeg'}
 ALLOWED_EXTENSIONS_FILES = {'.pdf'}
@@ -25,8 +26,6 @@ def allowed_img(filename):
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_FILES
-
-
 
 #Importaciones para modulacion
 
@@ -56,24 +55,29 @@ def getBook(id):
 
 
 # Creacion de los archivos y enrutamientos a MongoDB
-@app.route('/file', methods=['POST'])
-def upload_file():
+@app.route('/file/<descripcionPDF>/<etiquetasPDF>/<tituloPDF>/<autorPDF>', methods=['POST'])
+def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF): 
     if 'file' not in request.files:
         flash('No file part')
-        return "ERROR!!"
+        return "ERROR!!1"
     file = request.files['file']
     filename = secure_filename(file.filename)
 
     if file.filename == '':
         flash('No selected file')
-        return "ERROR!!"
+        return "ERROR!!2"
 
     else:
         file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/libros", filename))
 
         encoded_string = base64.b64encode(file.read())
         fileid = fs.put(encoded_string, filename=filename)
-        id = db.Libros.insert_one({"filename":filename,"fileid":fileid, "Popularidad": 0, "etiquetas" : "etiqueta1,etiqueta2,etiqueta3"})
+        id = db.Libros.insert_one({"filename":filename,"fileid":fileid, 
+        "Popularidad": 0, 
+        "etiquetas" : etiquetasPDF, 
+        "autor": autorPDF,
+        "Titulo": tituloPDF,
+        "descripcion": descripcionPDF})
         
         return "GUARDADO!!"
 

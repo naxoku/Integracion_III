@@ -29,7 +29,7 @@ function App() {
                 <Route path="/biblioteca" element={<Biblioteca/>}/>
                 <Route path="/login" element={<LogIn/>}/>
                 <Route path="/registro" element={<Users/>}/>
-                <Route path="/Libro" element={<Libro/>}/> 
+                <Route path="/Libro/:nombreLibro" element={<Libro/>}/> 
                 {/* <Route path="/Navbar" element={<Navbar/>}/> */}
                 {/* Acá va el editor de texto, pero hay que arreglarlo porque está algo bug*/}
                 <Route path="/proyecto" element={<Proyecto/>}/> 
@@ -40,7 +40,7 @@ function App() {
                 {/* Acá está el componente perfil de usuario */}
                 <Route path="/perfil/:unnombre" element={<PerfilUser/>}/>
                 <Route path="/Busquedas/:buscado" element={<Busquedas/>}/>
-                <Route path="/biblioteca/info/" element={<InfoLibro/>}/>
+                <Route path="/biblioteca/info/:idLibro" element={<InfoLibro/>}/>
                 <Route path="/acerca-de/" element={<AcercaDe/>}/>
             </Routes>
             

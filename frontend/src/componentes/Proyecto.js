@@ -21,6 +21,12 @@ const Proyecto = () => {
     const [libro3,  setProyecto3] = useState("");
     const [desc3,  setDescripcion3] = useState("");
 
+    const [descripcionPDF,  setDescripcionPDF] = useState("");
+    const [etiquetasPDF,  setEtiquetasPDF] = useState("");
+    const [tituloPDF,  setTituloPDF] = useState("");
+    const autorPDF = getLoggedInUserId();
+    const [file, setPDF] = useState();
+
     const getUser = async () => {
 
         const res = await axios.get(`${API}/users/${idUser}`, {
@@ -50,6 +56,20 @@ const Proyecto = () => {
 
         window.location = "/proyecto/crear";
         };
+
+    /*const subirPDF = async (file) => {
+        console.log(file)
+
+
+        var re = await axios.post(`${API}/file/${descripcionPDF}/${etiquetasPDF}/${tituloPDF}/${autorPDF}`,{
+              file
+         },{
+            mode: "no-cors",
+            });
+
+        console.log(re);
+
+    }*/
         
     useEffect(() => {
         getUser();
@@ -240,14 +260,14 @@ const Proyecto = () => {
                                                 <h5>Nombre del libro</h5>
                                             </div>
                                             <div className='col mb-3'>
-                                                <input onChange={(e) => setnProyecto(e.target.value)} type="text" class="form-control" id="recipient-name" placeholder='Nombre...'/>
+                                                <input onChange={(e) => setTituloPDF(e.target.value)} type="text" class="form-control" id="recipient-name" placeholder='Nombre...'/>
                                             </div>
 
                                             <div className='col'>
                                                 <h5>Descripción del libro</h5>
                                             </div>
                                             <div className='col mb-3'>
-                                                <textarea onChange={(e) => setnDescripcion(e.target.value)} class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder='Escriba aquí...'></textarea>
+                                                <textarea onChange={(e) => setDescripcionPDF(e.target.value)} class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder='Escriba aquí...'></textarea>
                                             </div>
 
                                             <div className='col'>
@@ -255,13 +275,14 @@ const Proyecto = () => {
                                             </div>
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-1">
-                                                    <input type="text" class="form-control" placeholder="Separar por comas..." aria-label="Recipient's username" aria-describedby="button-addon2"/>
+                                                    <input type="text" class="form-control" placeholder="Separar por comas..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setEtiquetasPDF(e.target.value)} />
                                                     <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
                                                 </div>
                                                 <span class="badge text-bg-primary m-1">Libro</span>
                                                 <span class="badge text-bg-primary m-1">Historia</span>
                                             </div>
 
+                                            
                                             <div className='col'>
                                                 <h5>Portada</h5>
                                             </div>
@@ -277,18 +298,24 @@ const Proyecto = () => {
                                             <div className='col mb-3'>
                                                 <h6>NOMBRE DEL USUARIO</h6>
                                             </div>
+                                        
                                             <div className='col'>
                                                 <h5>Seleccionar libro</h5>
                                             </div>
+                                            <form action={API+"/file/"+descripcionPDF+"/"+etiquetasPDF+"/"+tituloPDF+"/"+autorPDF} method='POST' enctype="multipart/form-data"  class="input-group">
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-3">
-                                                    <input type="file" class="form-control" id="inputGroupFile01"/>
+                                                    <input type="file" name="file" class="form-control" id="inputGroupFile01" enctype="multipart/form-data"/>
                                                 </div>
                                             </div>
                                             <div className='col'></div>
                                             <div className='col container-sm'>
-                                                <a href="/proyecto/crear" class="mb-3 btn btn-primary container-md" type="button" id="inputGroupFileAddon04" onClick={(e) => editNyD(nuevoPr)}>Subir libro</a>
+                                            
+                                                <button type="submit" class="mb-3 btn btn-primary container-md" id="inputGroupFileAddon04" >Subir libro</button>
+                                      
                                             </div>
+                                            </form>
+                                        
                                         </div>
                                     </div>
                                 </div>

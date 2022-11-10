@@ -49,7 +49,7 @@ export  function Navbar2() {
 
 		setNombre(data['name']);
 		console.log(usuario);
-		   window.location= '../perfil/'+data['name'];
+		   window.location= '/perfil/'+data['name'];
 		
         
     };

@@ -26,10 +26,30 @@ const agregarComentario = async (nuevoComentario,idlibro) => {
 const InfoLibro = () => {
     
     const [nuevoComentario, setComentario] = useState("");
+    const [Titulo, setTitulo] = useState("");
+    const [etiquetas, setEtiquetas] = useState("");
+    const [autor, setAutor] = useState("");
+    const [descripcion, setDescripcion] = useState("");
     let { idLibro } = useParams();
     const idlibro = {idLibro}.idLibro;
-    console.log(idlibro);
 
+    const obtenerLibro = async (idlibro) => {
+
+        const libro = await axios.get(`/users/Libros/${idlibro}`, {  
+            mode: "no-cors"
+           }); 
+    
+        setTitulo(libro.data['Titulo']);
+        setEtiquetas(libro.data['etiquetas'].split(","));
+        setAutor(libro.data['autor']);  
+        setDescripcion(libro.data['descripcion']);     
+
+    }
+    
+    useEffect(() => {
+        obtenerLibro(idlibro);
+    });
+           
     return (
         <div className='container-md'>
             <div class="p-4 mt-4 mb-4 bg-light border rounded-4">
@@ -40,15 +60,20 @@ const InfoLibro = () => {
                         </div>
                         <div class="col-md-5">
                             <div className='card-body'>
-                                <h5 class="card-title">Oui oui madam!</h5>
-                                <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
-                                aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
-                                aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
+                                <h5 class="card-title">{Titulo}</h5>
+                                <p class="card-text">{descripcion}</p>
                                 <div>
                                     <h5 className='card-title'>Etiquetas</h5>
-                                    <span class="badge text-bg-secondary me-1">Comedia</span>
-                                    <span class="badge text-bg-secondary me-1">Romance</span>
-                                    <span class="badge text-bg-secondary me-1">Novela</span>
+                                    {etiquetas && <>
+                                      
+                                          {etiquetas.map((index) => (
+
+                                 <span class="badge text-bg-secondary me-1">{index}</span>
+                                           )
+                                           )
+                                            }
+
+                                    </>}
                                 </div>
 
                                 {/* Calificación del libro */}
