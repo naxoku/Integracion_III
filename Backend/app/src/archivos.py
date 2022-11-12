@@ -51,6 +51,7 @@ def getBooks():
     libros = []
     for doc in db.Libros.find():
         libros.append({
+            
             '_id':  str(ObjectId(doc['_id'])),
             'Popularidad': doc['Popularidad'],
             'etiquetas': doc['etiquetas'],
@@ -58,7 +59,8 @@ def getBooks():
             'Titulo' : doc['Titulo'], 
             'descripcion': doc['descripcion'],
             'fileid': doc['fileid'],
-            'filename': doc['filename']
+            'filename': doc['filename'],
+            'fileid': doc['fileid']
         })
     return dumps(libros)
 
@@ -72,6 +74,7 @@ def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF):
         flash('No file part')
         return "ERROR!!1"
     file = request.files['file']
+    portada = request.files['portada']
     filename = secure_filename(file.filename)
 
     if file.filename == '':
@@ -79,7 +82,10 @@ def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF):
         return "ERROR!!2"
 
     else:
-        file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/libros", filename))
+        if file and allowed_img(file.filename):
+            name = "libro_"
+            ext = ".pdf"
+            file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/libros", name+autorPDF+ext))
 
         encoded_string = base64.b64encode(file.read())
         fileid = fs.put(encoded_string, filename=filename)
@@ -89,6 +95,11 @@ def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF):
         "autor": autorPDF,
         "Titulo": tituloPDF,
         "descripcion": descripcionPDF})
+
+        if portada and allowed_img(portada.filename):
+            name = "portada_"
+            ext = ".jpg"
+            portada.save(os.path.join(app.config['UPLOAD_FOLDER']+"/portadas", name+str(fileid)+ext))
         
         return "GUARDADO!!"
 
@@ -123,6 +134,13 @@ def upload_img(id):
 def download_img(id):
     if exists(app.config['UPLOAD_FOLDER']+"/imagenes_perfil/perfil_"+id+".jpg"):
         return send_from_directory(app.config['UPLOAD_FOLDER']+"/imagenes_perfil", "perfil_"+id+".jpg")
+    else:
+        return send_from_directory(app.config['UPLOAD_FOLDER']+"/archivos_estaticos/", "pan.png")
+
+@app.route('/portada/<id>', methods=['GET'])
+def portada(id):
+    if exists(app.config['UPLOAD_FOLDER']+"/portadas/portada_"+str(id)+".jpg"):
+        return send_from_directory(app.config['UPLOAD_FOLDER']+"/portadas", "portada_"+str(id)+".jpg")
     else:
         return send_from_directory(app.config['UPLOAD_FOLDER']+"/archivos_estaticos/", "pan.png")
 

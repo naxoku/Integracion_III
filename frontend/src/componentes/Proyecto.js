@@ -451,9 +451,10 @@ const Proyecto = () => {
                                             <div className='col'>
                                                 <h5>Portada</h5>
                                             </div>
+                                            <form action={API+"/file/"+descripcionPDF+"/"+etiquetasPDF+"/"+tituloPDF+"/"+autorPDF} method='POST' href="#" enctype="multipart/form-data"  class="input-group">
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-3">
-                                                    <input type="file" class="form-control" id="inputGroupFile01"/>
+                                                    <input type="file" name="portada" class="form-control" id="inputGroupFile01"/>
                                                 </div>
                                             </div>
 
@@ -467,7 +468,7 @@ const Proyecto = () => {
                                             <div className='col'>
                                                 <h5>Seleccionar libro</h5>
                                             </div>
-                                            <form action={API+"/file/"+descripcionPDF+"/"+etiquetasPDF+"/"+tituloPDF+"/"+autorPDF} method='POST' href="#" enctype="multipart/form-data"  class="input-group">
+                                          
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-3">
                                                     <input type="file" name="file" class="form-control" id="inputGroupFile01" enctype="multipart/form-data"/>

@@ -3,29 +3,36 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 const API = process.env.REACT_APP_API;
 
-export const Principal = () => {
+class Principal extends React.Component{
 
-    const [books, setBooks] = useState("");
-
-    const redireccionar = async (ide) => {
-        window.location = "/biblioteca/info/"+ide;
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            books : ""
+        }
     }
 
-    const getBooks = async () => {
+async redireccionar(ide) {
+    window.location = "/biblioteca/info/"+ide;
+}
+
+async getBooks(){
         
-        const res = await axios.get(API+"/users/Libros", {
-            mode: "no-cors"
-        });
-        
-        const data = res.data;
+    const res = await axios.get(API+"/users/Libros", {
+        mode: "no-cors"
+    });
+    
+    const data = res.data;
 
-        setBooks(data);
-    };        
+    this.setState({books:data});
+}; 
 
-    useEffect(() => {
-        getBooks(); 
-     });     
+componentDidMount(){
+    this.getBooks(); 
+}
 
+render(){
     return (
         <div>
             <div className='container-md mt-3'>
@@ -160,9 +167,9 @@ export const Principal = () => {
                     <div class="row row-cols-1 row-cols-md-4 g-4">
 
 
-                    {books ? 
+                    {this.state.books ? 
                         <> {
-                            books.map((libro)=>(
+                            this.state.books.map((libro)=>(
                             <div class="p-4 mb-4 bg-light border rounded-4" >
 
                              <div class="col d-flex justify-content-center">
@@ -191,7 +198,7 @@ export const Principal = () => {
                                 </div>
                                 <div class="card-footer">
                                     <small>Subido por: {libro.autor}</small>
-                                    <button onClick={() => redireccionar(libro._id)}>Ver más</button>
+                                    <button onClick={() => this.redireccionar(libro._id)}>Ver más</button>
                                 </div>
                             </div>
                         </div>
@@ -431,6 +438,8 @@ export const Principal = () => {
             </div>
         </div>
     )
+}
+
 }
 
 export default Principal;

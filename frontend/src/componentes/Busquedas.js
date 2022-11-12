@@ -1,7 +1,5 @@
 import React, { useState } from "react"
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import Redirect from "react";
 
 const API = process.env.REACT_APP_API;
 
@@ -15,7 +13,7 @@ class Tabla extends React.Component{
         }
     }
 
-    async filtrar(busqueda){
+    async filtrarUsuarios(busqueda){
  
         const res = await fetch(`${API}/users`);
         const data = await res.json();
@@ -32,12 +30,35 @@ class Tabla extends React.Component{
         this.setState({usuarios : resultadosBusqueda});
     }
 
+    async filtrarLibros(busqueda){
+ 
+        const res = await fetch(`${API}/users/Libros`);
+        const data = await res.json();
+        console.log(data)
+        var resultadosBusqueda = data.filter((elemento)=>{  
+
+        if (elemento.Titulo.toString().toLowerCase().includes(busqueda.toLowerCase())) {
+            return elemento;
+
+        }else{
+            return 0;
+
+        }});
+    
+        this.setState({libros : resultadosBusqueda});
+    }
+
     redir(search){
         window.location= "../perfil/"+search;
     }
+    
+    redirInfo(search){
+        window.location= "../biblioteca/info/"+search;
+    }
 
     componentDidMount(){
-        this.filtrar(this.props.busqueda);
+        this.filtrarUsuarios(this.props.busqueda);
+        this.filtrarLibros(this.props.busqueda);
     }
 
     render(){
@@ -71,6 +92,32 @@ class Tabla extends React.Component{
                </div>
                 
                <h4>Libros encontrados:</h4>
+               {this.state.libros ? 
+            
+                        <> {
+                            this.state.libros.map((libro, index)=>(
+                    
+                            <div class="p-4 mb-4 bg-light border rounded-4" onClick={() => this.redirInfo(libro._id)}>
+                                <div className="row">
+                                    <div className="col-sm-1">
+                                        <img src= {API+"/portada/"+libro.fileid.$oid} height="150" width="150" class="img-fluid rounded-1" alt="fotoPerfil"/>
+                                    </div>
+                                    <div className="col">
+                                        <h3>{libro.Titulo}</h3>
+                                        <p>{libro.descripcion}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            ))
+                        }   
+                        </>
+                        :
+                        <>                  
+                            <p> No se encontraron libros</p>
+                        </>
+                    }
+
+               
             </div>
         );
     }
