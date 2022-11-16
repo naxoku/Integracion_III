@@ -21,6 +21,7 @@ def getUsers():
         users.append({
             '_id': str(ObjectId(doc['_id'])),
             'name': doc['name'],
+            'img': doc['img'],
             'email': doc['email'],
             'password': doc['password'],
             'instagram' : doc['instagram'], 

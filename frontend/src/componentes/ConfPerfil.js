@@ -82,6 +82,7 @@ const Perfil = () => {
 
      // Para modificar y guardar variables
     const [usuario,  setNombre] = useState("");
+    const [foto, setFoto] = useState("");
     const [correo, setCorreo] = useState("");
     const [contrasena, setPwd] = useState("");
     const [instagram, setIg] = useState("");
@@ -123,7 +124,8 @@ const Perfil = () => {
         const data = res.data;
         
         setNombre(data['name']);
-        setIg(data['instagram'])
+        setFoto(data['img']);
+        setIg(data['instagram']);
         setCorreo(data['email']);
         setPwd(data['password']);
         setFb(data['facebook']);
@@ -185,6 +187,7 @@ const Perfil = () => {
         window.location = "/configuracion";
             };
 
+      
 
     // mostrar datos actuales del usuario al cargar la pagina
     useEffect(() => {
@@ -284,7 +287,7 @@ const Perfil = () => {
                         <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                  < img src={API+"/img/"+idUser} class="img-fluid rounded-start" alt="fotoPerfil"/>
+                                  < img src={foto} class="img-fluid rounded-start" alt="fotoPerfil"/>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
@@ -297,7 +300,7 @@ const Perfil = () => {
                         </div>
                         <div class="mb-3">
                             <h6>Cambiar foto de perfil</h6>
-                            <form action={API+"/file"} method='POST' enctype="multipart/form-data"  class="input-group">
+                            <form action={API+"/users/img/"+idUser} method='POST' enctype="multipart/form-data"  class="input-group">
 
                                 <input type="file" name='file' class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload"/>
                                 <button class="btn bg-primary text-white" type="submit" value="Upload"  id="inputGroupFileAddon04"> Subir</button>  

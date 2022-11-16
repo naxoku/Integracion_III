@@ -74,7 +74,7 @@ class Comentarios extends React.Component{
                                 </div>
 
                                 <div>{(checkIfIsLoggedIn() && getLoggedInUserId()===comentario.receptor) && <>
-                                <button  className='btn btn-primary mt-3' onClick={(e) => this.eliminar(comentario._id)}>Eliminar este comentario de mi perfil</button>
+                                <button onClick={(e) => this.eliminar(comentario._id)}>Eliminar este comentario de mi perfil</button>
                                 </>  }</div>
                             </div>
                           
@@ -100,6 +100,7 @@ function PerfilUser() {
     let listaLibros = ["Libro_1", "Libro_2", "Libro_3", "Libro_4", "Libro_5"];
 
     const [usuario, setNombre] = useState("");
+    const [Foto, setFoto] = useState("");
     const [id, setID] = useState("");
     const [correo, setCorreo] = useState("");
     const [instagram, setIg] = useState("");
@@ -126,6 +127,7 @@ function PerfilUser() {
         const data = res.data;
         
         setID(data['_id']['$oid']);
+        setFoto(data['img']);
         setNombre(data['name']);
         setIg(data['instagram'])
         setCorreo(data['email']);
@@ -137,15 +139,6 @@ function PerfilUser() {
         
 
     };
-
-    const getLibros = async (id) => {
-
-        var libros = axios.get(`/users/Libros/${id}`,{
-            mode: "no-cors"
-            });
-        const librosCreados = libros.data;
-
-    }
 
     const agregarComentario = async (nuevoComentario) => {
 
@@ -176,7 +169,7 @@ function PerfilUser() {
                 {/* Foto */}
                 <div className='col-sm-2 mt-2'>
                  
-                    <img className='img-fluid rounded-circle border d-flex mx-auto ' src={API+"/img/"+id} width="200" alt='fotoPerfil.png'/>
+                    <img className='img-fluid rounded-circle border d-flex mx-auto ' src={Foto} width="200" alt='fotoPerfil.png'/>
                 </div>
 
                 {/* Usuario y descripción */}

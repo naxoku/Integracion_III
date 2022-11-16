@@ -55,7 +55,7 @@ def agregar_comentario_libro(id):
     db.Libros.find_one({'_id': ObjectId(id)})
 
     db.ComentariosLibros.insert_one(
-       {    'emisor': get_jwt_identity(), 
+       {    'emisor': str(get_jwt_identity()), 
             'libro': id, 
             'contenido': contenido         
         })

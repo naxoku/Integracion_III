@@ -6,10 +6,12 @@ import pymongo
 import os
 from flask_jwt_extended import JWTManager
 from flask import Flask, jsonify, request
-from decouple import config
+
+from dotenv import load_dotenv
+load_dotenv()
 
 #data Base, in order, client = url, db = DataBase general, Colection = coleccion especifica
-client = pymongo.MongoClient("mongodb+srv://"+config("MONGO_USER")+":"+config("MONGO_PASSWORD")+"@cluster0.ecy5yb3.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://"+os.environ["MONGO_USER"]+":"+os.environ["MONGO_PASSWORD"]+"@cluster0.ecy5yb3.mongodb.net/?retryWrites=true&w=majority")
 db = client.Kow_bib
 users = db.users
 fs = gridfs.GridFS(db)
@@ -34,6 +36,11 @@ app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
 app.config["CORS-HEADERS"] = 'Content-Type'
 app.config['UPLOAD_FOLDER'] = UPLOADER_FOLDER
 app.secret_key = 'super secret key'
+
+#RUTA general
+@app.route("/")
+def home_view():
+        return "<h1>HELLO WORLD</h1>"
 
 #Ruta de error
 

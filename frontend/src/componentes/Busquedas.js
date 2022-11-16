@@ -3,6 +3,10 @@ import { useParams } from "react-router-dom";
 
 const API = process.env.REACT_APP_API;
 
+
+
+
+
 class Tabla extends React.Component{
 
     constructor(props) {
@@ -30,9 +34,14 @@ class Tabla extends React.Component{
         this.setState({usuarios : resultadosBusqueda});
     }
 
+
+
     async filtrarLibros(busqueda){
  
         const res = await fetch(`${API}/users/Libros`);
+
+      
+
         const data = await res.json();
         console.log(data)
         var resultadosBusqueda = data.filter((elemento)=>{  
@@ -61,6 +70,7 @@ class Tabla extends React.Component{
         this.filtrarLibros(this.props.busqueda);
     }
 
+
     render(){
         return(
             <div className='container-md'>
@@ -73,7 +83,7 @@ class Tabla extends React.Component{
                             <div class="p-4 mb-4 bg-light border rounded-4" onClick={() => this.redir(usuario.name)}>
                                 <div className="row">
                                     <div className="col-sm-1">
-                                        <img src= {API+"/img/"+usuario._id} height="150" width="150" class="img-fluid rounded-1" alt="fotoPerfil"/>
+                                        <img src= {usuario.img} height="150" width="150" class="img-fluid rounded-1" alt="fotoPerfil"/>
                                     </div>
                                     <div className="col">
                                         <h3>{usuario.name}</h3>
@@ -100,7 +110,7 @@ class Tabla extends React.Component{
                             <div class="p-4 mb-4 bg-light border rounded-4" onClick={() => this.redirInfo(libro._id)}>
                                 <div className="row">
                                     <div className="col-sm-1">
-                                        <img src= {API+"/portada/"+libro.fileid.$oid} height="150" width="150" class="img-fluid rounded-1" alt="fotoPerfil"/>
+                                        <img src= {libro.img} height="150" width="150" class="img-fluid rounded-1" alt="fotoPerfil"/>
                                     </div>
                                     <div className="col">
                                         <h3>{libro.Titulo}</h3>

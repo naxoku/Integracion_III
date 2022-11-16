@@ -1,18 +1,21 @@
 import base64
 import os
-
 from app import app, db, fs
 from bson import *
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-from decouple import config
 from flask import Blueprint, Response, flash, jsonify, redirect, request, send_file, send_from_directory, url_for
 from genericpath import exists
 from werkzeug.utils import secure_filename
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+config = cloudinary.config(secure=True)
 
 ALLOWED_EXTENSIONS_PERFIL = {'png', 'jpg', 'jpeg'}
 ALLOWED_EXTENSIONS_FILES = {'.pdf'}
-REACT = config("REACT")
+REACT = os.environ["REACT"]
 
 def allowed_img(filename):
     return '.' in filename and \
@@ -65,9 +68,9 @@ def getBooks():
             'autor': doc['autor'],
             'Titulo' : doc['Titulo'], 
             'descripcion': doc['descripcion'],
-            'fileid': doc['fileid'],
             'filename': doc['filename'],
-            'fileid': doc['fileid']
+            'url': doc['url'],
+            'img': doc['img']
         })
     return dumps(libros)
 
@@ -77,38 +80,46 @@ def getBooks():
 # Creacion de los archivos y enrutamientos a MongoDB
 @app.route('/file/<descripcionPDF>/<etiquetasPDF>/<tituloPDF>/<autorPDF>', methods=['POST'])
 def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF): 
-    if 'file' not in request.files:
-        flash('No file part')
-        return "ERROR!!1"
     file = request.files['file']
     portada = request.files['portada']
-    filename = secure_filename(file.filename)
 
-    if file.filename == '':
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(REACT+"/proyecto")
+    if file.filename == '' or portada.filename == '':
         flash('No selected file')
-        return "ERROR!!2"
+        return redirect(REACT+"/proyecto")
+    
 
-    else:
-        if file and allowed_img(file.filename):
-            name = "libro_"
-            ext = ".pdf"
-            file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/libros", name+autorPDF+ext))
-
-        encoded_string = base64.b64encode(file.read())
-        fileid = fs.put(encoded_string, filename=filename)
-        id = db.Libros.insert_one({"filename":filename,"fileid":fileid, 
+    filename = secure_filename(file.filename)
+    if (file) and (portada and allowed_img(portada.filename)):
+        name_book = "libro_"
+        id = db.Libros.insert_one({"filename":filename, 
         "Popularidad": 0, 
         "etiquetas" : etiquetasPDF, 
         "autor": autorPDF,
         "Titulo": tituloPDF,
-        "descripcion": descripcionPDF})
+        "descripcion": descripcionPDF,
+        'url': "",
+        "img": ""
+        })
 
-        if portada and allowed_img(portada.filename):
-            name = "portada_"
-            ext = ".jpg"
-            portada.save(os.path.join(app.config['UPLOAD_FOLDER']+"/portadas", name+str(fileid)+ext))
-        
-        return "GUARDADO!!"
+
+        cloudinary.uploader.upload(file, public_id=name_book+str(id.inserted_id), unique_filename = False, overwrite=True)
+        urlbook = cloudinary.CloudinaryImage(name_book+str(id.inserted_id)).build_url()
+
+
+        name_port = "portada_"
+        cloudinary.uploader.upload(portada, public_id=name_port+str(id.inserted_id), unique_filename = False, overwrite=True)
+        urlimg = cloudinary.CloudinaryImage(name_port+str(id.inserted_id)).build_url()
+        print(id.inserted_id)
+
+        db.Libros.update_one({'_id': ObjectId(id.inserted_id)}, {'$set': {
+            "url": urlbook,
+            "img": urlimg
+
+        }})
+    return redirect(REACT+"/proyecto")
 
 
 # Renderiza el archivo PDF alojado en la carpeta desiganda arriba
@@ -132,24 +143,26 @@ def upload_img(id):
         return redirect(REACT+"/configuracion")
     if file and allowed_img(file.filename):
         name = "perfil_"
-        ext = ".jpg"
-        file.save(os.path.join(app.config['UPLOAD_FOLDER']+"/imagenes_perfil", name+id+ext))
+      
+        cloudinary.uploader.upload(file, public_id=name+id, unique_filename = False, overwrite=True)
+        srcURL = cloudinary.CloudinaryImage(name+id).build_url()
+        db.users.update_one({'_id': ObjectId(id)}, {'$set': {
+            'img': srcURL
+        }})
         return  redirect(REACT+"/configuracion")
     return redirect(REACT+"/configuracion")
     
 @app.route('/img/<id>', methods=['GET'])
 def download_img(id):
-    if exists(app.config['UPLOAD_FOLDER']+"/imagenes_perfil/perfil_"+id+".jpg"):
-        return send_from_directory(app.config['UPLOAD_FOLDER']+"/imagenes_perfil", "perfil_"+id+".jpg")
-    else:
-        return send_from_directory(app.config['UPLOAD_FOLDER']+"/archivos_estaticos/", "pan.png")
+    user = db.users.find_one({'_id': ObjectId(id)})
+    img = json.loads(dumps(user['img']))
+    return img
 
 @app.route('/portada/<id>', methods=['GET'])
 def portada(id):
-    if exists(app.config['UPLOAD_FOLDER']+"/portadas/portada_"+str(id)+".jpg"):
-        return send_from_directory(app.config['UPLOAD_FOLDER']+"/portadas", "portada_"+str(id)+".jpg")
-    else:
-        return send_from_directory(app.config['UPLOAD_FOLDER']+"/archivos_estaticos/", "pan.png")
+    portada = db.Libros.find_one({'_id': ObjectId(id)})
+    img = json.loads(dumps(portada['img']))
+    return img
 
 
     

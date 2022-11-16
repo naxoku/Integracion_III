@@ -41,11 +41,12 @@ def createUsers():
         hashed = generate_password_hash(password)
 
         id = db.users.insert_one(
-            {'name': name, 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.", "mostrarHistorial": "true" ,"mostrarRedes": "true", "nombreproyecto":"Aqui el usuario asignara su proyecto(De momento es un proyecto por usuario)", "descripcionproyecto":"Aqui el usuario asignara la descripcion de su proyecto a crear",'libro1': "Libro 1 a crear del usuario",'desc1': "Descripcion de Libro1", 'libro2': "Libro 2 a crear del usuario",'desc2': "Descripcion de Libro1", 'libro3' : "Libro 3 a crear del usuario",'desc3': "Descripcion de Libro1"}
+            {'name': name, 'img' : 'https://res.cloudinary.com/drybosfn5/image/upload/v1667866579/pan_cwoaj7.png', 'email': email, 'password' : hashed, "instagram" : "", "twitter" : "", "facebook" : "", "biografia" : "Acá es donde se previsualizará la biografía que cada usuario querrá colocar en su perfil.", "mostrarHistorial": "true" ,"mostrarRedes": "true", "nombreproyecto":"Aqui el usuario asignara su proyecto(De momento es un proyecto por usuario)", "descripcionproyecto":"Aqui el usuario asignara la descripcion de su proyecto a crear",'libro1': "Libro 1 a crear del usuario",'desc1': "Descripcion de Libro1", 'libro2': "Libro 2 a crear del usuario",'desc2': "Descripcion de Libro1", 'libro3' : "Libro 3 a crear del usuario",'desc3': "Descripcion de Libro1"}
         )
         response = {
             'id' : str(id),
             'name': name,
+            'img' : 'https://res.cloudinary.com/drybosfn5/image/upload/v1667866579/pan_cwoaj7.png',
             'email': email,
             'password': hashed,
             'biografia': '',

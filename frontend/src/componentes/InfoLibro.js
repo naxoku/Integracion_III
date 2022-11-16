@@ -14,6 +14,7 @@ class InfoL extends React.Component{
         this.state = {
 
         ID : "",
+        img : "",
         Titulo : "",
         etiquetas : "",
         autor : "",
@@ -84,11 +85,12 @@ class InfoL extends React.Component{
            }); 
 
         this.setState({ Titulo : libro.data['0']['Titulo']})
+        this.setState({img : libro.data['0']['img']})
         this.setState({ etiquetas : libro.data['0']['etiquetas'].split(",")})
         this.setState({ autor : libro.data['0']['autor'] })
         this.setState({ descripcion : libro.data['0']['descripcion']})
         this.setState({ filename : libro.data['0']['filename']})
-        this.setState({ fileid : libro.data['0']['fileid']['$oid']})
+
 
     }
 
@@ -104,7 +106,7 @@ class InfoL extends React.Component{
                     <div class="card carouselSize">
                         <div class="row g-0 d-flex justify-content-center">
                             <div class="col-sm-5 d-flex justify-content-center">
-                                <img src= {API+"/portada/"+this.state.fileid} class="rounded imgSize" alt="portadaLibro"/>
+                                <img src= {this.state.img} class="rounded imgSize" alt="portadaLibro"/>
                             </div>
                             <div class="col-md-5">
                                 <div className='card-body'>
