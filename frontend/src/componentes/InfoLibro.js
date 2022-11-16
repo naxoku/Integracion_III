@@ -49,14 +49,21 @@ class InfoL extends React.Component{
     async agregarComentario(nuevoComentario){
 
         if(checkIfIsLoggedIn()){
-    
+
+            const autor = await axios.get(`/users/${getLoggedInUserId()}`, {  
+                mode: "no-cors"
+               }); 
+            
+
         if(nuevoComentario){
-          await axios.post(`/users/comentarios/libro/${this.props.idlibro}`,{nuevoComentario}, {  
+          await axios.post(`/users/comentarios/libro/${this.props.idlibro}/${autor.data['name']}`,{nuevoComentario}, {  
             headers : {
                 authorization : `Bearer ${getToken()}`
             },
             mode: "no-cors",
            }); 
+           
+        window.location.reload();
         }
         }else{
             window.confirm("Para añadir un comentario debes estar logueado");
@@ -65,27 +72,26 @@ class InfoL extends React.Component{
 
     async getComentarios(){
    
-
         const res = await axios.get(`${API}/users/comentarios/libro/${this.props.idlibro}`, {
             headers : {
                 authorization : `Bearer ${getToken()}`
             },
             mode: "no-cors",
             }); 
+        console.log(res.data['0'])
 
         this.setState({comentarios : res.data});
 
     }
 
-
     async obtenerLibro(){
 
         const libro = await axios.get(`/users/Libros/id/${this.props.idlibro}`, {  
             mode: "no-cors"
-           }); 
+           });         
 
         this.setState({ Titulo : libro.data['0']['Titulo']})
-        this.setState({img : libro.data['0']['img']})
+        this.setState({ img : libro.data['0']['img']})
         this.setState({ etiquetas : libro.data['0']['etiquetas'].split(",")})
         this.setState({ autor : libro.data['0']['autor'] })
         this.setState({ descripcion : libro.data['0']['descripcion']})
@@ -180,15 +186,17 @@ class InfoL extends React.Component{
                 <div>
                     <h4>Comentarios:</h4>
                     {this.state.comentarios ? 
+                       
                         <> {
                             this.state.comentarios.map((comentario, index)=>(
-                        
+                             
                             <div class="p-4 mb-4 bg-light border rounded-4">
                                 <div className="row">
                                     <div className="col-sm-1">
                                     </div>
                                     <div className="col">
-                                        <h3>{comentario.emisor}</h3>
+                                        <h3>{comentario.nombreEmisor}</h3>
+                               
             
                                         <p>{comentario.contenido}</p>
                                   
