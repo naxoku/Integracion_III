@@ -98,7 +98,6 @@ def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF):
         id = db.Libros.insert_one({"filename":filename, 
         "Popularidad": 0, 
         "etiquetas" : etiquetasPDF, 
-        "autor": autorPDF,
         "Titulo": tituloPDF,
         "descripcion": descripcionPDF,
         'url': "",
@@ -117,7 +116,8 @@ def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF):
 
         db.Libros.update_one({'_id': ObjectId(id.inserted_id)}, {'$set': {
             "url": urlbook,
-            "img": urlimg
+            "img": urlimg,
+            "autor": str(id.inserted_id)
 
         }})
     return redirect(REACT+"/proyecto")

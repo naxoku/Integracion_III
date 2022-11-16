@@ -2,31 +2,36 @@ import React, {useState, useEffect} from 'react'
 
 import {Document, Page} from 'react-pdf/dist/esm/entry.webpack';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 const API = process.env.REACT_APP_API;
 function Libro() {
 
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
+    const [link, setLink] = useState("")
     let { nombreLibro } = useParams();
     let { idLibro } = useParams();
     const nombrelibro = {nombreLibro}.nombreLibro;
     const idlibro = {idLibro}.idLibro;
 
     
- 
-        const res = fetch(`${API}/users/Libros/${idlibro}`, {
+    async function img_perf(){
+        const res = await axios.get(`${API}/users/Libros/${idlibro}`, {
             mode: "no-cors",
-           
             });
-        const data =  res.json();
-        console.log(idlibro)
+        const data = res.data
+ 
+        
+    
+        setLink(data['0']['url']);
+       
+ 
+    };
     
 
     
 
 
-        console.log(idlibro)
-        console.log(res.data['filename'])
     function onDocumentLoadSuccess({ numPages: nextNumPages }) {
         setNumPages(nextNumPages);
     }
@@ -51,14 +56,17 @@ function Libro() {
         setValor(divSize.offsetWidth);
         // console.log(valor);
     });
-  
+    useEffect(() => {
+        img_perf();
+    
+        });
     return (
         <div className='container-md'>
             <div class="p-4 mt-3 mb-4 bg-light border rounded-4">
                 <center>
                     <div id='documento'>
                         <Document
-                            file={{url : "http://localhost:5000/file/"+nombrelibro}}
+                            file={{url : link}}
                             onLoadSuccess={onDocumentLoadSuccess}
                             >
                             <Page 
