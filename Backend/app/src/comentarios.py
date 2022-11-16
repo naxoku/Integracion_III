@@ -52,20 +52,20 @@ def eliminar_comentario(id):
 def agregar_comentario_libro(id):
     contenido = request.json['nuevoComentario']
 
-    user = db.Libros.find_one({'_id': ObjectId(id)})
+    db.Libros.find_one({'_id': ObjectId(id)})
 
     db.ComentariosLibros.insert_one(
-       {    'emisor': user['name'], 
+       {    'emisor': get_jwt_identity(), 
             'libro': id, 
             'contenido': contenido         
         })
-    return 200
+    return jsonify(contenido)
 
 # ruta para obtener los comentarios de libro especifico desde la bd 
 @app.route("/users/comentarios/libro/<id>",methods=['GET'])
 def obtener_comentarios_libro(id):
     comentarios = []
-    for doc in db.ComentariosLibros.find({'Libro': id}):
+    for doc in db.ComentariosLibros.find({'libro': id}):
         comentarios.append({
             '_id' : str(ObjectId(doc['_id'])),
             'emisor': doc['emisor'], 

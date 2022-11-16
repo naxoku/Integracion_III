@@ -40,11 +40,18 @@ def libro():
         </form>
     
     '''
-@app.route('/users/Libros/<id>', methods=['GET'])
-def getBook(id):
-    book = db.Libros.find_one({'_id': ObjectId(id)})
+@app.route('/users/Libros/<idAutor>', methods=['GET'])
+def getBook(idAutor):
+    book = db.Libros.find({'autor': idAutor})
     response = dumps(book)
     return Response(response, mimetype="application/json")
+
+@app.route('/users/Libros/id/<id>', methods=['GET'])
+def getBook2(id):
+    book = db.Libros.find({'_id': ObjectId(id)})
+    response = dumps(book)
+    return Response(response, mimetype="application/json")
+
 
 @app.route('/users/Libros', methods=['GET'])
 def getBooks():

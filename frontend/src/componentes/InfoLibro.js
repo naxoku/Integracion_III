@@ -1,13 +1,12 @@
 import React from 'react'
 import axios from 'axios';
-import { checkIfIsLoggedIn, getToken } from '../utils';
+import { checkIfIsLoggedIn, getToken, getLoggedInUserId } from '../utils';
 import { useParams } from "react-router-dom";
 const API = process.env.REACT_APP_API;
 
 const logeado = checkIfIsLoggedIn();
 
-
-class Nose extends React.Component{
+class InfoL extends React.Component{
 
     constructor(props) {
         super(props);
@@ -27,16 +26,31 @@ class Nose extends React.Component{
 
     async redireccionar(e){
 
-        window.location = "/Libro/"+this.state.ID+"/"+this.state.filename;
+        window.location = "/Libro/"+this.props.idlibro+"/"+this.state.filename;
     
     }
 
-    async agregarComentario(nuevoComentario,idlibro){
+    async eliminar(id){
+        const userResponse = window.confirm("¿Estás seguro de querer eliminar este comentario?");
+            if (userResponse) {
+    
+               await axios.delete(API+"/users/comentarios/libro/"+this.props.idlibro, {
+                    headers : {
+                        authorization : `Bearer ${getToken()}`
+                    }
+                    }); 
+                window.location.reload();
+   
+            }
+
+    }
+
+    async agregarComentario(nuevoComentario){
 
         if(checkIfIsLoggedIn()){
     
         if(nuevoComentario){
-          await axios.post(`/users/comentarios/libro/${idlibro}`,{nuevoComentario}, {  
+          await axios.post(`/users/comentarios/libro/${this.props.idlibro}`,{nuevoComentario}, {  
             headers : {
                 authorization : `Bearer ${getToken()}`
             },
@@ -48,24 +62,39 @@ class Nose extends React.Component{
         }
     }
 
-    async obtenerLibro(idlibro){
+    async getComentarios(){
+   
 
-        const libro = await axios.get(`/users/Libros/${idlibro}`, {  
+        const res = await axios.get(`${API}/users/comentarios/libro/${this.props.idlibro}`, {
+            headers : {
+                authorization : `Bearer ${getToken()}`
+            },
+            mode: "no-cors",
+            }); 
+
+        this.setState({comentarios : res.data});
+
+    }
+
+
+    async obtenerLibro(){
+
+        const libro = await axios.get(`/users/Libros/id/${this.props.idlibro}`, {  
             mode: "no-cors"
            }); 
-        this.setState({ ID : libro.data['_id']['$oid']})
-        this.setState({ Titulo : libro.data['Titulo']})
-        this.setState({ etiquetas : libro.data['etiquetas'].split(",")})
-        this.setState({ autor : libro.data['autor'] })
-        this.setState({ descripcion : libro.data['descripcion']})
-        this.setState({ filename : libro.data['filename']})
-        this.setState({ fileid : libro.data['fileid']['$oid']})
+
+        this.setState({ Titulo : libro.data['0']['Titulo']})
+        this.setState({ etiquetas : libro.data['0']['etiquetas'].split(",")})
+        this.setState({ autor : libro.data['0']['autor'] })
+        this.setState({ descripcion : libro.data['0']['descripcion']})
+        this.setState({ filename : libro.data['0']['filename']})
+        this.setState({ fileid : libro.data['0']['fileid']['$oid']})
 
     }
 
     componentDidMount(){
-        this.obtenerLibro(this.props.idlibro);
-        console.log(this.props.idlibro)
+        this.obtenerLibro();
+        this.getComentarios();
     }
 
     render(){
@@ -145,18 +174,50 @@ class Nose extends React.Component{
                             </div>
                         </div>
                     </div>
-                    <div class="mt-3">
-                        {logeado && (
-                            <>
-                                <h4>Haz un comentario</h4>
-                                <textarea class="form-control" id="validationTextarea" placeholder="Haz un comentario..." onChange={(e) => this.setState({ nuevoComentario : e.target.value})} required></textarea>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class="btn btn-primary me-md-2" type="button" onClick={(e) => this.agregarComentario(this.state.nuevoComentario,this.props.idlibro)}>Comentar</button>
+                    <div className='container-md'>
+                <div>
+                    <h4>Comentarios:</h4>
+                    {this.state.comentarios ? 
+                        <> {
+                            this.state.comentarios.map((comentario, index)=>(
+                        
+                            <div class="p-4 mb-4 bg-light border rounded-4">
+                                <div className="row">
+                                    <div className="col-sm-1">
+                                    </div>
+                                    <div className="col">
+                                        <h3>{comentario.emisor}</h3>
+            
+                                        <p>{comentario.contenido}</p>
+                                  
+                                    </div>
+                                </div>
+
+                                <div>{(checkIfIsLoggedIn() && getLoggedInUserId()===comentario.receptor) && <>
+                                <button className='btn btn-primary mt-3' onClick={(e) => this.eliminar(comentario._id)}>Eliminar este comentario de mi libro</button>
+                                </>  }</div>
                             </div>
-                            </>
-                        )}
-    
-                        {!logeado && (
+                          
+                            ))
+
+                        }   
+                        </>
+                        :
+                        <>                  
+                       <label>No hay comentarios de momento...</label>
+                    
+                        </>
+                    }
+
+                  {logeado && (
+                        <>
+                            <h4>Haz un comentario</h4>
+                            <textarea class="form-control" id="validationTextarea" placeholder="Haz un comentario..." required onChange={(e) => this.setState({nuevoComentario : e.target.value})}></textarea>
+                            <button  className='btn btn-primary mt-3' onClick={(e) => this.agregarComentario(this.state.nuevoComentario)}>Comentar</button>
+                        </>
+                    )}
+
+                  {!logeado && (
                             <>
                                 <h4>Haz un comentario</h4>
                                 <textarea class="form-control" id="validationTextarea" placeholder="Necesitas una cuenta para poder comentar" required disabled></textarea>
@@ -164,13 +225,12 @@ class Nose extends React.Component{
                         )}
                         
                     </div>
-                    <div class="mt-3">
-                        <h4>Comentarios</h4>
-                        {/* Si hay comentarios, mostrarlos. En caso de que no hayan mostrar esto. */}
-                        <label>No hay comentarios de momento...</label>
-                    </div>
+                  
+               </div>
+                
                 </div>
             </div>
+           
         )
     }
    
@@ -182,169 +242,7 @@ const InfoLibro = () => {
     let { idLibro } = useParams();
     const laid = {idLibro}.idLibro;
 
-    return(<Nose idlibro={laid} />)
+    return(<InfoL idlibro={laid} />)
 }
-/*
-const InfoLibro = () => {
-    
-    const [nuevoComentario, setComentario] = useState("");
-    const [Titulo, setTitulo] = useState("");
-    const [etiquetas, setEtiquetas] = useState("");
-    const [autor, setAutor] = useState("");
-    const [descripcion, setDescripcion] = useState("");
-    const [filename, setFileName] = useState("");
-    const [ID, setID] = useState("");
-    let { idLibro } = useParams();
-    const idlibro = {idLibro}.idLibro;
 
-
-    const redireccionar = async (e) => {
-
-        window.location = "/Libro/"+ID+"/"+filename;
-    
-    }
-
-    const agregarComentario = async (nuevoComentario,idlibro) => {
-
-        if(checkIfIsLoggedIn()){
-    
-        if(nuevoComentario){
-          await axios.post(`/users/comentarios/libro/${idlibro}`,{nuevoComentario}, {  
-            headers : {
-                authorization : `Bearer ${getToken()}`
-            },
-            mode: "no-cors",
-           }); 
-        }
-        }else{
-            window.confirm("Para añadir un comentario debes estar logueado");
-        }
-    }
-
-    const obtenerLibro = async (idlibro) => {
-
-        const libro = await axios.get(`/users/Libros/${idlibro}`, {  
-            mode: "no-cors"
-           }); 
-    
-        setID(libro.data['_id']['$oid']);
-        setTitulo(libro.data['Titulo']);
-        setEtiquetas(libro.data['etiquetas'].split(","));
-        setAutor(libro.data['autor']);  
-        setDescripcion(libro.data['descripcion']);    
-        setFileName(libro.data['filename']);     
-
-    }
-    
-    useEffect(() => {
-        obtenerLibro(idlibro);
-    });
-
-           
-    return (
-        <div className='container-md'>
-            <div class="p-4 mt-4 mb-4 bg-light border rounded-4">
-                <div class="card carouselSize">
-                    <div class="row g-0 d-flex justify-content-center">
-                        <div class="col-sm-5 d-flex justify-content-center">
-                            <img src= {API+"/portada/"+autor} class="rounded imgSize" alt="portadaLibro"/>
-                        </div>
-                        <div class="col-md-5">
-                            <div className='card-body'>
-                                <h5 class="card-title">{Titulo}</h5>
-                                <p class="card-text">{descripcion}</p>
-                                <div>
-                                    <h5 className='card-title'>Etiquetas</h5>
-                                    {etiquetas && <>
-                                      
-                                          {etiquetas.map((index) => (
-
-                                 <span class="badge text-bg-secondary me-1">{index}</span>
-                                           )
-                                           )
-                                            }
-
-                                    </>}
-                                </div>
-
-                         
-                                <div>
-                                    <h5 className='card-title mb-1 mt-1'>Calificación: [valor] <i class="bi bi-star"></i></h5>
-                                    {logeado && (
-                                        <> 
-                                            <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off"/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option1"><i class="bi bi-star"></i></label>
-
-                                            <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off"/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option2"><i class="bi bi-star"></i></label>
-
-                                            <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off"/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option3"><i class="bi bi-star"></i></label>
-
-                                            <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off"/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option4"><i class="bi bi-star"></i></label>
-
-                                            <input type="radio" class="btn-check" name="options" id="option5" autocomplete="off"/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option5"><i class="bi bi-star"></i></label>
-                                        </>
-                                    )}
-
-                                    {!logeado && (
-                                        <>
-                                            <h6>Necesitas una cuenta para poder calificar</h6>
-                                            <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" disabled/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option1"><i class="bi bi-star"></i></label>
-
-                                            <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" disabled/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option2"><i class="bi bi-star"></i></label>
-
-                                            <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off" disabled/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option3"><i class="bi bi-star"></i></label>
-
-                                            <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off" disabled/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option4"><i class="bi bi-star"></i></label>
-
-                                            <input type="radio" class="btn-check" name="options" id="option5" autocomplete="off" disabled/>
-                                            <label class="btn btn-secondary btn-sm me-1" for="option5"><i class="bi bi-star"></i></label>
-                                        </>
-                                    )}
-
-                                </div>
-                                <div>
-                                    <button className='btn btn-primary mt-3' onClick={(e) => redireccionar(e)}>Leer el libro</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    {logeado && (
-                        <>
-                            <h4>Haz un comentario</h4>
-                            <textarea class="form-control" id="validationTextarea" placeholder="Haz un comentario..." onChange={(e) => setComentario(e.target.value)} required></textarea>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-primary me-md-2" type="button" onClick={(e) => agregarComentario(nuevoComentario,idlibro)}>Comentar</button>
-                        </div>
-                        </>
-                    )}
-
-                    {!logeado && (
-                        <>
-                            <h4>Haz un comentario</h4>
-                            <textarea class="form-control" id="validationTextarea" placeholder="Necesitas una cuenta para poder comentar" required disabled></textarea>
-                        </>
-                    )}
-                    
-                </div>
-                <div class="mt-3">
-                    <h4>Comentarios</h4>
-           
-                    <label>No hay comentarios de momento...</label>
-                </div>
-            </div>
-        </div>
-    )
-}
-*/
-
-export default InfoLibro
+export default InfoLibro;

@@ -74,7 +74,7 @@ class Comentarios extends React.Component{
                                 </div>
 
                                 <div>{(checkIfIsLoggedIn() && getLoggedInUserId()===comentario.receptor) && <>
-                                <button onClick={(e) => this.eliminar(comentario._id)}>Eliminar este comentario de mi perfil</button>
+                                <button  className='btn btn-primary mt-3' onClick={(e) => this.eliminar(comentario._id)}>Eliminar este comentario de mi perfil</button>
                                 </>  }</div>
                             </div>
                           
@@ -137,6 +137,15 @@ function PerfilUser() {
         
 
     };
+
+    const getLibros = async (id) => {
+
+        var libros = axios.get(`/users/Libros/${id}`,{
+            mode: "no-cors"
+            });
+        const librosCreados = libros.data;
+
+    }
 
     const agregarComentario = async (nuevoComentario) => {
 

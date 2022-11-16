@@ -29,6 +29,7 @@ const Proyecto = () => {
     const [descripcionPDF,  setDescripcionPDF] = useState("");
     const [etiquetasPDF,  setEtiquetasPDF] = useState("");
     const [tituloPDF,  setTituloPDF] = useState("");
+    const [etiketas,  setEt] = useState("");
     const autorPDF = getLoggedInUserId();
     const [file, setPDF] = useState();
 
@@ -47,6 +48,13 @@ const Proyecto = () => {
         setDescripcion3(data['desc3']);
         setNombre(data['name']);
     };
+
+    const agregarEtiquetas = async (etiquetas) => {
+
+           setEt(etiquetas.split(","));
+
+
+    }
 
     const editNyD = async () => {
         await axios.put(`${API}/users/nuevoproyecto/${idUser}`, {
@@ -441,10 +449,17 @@ const Proyecto = () => {
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-1">
                                                     <input type="text" class="form-control" placeholder="Separar por comas..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setEtiquetasPDF(e.target.value)} />
-                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
+                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onClick={(e) => agregarEtiquetas(etiquetasPDF)} >+</button>
                                                 </div>
-                                                <span class="badge text-bg-primary m-1">Libro</span>
-                                                <span class="badge text-bg-primary m-1">Historia</span>
+                                                {etiketas && <>
+                                          
+                                          {etiketas.map((index) => (
+
+                                             <span class="badge text-bg-primary m-1">{index}</span>
+                                             )
+                                           )
+                                            }
+                                    </>}
                                             </div>
 
                                             

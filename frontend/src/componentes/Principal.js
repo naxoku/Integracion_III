@@ -175,7 +175,7 @@ render(){
                              <div class="col d-flex justify-content-center">
                             <div class="card h-100 cardSize">
                                 <div class="d-flex justify-content-center">
-                                    <img src="pan.png" class="card-img-top imgSize" alt="..."/>
+                                    <img src= {API+"/portada/"+libro.fileid.$oid} class="card-img-top imgSize" alt="..."/>
                                 </div>
 
                                 <div class="card-body">
