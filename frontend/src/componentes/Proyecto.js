@@ -51,11 +51,10 @@ const Proyecto = () => {
 
     const agregarEtiquetas = async (etiquetas) => {
 
-           setEt(etiquetas.split(","));
+        setEt(etiquetas.split(","));
 
 
-    }
-
+ }
     const editNyD = async () => {
         await axios.put(`${API}/users/nuevoproyecto/${idUser}`, {
                 nuevoPr
@@ -449,17 +448,10 @@ const Proyecto = () => {
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-1">
                                                     <input type="text" class="form-control" placeholder="Separar por comas..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setEtiquetasPDF(e.target.value)} />
-                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onClick={(e) => agregarEtiquetas(etiquetasPDF)} >+</button>
+                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
                                                 </div>
-                                                {etiketas && <>
-                                          
-                                          {etiketas.map((index) => (
-
-                                             <span class="badge text-bg-primary m-1">{index}</span>
-                                             )
-                                           )
-                                            }
-                                    </>}
+                                                <span class="badge text-bg-primary m-1">Libro</span>
+                                                <span class="badge text-bg-primary m-1">Historia</span>
                                             </div>
 
                                             
@@ -469,7 +461,7 @@ const Proyecto = () => {
                                             <form action={API+"/file/"+descripcionPDF+"/"+etiquetasPDF+"/"+tituloPDF+"/"+autorPDF} method='POST' href="#" enctype="multipart/form-data"  class="input-group">
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-3">
-                                                    <input type="file" name="portada" class="form-control" id="inputGroupFile01"/>
+                                                    <input type="file" name="portada" class="form-control" id="inputGroupFile01" accept=".jpg, .jpeg, .png"/>
                                                 </div>
                                             </div>
 
@@ -486,7 +478,7 @@ const Proyecto = () => {
                                           
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-3">
-                                                    <input type="file" name="file" class="form-control" id="inputGroupFile01" enctype="multipart/form-data"/>
+                                                    <input type="file" name="file" class="form-control" id="inputGroupFile01" enctype="multipart/form-data" accept=".pdf"/>
                                                 </div>
                                             </div>
                                             <div className='col'></div>

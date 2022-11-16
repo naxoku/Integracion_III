@@ -2,14 +2,31 @@ import React, {useState, useEffect} from 'react'
 
 import {Document, Page} from 'react-pdf/dist/esm/entry.webpack';
 import { useParams } from 'react-router-dom';
-
+const API = process.env.REACT_APP_API;
 function Libro() {
 
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
     let { nombreLibro } = useParams();
+    let { idLibro } = useParams();
     const nombrelibro = {nombreLibro}.nombreLibro;
+    const idlibro = {idLibro}.idLibro;
 
+    
+ 
+        const res = fetch(`${API}/users/Libros/${idlibro}`, {
+            mode: "no-cors",
+           
+            });
+        const data =  res.json();
+        console.log(idlibro)
+    
+
+    
+
+
+        console.log(idlibro)
+        console.log(res.data['filename'])
     function onDocumentLoadSuccess({ numPages: nextNumPages }) {
         setNumPages(nextNumPages);
     }
