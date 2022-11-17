@@ -1,11 +1,82 @@
+from json import dumps
 from app import app
 from app import db
 from app import not_found
 from flask_jwt_extended import create_access_token , jwt_required, get_jwt_identity
-from flask import jsonify, request, Blueprint
+from flask import jsonify, request, Blueprint, Response, json
 from bson.objectid import ObjectId
 
 plibrosBp = Blueprint('proyectolibros', __name__)
+
+@app.route("/users/nuevoproyecto/<id>",methods=['POST'])
+def PROYECTO1(id):
+    contenido = request.json['nuevoNombreP']
+    dProyecto = request.json['nuevaDes']
+    if contenido and dProyecto:
+        
+        db.Proyectos.insert_one(
+           {    'Nombre_Libro': contenido,
+                'descripcion': dProyecto,
+                'contenido': "contenido del libro",      
+            })
+        response = {
+            'id' : str(id),    
+            'Nombre_Libro': contenido,
+            'descripcion': dProyecto,
+            'contenido': "contenido del libro"         
+        }
+        return response
+    else:
+        return not_found()
+
+# ruta para obtener los comentarios de perfil especifico desde la bd 
+@app.route("/users/nuevoproyecto/<id>",methods=['GET'])
+def obtener_libro1(id):
+    portada = db.Proyectos.find_one({'_id': ObjectId(id)})
+    img = json.loads(dumps(portada['Nombre_Libros']))
+    return img
+
+@app.route("/users/nuevoproyecto2/<id>",methods=['POST'])
+def PROYECTO2(id):
+    contenido = request.json['nuevoNombreP2']
+    dProyecto = request.json['nuevaDes2']
+    if contenido and dProyecto:
+        
+        id = db.Libros.insert_one(
+           {    'Nombre_Libro2': contenido,
+                'descripcion2': dProyecto,
+                'contenido2': "contenido del libro"         
+            })
+        response = {
+            'id' : str(id),
+            'Nombre_Libro2': contenido,
+            'descripcion2': dProyecto,
+            'contenido2': "contenido del libro"         
+        }
+        return response
+    else:
+        return not_found()
+
+@app.route("/users/nuevoproyecto3/<id>",methods=['POST'])
+def PROYECTO3(id):
+    contenido = request.json['nuevoNombreP3']
+    dProyecto = request.json['nuevaDes3']
+    if contenido and dProyecto:
+        
+        id = db.Libros.insert_one(
+           {    'Nombre_Libro3': contenido,
+                'descripcion3': dProyecto,
+                'contenido3': "contenido del libro"         
+            })
+        response = {
+            'id' : str(id),
+            'Nombre_Libro3': contenido,
+            'descripcion3': dProyecto,
+            'contenido3': "contenido del libro"         
+        }
+        return response
+    else:
+        return not_found()
 
 @app.route('/users/nuevoproyecto/<id>', methods=['PUT'])
 def nombreProyecto(id):
