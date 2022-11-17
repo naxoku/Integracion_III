@@ -3,10 +3,6 @@ import { useParams } from "react-router-dom";
 
 const API = process.env.REACT_APP_API;
 
-
-
-
-
 class Tabla extends React.Component{
 
     constructor(props) {
@@ -34,24 +30,19 @@ class Tabla extends React.Component{
         this.setState({usuarios : resultadosBusqueda});
     }
 
-
-
     async filtrarLibros(busqueda){
  
         const res = await fetch(`${API}/users/Libros`);
-
-      
-
         const data = await res.json();
-        console.log(data)
+
+        // console.log(data)
         var resultadosBusqueda = data.filter((elemento)=>{  
 
         if (elemento.Titulo.toString().toLowerCase().includes(busqueda.toLowerCase())) {
             return elemento;
 
-        }else{
+        } else {
             return 0;
-
         }});
     
         this.setState({libros : resultadosBusqueda});
@@ -70,27 +61,26 @@ class Tabla extends React.Component{
         this.filtrarLibros(this.props.busqueda);
     }
 
-
     render(){
         return(
             <div className='container-md'>
-                <h2 class="fw-bold mt-3">Resultados relacionados a "{this.props.busqueda}"</h2>
+                <h2 class="fw-bold mt-3">Resultados relacionados a: "{this.props.busqueda}"</h2>
                 <div>
                     <h4>Usuarios encontrados:</h4>
                     {this.state.usuarios ? 
                         <> {
                             this.state.usuarios.map((usuario, index)=>(
-                            <div class="p-4 mb-4 bg-light border rounded-4" onClick={() => this.redir(usuario.name)}>
-                                <div className="row">
-                                    <div className="col-sm-1">
-                                        <img src= {usuario.img} height="150" width="150" class="img-fluid rounded-1" alt="fotoPerfil"/>
-                                    </div>
-                                    <div className="col">
-                                        <h3>{usuario.name}</h3>
-                                        <p>{usuario.biografia}</p>
+                                <div className="p-4 mb-2 border rounded-4">
+                                    <div className="row " onClick={() => this.redir(usuario .name)}>
+                                        <div className="col-sm-1">
+                                            <img src= {usuario.img} class="imgSearch     rounded-1" alt="fotoPerfil"/>
+                                        </div>
+                                        <div className="col">
+                                            <h3>{usuario.name}</h3>
+                                            <p>{usuario.biografia}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             ))
                         }   
                         </>
@@ -99,16 +89,15 @@ class Tabla extends React.Component{
                             <p> No se encontraron usuarios</p>
                         </>
                     }
-               </div>
-                
-               <h4>Libros encontrados:</h4>
-               {this.state.libros ? 
-            
+                    
+                </div>
+                <div>
+                    <h4 className="mt-4">Libros encontrados:</h4>
+                    {this.state.libros ? 
                         <> {
                             this.state.libros.map((libro, index)=>(
-                    
-                            <div class="p-4 mb-4 bg-light border rounded-4" onClick={() => this.redirInfo(libro._id)}>
-                                <div className="row">
+                            <div class="p-4 mb-2 border rounded-4">
+                                <div className="row" onClick={() => this.redirInfo(libro._id)}>
                                     <div className="col-sm-1">
                                         <img src= {libro.img} height="150" width="150" class="img-fluid rounded-1" alt="fotoPerfil"/>
                                     </div>
@@ -126,8 +115,8 @@ class Tabla extends React.Component{
                             <p> No se encontraron libros</p>
                         </>
                     }
-
-               
+                   
+                </div>
             </div>
         );
     }

@@ -55,116 +55,120 @@ render(){
                 <br></br>
                 {/* Carousel */}
                 <h4>Lo más leído esta semana</h4>
-                <div class="p-4 mb-4 bg-light border rounded-4">
-                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-                        {/* Indicadores carousel */}
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                        </div>
-
+                <div class="mb-4">
+                    <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="true">
                         {/* Contenido del carousel */}
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="card carouselSize">
-                                    <div class="row g-0 d-flex justify-content-center">
-                                        <div class="col-sm-5 d-flex justify-content-center">
-                                            <img src="portada.png" class="rounded imgSize" alt="..."/>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div className='card-body'>
-                                                <h5 class="card-title">Oui oui madam!</h5>
-                                                <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
-                                                aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
-                                                aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
-                                                <div>
-                                                    <h5 className='card-title'>Etiquetas</h5>
-                                                    <span class="badge text-bg-secondary me-1">Comedia</span>
-                                                    <span class="badge text-bg-secondary me-1">Romance</span>
-                                                    <span class="badge text-bg-secondary me-1">Novela</span>
+                        <div className='pb-4'>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active mb-4">
+                                    <div class="card ">
+                                        <div class="row g-0 d-flex justify-content-center">
+                                            <div class="col-sm-5 d-flex justify-content-center">
+                                                <img src="portada.png" class="rounded imgSize" alt="..."/>
+                                            </div>
+                                            <div class="col-sm-5 d-flex justify-content-center">
+                                                <div className='card-body'>
+                                                    <h5 class="card-title">Oui oui madam!</h5>
+                                                    <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
+                                                    aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
+                                                    aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
+                                                    <div>
+                                                        <h5 className='card-title'>Etiquetas</h5>
+                                                        <span class="badge text-bg-secondary me-1">Comedia</span>
+                                                        <span class="badge text-bg-secondary me-1">Romance</span>
+                                                        <span class="badge text-bg-secondary me-1">Novela</span>
+                                                    </div>
+                                                    <div>
+                                                        <br></br>
+                                                        <a className='btn btn-primary btn-sm'>Ver el libro</a>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <br></br>
-                                                    <a className='btn btn-primary btn-sm'>Ver el libro</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item mb-4">
+                                    <div class="card ">
+                                        <div class="row g-0 d-flex justify-content-center">
+                                            <div class="col-sm-5 d-flex justify-content-center">
+                                                <img src="portada2.jpg" class="rounded imgSize" alt="..."/>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div className='card-body'>
+                                                    <h5 class="card-title">Oui oui madam!</h5>
+                                                    <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
+                                                    aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
+                                                    aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
+                                                    <div>
+                                                        <h5 className='card-title'>Etiquetas</h5>
+                                                        <span class="badge text-bg-secondary me-1">Comedia</span>
+                                                        <span class="badge text-bg-secondary me-1">Romance</span>
+                                                        <span class="badge text-bg-secondary me-1">Novela</span>
+                                                    </div>
+                                                    <div>
+                                                        <br></br>
+                                                        <a className='btn btn-primary btn-sm'>Ver el libro</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item mb-4">
+                                    <div class="card ">
+                                        <div class="row g-0 d-flex justify-content-center">
+                                            <div class="col-sm-5 d-flex justify-content-center">
+                                                <img src="portada3.jpg" class="rounded imgSize" alt="..."/>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div className='card-body'>
+                                                    <h5 class="card-title">Oui oui madam!</h5>
+                                                    <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
+                                                    aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
+                                                    aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
+                                                    <div>
+                                                        <h5 className='card-title'>Etiquetas</h5>
+                                                        <span class="badge text-bg-secondary me-1">Comedia</span>
+                                                        <span class="badge text-bg-secondary me-1">Romance</span>
+                                                        <span class="badge text-bg-secondary me-1">Novela</span>
+                                                    </div>
+                                                    <div>
+                                                        <br></br>
+                                                        <a className='btn btn-primary btn-sm'>Ver el libro</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="carousel-item">
-                                <div class="card carouselSize">
-                                    <div class="row g-0 d-flex justify-content-center">
-                                        <div class="col-sm-5 d-flex justify-content-center">
-                                            <img src="portada2.jpg" class="rounded imgSize" alt="..."/>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div className='card-body'>
-                                                <h5 class="card-title">Oui oui madam!</h5>
-                                                <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
-                                                aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
-                                                aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
-                                                <div>
-                                                    <h5 className='card-title'>Etiquetas</h5>
-                                                    <span class="badge text-bg-secondary me-1">Comedia</span>
-                                                    <span class="badge text-bg-secondary me-1">Romance</span>
-                                                    <span class="badge text-bg-secondary me-1">Novela</span>
-                                                </div>
-                                                <div>
-                                                    <br></br>
-                                                    <a className='btn btn-primary btn-sm'>Ver el libro</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="card carouselSize">
-                                    <div class="row g-0 d-flex justify-content-center">
-                                        <div class="col-sm-5 d-flex justify-content-center">
-                                            <img src="portada3.jpg" class="rounded imgSize" alt="..."/>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div className='card-body'>
-                                                <h5 class="card-title">Oui oui madam!</h5>
-                                                <p class="card-text">Comedia moderna sobre una pareja bien disparejaaaaaa
-                                                aaaaaa aa a a aaaaaaaaaa aaaaaaaaaa aaaaaaaaaaa 
-                                                aaaaaaa aaaaaaaaaaa aaaaaaaaaaaaa aaaaaa aaaaaaaa aaaa.</p>
-                                                <div>
-                                                    <h5 className='card-title'>Etiquetas</h5>
-                                                    <span class="badge text-bg-secondary me-1">Comedia</span>
-                                                    <span class="badge text-bg-secondary me-1">Romance</span>
-                                                    <span class="badge text-bg-secondary me-1">Novela</span>
-                                                </div>
-                                                <div>
-                                                    <br></br>
-                                                    <a className='btn btn-primary btn-sm'>Ver el libro</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            {/* Indicadores carousel */}
+                            <div class="carousel-indicators me-0 ms-0 border rounded-2">
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                             </div>
                         </div>
-
+    
                         {/* Botones prev - next del carousel */}
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <div className='container'>
+                        <button class="carousel-control-prev pb-5" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <button class="carousel-control-next pb-5" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
+                        </div>
+                        
                     </div>
                 </div>
 
                 {/* Secciones de libros */}
                 <h4 class="fw-bold mt-3">Lo más popular</h4>
-                <div class="p-4 mb-4 bg-light border rounded-4">
-                    <div class="row row-cols-1 row-cols-md-5 g-4">
+                <div class="mb-4">
+                    <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-5 g-4">
                         
                     {this.state.books ? 
                         <> 
@@ -173,12 +177,12 @@ render(){
                                 <div class="col d-flex justify-content-center">
                                     <div class="card h-100 cardSize">
                                         <div class="d-flex justify-content-center">
-                                            <img src= {libro.img} class="card-img-top imgSize" alt="portada.png"/>
+                                            <img src= {libro.img} class="card-img-top imgSize" width={"200px"} height={"300px"} alt="portada.png"/>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="border-top card-body">
                                             <h5 class="card-title">{libro.Titulo}</h5>
                                             <p class="card-text">{libro.descripcion}</p>
-                                            <div>
+                                            <div className='mb-2'>
                                                 {libro.etiquetas && 
                                                 <>
                                                     {libro.etiquetas.split(",").map((index) => (
@@ -187,10 +191,12 @@ render(){
                                                     }
                                                 </>}
                                             </div>
+                                            <div>
+                                                <button className='btn btn-primary btn-sm' onClick={(e) => this.redireccionar(libro._id)}>Ver más</button>
+                                            </div>
                                         </div>
                                         <div class="card-footer">
-                                            <p>Autor: {libro.nombreAutor}</p>
-                                            <button onClick={(e) => this.redireccionar(libro._id)}>Ver más</button>
+                                            <small>Subido por: {libro.nombreAutor}</small>
                                         </div>
                                     </div>
                                 </div>                         

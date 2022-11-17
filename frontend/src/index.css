@@ -1,29 +1,49 @@
-/* Clases para el carousel */
-.cardSize{
-    max-width: 240px;
-}
-
-.carouselSize{
-    max-width: 1200px;
-}
-
-/* Clases para el tamaño de las imágenes */
+/* ======== Clases para el tamaño de las imágenes ======== */
 .imgSize{
+    min-height: 300px;
+    min-width: 200px;
     max-height: 300px;
     max-width: 200px;
-    height: 300px;
-    width: auto;
-    margin: 20px;   
+    margin: 20px;
+    transition: 0.2s ease-in-out; 
 }
 
 .imgProfSize{
     display: block;
     margin: auto;
+    min-height: 200px;
+    min-width: 200px;
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.imgSearch{
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 100px;
+    max-width: 100px;
+    cursor: pointer;
+}
+
+.imgComments{
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.navAnim {
+    transition:  0.2s;
+  }
+
+/* ======== Hovers ======== */
+.navAnim:hover{
+    margin-left: 10px;
 }
 
 /* ======== Clases de prueba ======== */
 .fondo{
-    background-color: black;
+    background-color: rgba(195, 195, 195, 0.22);
 }
 
 .fondoD{

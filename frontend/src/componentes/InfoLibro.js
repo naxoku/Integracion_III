@@ -6,6 +6,13 @@ const API = process.env.REACT_APP_API;
 
 const logeado = checkIfIsLoggedIn();
 
+const InfoLibro = () => {
+    let { idLibro } = useParams();
+    const laid = {idLibro}.idLibro;
+
+    return(<InfoL idlibro={laid} />)
+}
+
 class InfoL extends React.Component{
 
     constructor(props) {
@@ -103,6 +110,7 @@ class InfoL extends React.Component{
 
     }
 
+
     componentDidMount(){
         this.obtenerLibro();
         this.getComentarios();
@@ -110,9 +118,9 @@ class InfoL extends React.Component{
 
     render(){
         return (
-            <div className='container-md'>
-                <div class="p-4 mt-4 mb-4 bg-light border rounded-4">
-                    <div class="card carouselSize">
+            <div className='container-md mt-3'>
+                <div class="p-4">
+                    <div class="card">
                         <div class="row g-0 d-flex justify-content-center">
                             <div class="col-sm-5 d-flex justify-content-center">
                                 <img src= {this.state.img} class="rounded imgSize" alt="portadaLibro"/>
@@ -123,23 +131,20 @@ class InfoL extends React.Component{
                                     <p class="card-text">{this.state.descripcion}</p>
                                     <div>
                                         <h5 className='card-title'>Etiquetas</h5>
-                                        {this.state.etiquetas && <>
-                                          
-                                              {this.state.etiquetas.map((index) => (
-    
-                                     <span class="badge text-bg-secondary me-1">{index}</span>
-                                               )
-                                               )
-                                                }
-    
-                                        </>}
+                                        {this.state.etiquetas &&
+                                            <>
+                                                {this.state.etiquetas.map((index) => (    
+                                                    <span class="badge text-bg-secondary me-1">{index}</span>
+                                                ))}
+                                            </>
+                                        }
                                     </div>
     
                                     {/* Calificación del libro */}
                                     <div>
-                                        <h5 className='card-title mb-1 mt-1'>Calificación: [valor] <i class="bi bi-star"></i></h5>
                                         {logeado && (
                                             <> 
+                                                <h5 className='card-title mb-1 mt-3'>Calificación</h5>
                                                 <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off"/>
                                                 <label class="btn btn-secondary btn-sm me-1" for="option1"><i class="bi bi-star"></i></label>
     
@@ -159,7 +164,7 @@ class InfoL extends React.Component{
     
                                         {!logeado && (
                                             <>
-                                                <h6>Necesitas una cuenta para poder calificar</h6>
+                                                <h5 className='card-title mb-1 mt-3'>Calificación</h5>
                                                 <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" disabled/>
                                                 <label class="btn btn-secondary btn-sm me-1" for="option1"><i class="bi bi-star"></i></label>
     
@@ -185,78 +190,61 @@ class InfoL extends React.Component{
                             </div>
                         </div>
                     </div>
-                    <div className='container-md'>
-                <div>
-                    <h4>Comentarios:</h4>
-                    {this.state.comentarios ? 
-                       
-                        <> {
-                            this.state.comentarios.map((comentario, index)=>(
-                             
-                            <div class="p-4 mb-4 bg-light border rounded-4">
-                                <div className="row">
-                                    <div className="col-sm-1">
-                                        <img class="card-img-top imgSize" src={comentario.img}></img>
-                                    </div>
-                                    <div className="col">
-                                        <h3>{comentario.nombreEmisor}</h3>
-                               
+                    <div>
+                        <div>
+                            {logeado && (
+                                <>
+                                    <h4 className='mt-3'>Haz un comentario</h4>
+                                    <textarea class="form-control" id="validationTextarea" placeholder="Haz un comentario..." required onChange={(e) => this.setState({nuevoComentario : e.target.value})}></textarea>
+                                    <button  className='btn btn-primary mt-3' onClick={(e) => this.agregarComentario(this.state.nuevoComentario)}>Comentar</button>
+                                </>
+                            )}
             
-                                        <p>{comentario.contenido}</p>
-                                  
+                            {!logeado && (
+                                <>
+                                    <h4 className='mt-3'>Haz un comentario</h4>
+                                    <textarea class="form-control" id="validationTextarea" placeholder="Necesitas una cuenta para poder comentar" required disabled></textarea>
+                                </>
+                            )}
+
+                            <h4 className='mt-3'>Comentarios:</h4>
+                            {this.state.comentarios ? 
+                                <> 
+                                {this.state.comentarios.map((comentario, index)=>(
+                                    <div class="p-4 mb-2 border rounded-2">
+                                        <div className="row">
+                                            <div className="col-md-1">
+                                                <img class="card-img-top imgComments" src={comentario.img}></img>
+                                            </div>
+                                            <div className='col'>
+                                                    <h3 className='ms-3'>{comentario.nombreEmisor}</h3>
+                                                    <p className='ms-3'>{comentario.contenido}</p>
+                                            </div>
+                                        </div>
+        
+                                        <div>
+                                            {(checkIfIsLoggedIn() && getLoggedInUserId() === comentario.receptor) && 
+                                            <>
+                                                <button className='btn btn-primary mt-3' onClick={(e) => this.eliminar(comentario._id)}>
+                                                    Eliminar este comentario de mi libro
+                                                </button>
+                                            </>
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div>{(checkIfIsLoggedIn() && getLoggedInUserId()===comentario.receptor) && <>
-                                <button className='btn btn-primary mt-3' onClick={(e) => this.eliminar(comentario._id)}>Eliminar este comentario de mi libro</button>
-                                </>  }</div>
-                            </div>
-                          
-                            ))
-
-                        }   
-                        </>
-                        :
-                        <>                  
-                       <label>No hay comentarios de momento...</label>
-                    
-                        </>
-                    }
-
-                  {logeado && (
-                        <>
-                            <h4>Haz un comentario</h4>
-                            <textarea class="form-control" id="validationTextarea" placeholder="Haz un comentario..." required onChange={(e) => this.setState({nuevoComentario : e.target.value})}></textarea>
-                            <button  className='btn btn-primary mt-3' onClick={(e) => this.agregarComentario(this.state.nuevoComentario)}>Comentar</button>
-                        </>
-                    )}
-
-                  {!logeado && (
-                            <>
-                                <h4>Haz un comentario</h4>
-                                <textarea class="form-control" id="validationTextarea" placeholder="Necesitas una cuenta para poder comentar" required disabled></textarea>
-                            </>
-                        )}
-                        
+                                    ))}   
+                                </>
+                                :
+                                <>                  
+                                    <label>No hay comentarios de momento...</label>
+                                </>
+                            }       
+                        </div>
                     </div>
-                  
-               </div>
-                
                 </div>
             </div>
-           
         )
     }
-   
-
-}
-
-
-const InfoLibro = () => {
-    let { idLibro } = useParams();
-    const laid = {idLibro}.idLibro;
-
-    return(<InfoL idlibro={laid} />)
 }
 
 export default InfoLibro;

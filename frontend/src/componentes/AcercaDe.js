@@ -2,8 +2,8 @@ import React from 'react'
 
 const AcercaDe = () => {
     return (
-        <div className='container-md'>
-            <div class="p-4 mt-3 mb-4 bg-light border rounded-4">
+        <div className='container-md mt-3'>
+
                 <div class="p-4 mb-3 bg-white border rounded-4">
                     <h4>Sobre el proyecto</h4>
                     <p>
@@ -68,7 +68,7 @@ const AcercaDe = () => {
                                 <div class="card-body">
                                     <h5 class="card-title">Sebastián Cisternas</h5>
                                     <p class="card-text">
-
+                                        Desarrollador frontend y base de datos
                                     </p>
                                     {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
                                 </div>
@@ -80,7 +80,7 @@ const AcercaDe = () => {
                                 <div class="card-body">
                                     <h5 class="card-title">Matias Millacura</h5>
                                     <p class="card-text">
-                                        
+                                    Desarrollador frontend y backend
                                     </p>
                                     {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
                                 </div>
@@ -92,9 +92,8 @@ const AcercaDe = () => {
                                 <div class="card-body">
                                     <h5 class="card-title">Rodrigo Sevilla</h5>
                                     <p class="card-text">
-                                        
+                                        Desarrollador frontend
                                     </p>
-                                    {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
                                 </div>
                             </div>
                         </div>
@@ -102,7 +101,6 @@ const AcercaDe = () => {
                     
                 </div>
             </div>
-        </div>
     )
 }
 

@@ -52,48 +52,51 @@ const Proyecto = () => {
     };
 
     const agregarEtiquetas = async (etiquetas) => {
-
         setEt(etiquetas.split(","));
+    }
+    
+    const crearlibro1 = async () => {      
+        await axios.post(`${API}/users/nuevoproyecto/${idUser}`,{
+            nuevoNombreP, nuevaDes
+        }); 
+        window.location = "/proyecto/crear";
+    };  
+    
+    const crearlibro2 = async (t) => {      
+        await axios.post(`/users/nuevoproyecto2/${idUser}`,{
+            nuevoNombreP2, nuevaDes2
+        }); 
+        window.location = "/proyecto/crear2";
+    };
 
+    const crearlibro3 = async () => {      
+        await axios.post(`/users/nuevoproyecto3/${idUser}`,{
+            nuevoNombreP3, nuevaDes3
+        }); 
+        window.location = "/proyecto/crear3";
+    };
+    
+    const editarlibro1 = async () => {      
+        await axios.put(`${API}/users/nuevoproyecto/${idUser}`,{
+            nuevoNombreP, nuevaDes
+        }); 
+        window.location = "/proyecto";
+    };
 
- }
- const crearlibro1 = async () => {      
-    await axios.post(`${API}/users/nuevoproyecto/${idUser}`,{
-        nuevoNombreP, nuevaDes
-    }); 
-    window.location = "/proyecto/crear";
-};  
-const crearlibro2 = async (t) => {      
-    await axios.post(`/users/nuevoproyecto2/${idUser}`,{
-        nuevoNombreP2, nuevaDes2
-    }); 
-       window.location = "/proyecto/crear2";
-};
-const crearlibro3 = async () => {      
-    await axios.post(`/users/nuevoproyecto3/${idUser}`,{
-        nuevoNombreP3, nuevaDes3
-    }); 
-       window.location = "/proyecto/crear3";
-};
+    const editarlibro2 = async () => {      
+        await axios.put(`${API}/users/nuevoproyecto2/${idUser}`,{
+            nuevoNombreP, nuevaDes
+        }); 
+        window.location = "/proyecto";
+    };
 
-const editarlibro1 = async () => {      
-    await axios.put(`${API}/users/nuevoproyecto/${idUser}`,{
-        nuevoNombreP, nuevaDes
-    }); 
-    window.location = "/proyecto";
-}; 
-const editarlibro2 = async () => {      
-    await axios.put(`${API}/users/nuevoproyecto2/${idUser}`,{
-        nuevoNombreP, nuevaDes
-    }); 
-    window.location = "/proyecto";
-}; 
-const editarlibro3 = async () => {      
-    await axios.put(`${API}/users/nuevoproyecto3/${idUser}`,{
-        nuevoNombreP, nuevaDes
-    }); 
-    window.location = "/proyecto";
-}; 
+    const editarlibro3 = async () => {      
+        await axios.put(`${API}/users/nuevoproyecto3/${idUser}`,{
+            nuevoNombreP, nuevaDes
+        }); 
+        window.location = "/proyecto";
+    }; 
+    
     useEffect(() => {
         getUser();
     
@@ -105,17 +108,15 @@ const editarlibro3 = async () => {
                 <>
                     <h2 className='mb-3'>¿Qué quieres hacer?</h2>
                     <div className='row'>
-
                        {/* Columna izquierda */}
-                       <div className='col-sm-3'>
+                       <div className='col-sm-3 mb-3'>
                             <h4>Opciones</h4>
-
                             {/* Botones verticales */}
-                            <div class="d-flex align-items-start">
-                                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Mis proyectos</button>
+                            <div>
+                                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                    <button class="nav-link active d-grid gap-2 mb-2" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Mis proyectos</button>
                                     {/* <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Crear proyecto</button>*/}
-                                    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Subir proyecto</button>
+                                    <button class="nav-link d-grid" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Subir proyecto</button>
                                 </div>
                             </div>                           
 
@@ -145,10 +146,10 @@ const editarlibro3 = async () => {
                                                         <td>{descripcion}</td>
                                                       
                                                         <td className='d-flex align-content-md-center'>
-                                                            <button type="button" class="btn btn-secondary me-1">
+                                                            <button type="button" class="btn btn-secondary btn-sm me-1">
                                                             <i class="bi bi-trash"> Eliminar</i>
                                                             </button>
-                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                            <button type="button" class="btn btn-secondary btn-sm ms-1" 
                                                                     data-bs-toggle="modal" 
                                                                     data-bs-target="#modalLibro1"
                                                                     data-bs-whatever="@mdo">
@@ -159,7 +160,7 @@ const editarlibro3 = async () => {
                                                             </button>
 
 
-                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                            <button type="button" class="btn btn-secondary btn-sm  ms-1" 
                                                                     data-bs-toggle="modal" 
                                                                     data-bs-target="#modalCreacion"
                                                                     data-bs-whatever="@mdo">
@@ -177,10 +178,10 @@ const editarlibro3 = async () => {
                                                         <td><a href='/proyecto/crear2'> {usuario} </a></td>
                                                         <td>{usuario}</td>
                                                         <td className='d-flex align-content-md-center'>
-                                                            <button type="button" class="btn btn-secondary me-1">
+                                                            <button type="button" class="btn btn-secondary btn-sm me-1">
                                                                 <i class="bi bi-trash"> Eliminar</i>
                                                             </button>
-                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                            <button type="button" class="btn btn-secondary btn-sm ms-1" 
                                                                     data-bs-toggle="modal" 
                                                                     data-bs-target="#modalLibro2"
                                                                     data-bs-whatever="@mdo">
@@ -190,7 +191,7 @@ const editarlibro3 = async () => {
                                                                 
                                                             </button>
 
-                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                            <button type="button" class="btn btn-secondary btn-sm ms-1" 
                                                                     data-bs-toggle="modal" 
                                                                     data-bs-target="#modalCreacion2"
                                                                     data-bs-whatever="@mdo">
@@ -205,10 +206,10 @@ const editarlibro3 = async () => {
                                                         <td><a href='/proyecto/crear3'> {usuario} </a></td>
                                                         <td>{usuario}</td>
                                                         <td className='d-flex align-content-md-center'>
-                                                            <button type="button" class="btn btn-secondary me-1">
+                                                            <button type="button" class="btn btn-secondary btn-sm me-1">
                                                             <i class="bi bi-trash"> Eliminar</i>
                                                             </button>
-                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                            <button type="button" class="btn btn-secondary btn-sm ms-1" 
                                                                     data-bs-toggle="modal" 
                                                                     data-bs-target="#modalLibro3"
                                                                     data-bs-whatever="@mdo">
@@ -217,7 +218,7 @@ const editarlibro3 = async () => {
                                                                 </i>
                                                                 
                                                             </button>
-                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                            <button type="button" class="btn btn-secondary btn-sm ms-1" 
                                                                     data-bs-toggle="modal" 
                                                                     data-bs-target="#modalCreacion3"
                                                                     data-bs-whatever="@mdo">
@@ -298,15 +299,15 @@ const editarlibro3 = async () => {
                                                     <button class="btn btn-outline-secondary" type="button" id="button-addon2" onClick={(e) => agregarEtiquetas(etiquetasPDF)}>+</button>
                                                 </div>
 
-                                                {etiketas && <>
-                                          
-                                                    {etiketas.map((index) => (
-
-                                                       <span class="badge text-bg-primary m-1">{index}</span>
-                                                         )
-                                                    )
-                                                  }
-                                                </>}
+                                                {etiketas &&
+                                                    <>
+                                                        {
+                                                            etiketas.map((index) => (
+                                                                <span class="badge text-bg-primary m-1">{index}</span>
+                                                            ))
+                                                        }
+                                                    </>
+                                                }
                                                 </div>
                                                 <div className='col'>
                                                     <h5>Portada</h5>
@@ -603,48 +604,51 @@ const editarlibro3 = async () => {
                                             <div className='col'>
                                                 <h5>Etiquetas</h5>
                                             </div>
+                                            
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-1">
                                                     <input type="text" class="form-control" placeholder="Separar por comas..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setEtiquetasPDF(e.target.value)} />
                                                     <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
                                                 </div>
-                                                <span class="badge text-bg-primary m-1">Libro</span>
-                                                <span class="badge text-bg-primary m-1">Historia</span>
                                             </div>
 
-                                            
-                                            <div className='col'>
-                                                <h5>Portada</h5>
-                                            </div>
                                             <form action={API+"/file/"+descripcionPDF+"/"+etiquetasPDF+"/"+tituloPDF+"/"+autorPDF+"/"+nombreAutorPDF} method='POST' href="#" enctype="multipart/form-data"  class="input-group">
-                                            <div className='col mb-3'>
-                                                <div class="input-group mb-3">
-                                                    <input type="file" name="portada" class="form-control" id="inputGroupFile01" accept=".jpg, .jpeg, .png"/>
-                                                </div>
-                                            </div>
-
-                                            <div className='col'>
-                                                <h5>Autor</h5>
-                                            </div>
-                                            <div className='col mb-3'>
-                                                <h6>NOMBRE DEL USUARIO</h6>
-                                            </div>
-                                        
-                                            <div className='col'>
-                                                <h5>Seleccionar libro</h5>
-                                            </div>
-                                          
-                                            <div className='col mb-3'>
-                                                <div class="input-group mb-3">
-                                                    <input type="file" name="file" class="form-control" id="inputGroupFile01" enctype="multipart/form-data" accept=".pdf"/>
-                                                </div>
-                                            </div>
-                                            <div className='col'></div>
-                                            <div className='col container-sm'>
+                                                <div className='row  row-cols-2'>
+                                                    <div className='col'>
+                                                        <h5>Portada</h5>
+                                                    </div>
+                                                    <div className='col mb-3'>
+                                                        <div class="input-group mb-3">
+                                                            <input type="file" name="portada" class="form-control" id="inputGroupFile01" accept=".jpg, .jpeg, .png"/>
+                                                        </div>
+                                                    </div>
+    
+                                                    <div className='col'>
+                                                        <h5>Autor</h5>
+                                                    </div>
+                                                    <div className='col mb-3'>
+                                                        <div className='col mb-3'>
+                                                            <input type="text" class="form-control" id="recipient-name" placeholder={usuario} disabled/>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <div className='col'>
+                                                        <h5>Seleccionar libro</h5>
+                                                    </div>
+                                                
+                                                    <div className='col mb-3'>
+                                                        <div class="input-group mb-3">
+                                                            <input type="file" name="file" class="form-control" id="inputGroupFile01" enctype="multipart/form-data" accept=".pdf"/>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'></div>
+                                                    <div className='col container-sm'>
+                                                    
+                                                        <button type="submit" class="mb-3 btn btn-primary container-md" id="inputGroupFileAddon04" >Subir libro</button>
                                             
-                                                <button type="submit" class="mb-3 btn btn-primary container-md" id="inputGroupFileAddon04" >Subir libro</button>
-                                      
-                                            </div>
+                                                    </div>
+                                                </div>
+                                                
                                             </form>
                                         
                                         </div>
