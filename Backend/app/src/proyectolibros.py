@@ -12,19 +12,21 @@ plibrosBp = Blueprint('proyectolibros', __name__)
 def PROYECTO1(id):
     contenido = request.json['nuevoNombreP']
     dProyecto = request.json['nuevaDes']
+
     if contenido and dProyecto:
-        
         db.Proyectos.insert_one(
-           {    'Nombre_Libro': contenido,
+           {    
+                'Nombre_Libro': contenido,
                 'descripcion': dProyecto,
                 'contenido': "contenido del libro",      
             })
-        response = {
-            'id' : str(id),    
+        response = { 
+            
             'Nombre_Libro': contenido,
             'descripcion': dProyecto,
             'contenido': "contenido del libro"         
         }
+        print(response)
         return response
     else:
         return not_found()
@@ -32,6 +34,7 @@ def PROYECTO1(id):
 # ruta para obtener los comentarios de perfil especifico desde la bd 
 @app.route("/users/nuevoproyecto/<id>",methods=['GET'])
 def obtener_libro1(id):
+
     portada = db.Proyectos.find_one({'_id': ObjectId(id)})
     img = json.loads(dumps(portada['Nombre_Libros']))
     return img
@@ -42,7 +45,7 @@ def PROYECTO2(id):
     dProyecto = request.json['nuevaDes2']
     if contenido and dProyecto:
         
-        id = db.Libros.insert_one(
+        id = db.Proyectos.insert_one(
            {    'Nombre_Libro2': contenido,
                 'descripcion2': dProyecto,
                 'contenido2': "contenido del libro"         
@@ -63,7 +66,7 @@ def PROYECTO3(id):
     dProyecto = request.json['nuevaDes3']
     if contenido and dProyecto:
         
-        id = db.Libros.insert_one(
+        id = db.Proyectos.insert_one(
            {    'Nombre_Libro3': contenido,
                 'descripcion3': dProyecto,
                 'contenido3': "contenido del libro"         

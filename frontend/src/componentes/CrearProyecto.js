@@ -45,7 +45,7 @@ const CrearProyecto = () => {
             {logeado && (
                 <>
                     <div>
-                        <h3>{libro1}</h3>
+                        <h3>Editor de Texto</h3>
                     </div>
                     <div class="d-grid gap-2 d-md-block mb-2">
                         {/* Dropwdown */}
