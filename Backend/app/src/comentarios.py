@@ -30,7 +30,7 @@ def obtener_comentarios(id):
     for doc in db.Comentarios.find({'receptor': id}):
         comentarios.append({
             '_id' : str(ObjectId(doc['_id'])),
-            'emisor': doc['emisor'], 
+            'emisor': doc['emisor'],
             'receptor': doc['receptor'], 
             'contenido': doc['contenido']           
         })
@@ -51,12 +51,14 @@ def eliminar_comentario(id):
 @jwt_required()
 def agregar_comentario_libro(id,nombre):
     contenido = request.json['nuevoComentario']
+    img = request.json['img_perf']
 
     db.Libros.find_one({'_id': ObjectId(id)})
 
     db.ComentariosLibros.insert_one(
        {    'emisor': str(get_jwt_identity()), 
-            'nombreEmisor': nombre, 
+            'nombreEmisor': nombre,
+            'img': img, 
             'libro': id, 
             'contenido': contenido         
         })
@@ -70,7 +72,8 @@ def obtener_comentarios_libro(id):
         comentarios.append({
             '_id' : str(ObjectId(doc['_id'])),
             'nombreEmisor': doc['nombreEmisor'], 
-            'emisor': doc['emisor'], 
+            'emisor': doc['emisor'],
+            'img' : doc['img'], 
             'libro' : doc['libro'],
             'contenido': doc['contenido']           
         })

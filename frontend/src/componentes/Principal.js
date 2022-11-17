@@ -179,7 +179,7 @@ render(){
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">{libro.titulo}</h5>
+                                    <h5 class="card-title">{libro.Titulo}</h5>
                                     <p class="card-text">{libro.descripcion}</p>
                                     <div>
                     
