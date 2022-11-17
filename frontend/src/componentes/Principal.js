@@ -164,57 +164,45 @@ render(){
                 {/* Secciones de libros */}
                 <h4 class="fw-bold mt-3">Lo más popular</h4>
                 <div class="p-4 mb-4 bg-light border rounded-4">
-                    <div class="row row-cols-1 row-cols-md-4 g-4">
-
-
+                    <div class="row row-cols-1 row-cols-md-5 g-4">
+                        
                     {this.state.books ? 
-                        <> {
+                        <> 
+                        {
                             this.state.books.map((libro)=>(
-                            <div class="p-4 mb-4 bg-light border rounded-4" >
-
-                             <div class="col d-flex justify-content-center">
-                            <div class="card h-100 cardSize">
-                                <div class="d-flex justify-content-center">
-                                    <img src= {libro.img} class="card-img-top imgSize" alt="..."/>
-                                </div>
-
-                                <div class="card-body">
-                                    <h5 class="card-title">{libro.titulo}</h5>
-                                    <p class="card-text">{libro.descripcion}</p>
-                                    <div>
-                    
-
-                                        {libro.etiquetas && <>
-                                      
-                                      {libro.etiquetas.split(",").map((index) => (
-
-                             <span class="badge text-bg-secondary me-1">{index}</span>
-                                       )
-                                       )
-                                        }
-
-                                </>}
+                                <div class="col d-flex justify-content-center">
+                                    <div class="card h-100 cardSize">
+                                        <div class="d-flex justify-content-center">
+                                            <img src= {libro.img} class="card-img-top imgSize" alt="portada.png"/>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">{libro.Titulo}</h5>
+                                            <p class="card-text">{libro.descripcion}</p>
+                                            <div>
+                                                {libro.etiquetas && 
+                                                <>
+                                                    {libro.etiquetas.split(",").map((index) => (
+                                                        <span class="badge text-bg-secondary me-1">{index}</span>
+                                                    ))
+                                                    }
+                                                </>}
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <p>Autor: {libro.nombreAutor}</p>
+                                            <button onClick={(e) => this.redireccionar(libro._id)}>Ver más</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-footer">
-                                    <p>Autor: {libro.nombreAutor}</p>
-                                    <button onClick={(e) => this.redireccionar(libro._id)}>Ver más</button>
-                                </div>
-                            </div>
-                        </div>
-                              
-                             </div>
-                         
+                                </div>                         
                             ))
                         }   
                         </>
                         :
                         <>                  
-                            <p> No se encontraron usuarios</p>
+                            <p> No se han encontrado libros</p>
                         </>
                     }
-                        
-                    
+
                     </div>
                 </div>
 

@@ -15,6 +15,7 @@ class InfoL extends React.Component{
 
         ID : "",
         img : "",
+        img_perf : "",
         Titulo : "",
         etiquetas : "",
         autor : "",
@@ -55,8 +56,10 @@ class InfoL extends React.Component{
                }); 
             
 
+
         if(nuevoComentario){
-          await axios.post(`/users/comentarios/libro/${this.props.idlibro}/${autor.data['name']}`,{nuevoComentario}, {  
+            const img_perf = autor.data['img']
+          await axios.post(`/users/comentarios/libro/${this.props.idlibro}/${autor.data['name']}`,{nuevoComentario,img_perf}, {  
             headers : {
                 authorization : `Bearer ${getToken()}`
             },
@@ -78,7 +81,7 @@ class InfoL extends React.Component{
             },
             mode: "no-cors",
             }); 
-        console.log(res.data['0'])
+            console.log(res)
 
         this.setState({comentarios : res.data});
 
@@ -193,6 +196,7 @@ class InfoL extends React.Component{
                             <div class="p-4 mb-4 bg-light border rounded-4">
                                 <div className="row">
                                     <div className="col-sm-1">
+                                        <img class="card-img-top imgSize" src={comentario.img}></img>
                                     </div>
                                     <div className="col">
                                         <h3>{comentario.nombreEmisor}</h3>

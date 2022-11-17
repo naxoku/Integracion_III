@@ -20,6 +20,7 @@ def getUsers():
     for doc in db.users.find():
         users.append({
             '_id': str(ObjectId(doc['_id'])),
+            'img': doc['img'],
             'name': doc['name'],
             'email': doc['email'],
             'password': doc['password'],
