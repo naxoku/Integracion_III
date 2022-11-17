@@ -37,6 +37,7 @@ const Proyecto = () => {
     const autorPDF = getLoggedInUserId();
     const [file, setPDF] = useState();
     const [nombreAutorPDF, setAutorPdf] = useState("");
+    
 
     const getUser = async () => {
         const res = await axios.get(`${API}/users/${idUser}`, {
@@ -44,8 +45,10 @@ const Proyecto = () => {
             });
        
         const data = res.data;
+
         setNombre(data['name']);
         setID(data['_id']['$oid']);
+        setAutorPdf(data['name']);
     };
 
     const agregarEtiquetas = async (etiquetas) => {
@@ -292,11 +295,18 @@ const editarlibro3 = async () => {
                                                     
                                                     <div class="input-group mb-1">
                                                     <input type="text" class="form-control" placeholder="Separar por comas..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setEtiquetasPDF(e.target.value)} />
-                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
+                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onClick={(e) => agregarEtiquetas(etiquetasPDF)}>+</button>
                                                 </div>
-                                                  
-                                                    <span class="badge text-bg-primary m-1">Libro</span>
-                                                    <span class="badge text-bg-primary m-1">Historia</span>
+
+                                                {etiketas && <>
+                                          
+                                                    {etiketas.map((index) => (
+
+                                                       <span class="badge text-bg-primary m-1">{index}</span>
+                                                         )
+                                                    )
+                                                  }
+                                                </>}
                                                 </div>
                                                 <div className='col'>
                                                     <h5>Portada</h5>
