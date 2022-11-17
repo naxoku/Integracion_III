@@ -1,6 +1,19 @@
 import React, { useEffect } from 'react'
 import { checkIfIsLoggedIn, getLoggedInUserId  } from '../utils';
-import EditorTexto from "./EditorTexto";
+import ReactDOM from 'react-dom';
+import 'froala-editor/js/froala_editor.pkgd.min.js';
+import 'froala-editor/css/froala_style.min.css';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+
+  
+import FroalaEditor from 'react-froala-wysiwyg';
+// Include special components if required.
+// import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
+// import FroalaEditorA from 'react-froala-wysiwyg/FroalaEditorA';
+// import FroalaEditorButton from 'react-froala-wysiwyg/FroalaEditorButton';
+// import FroalaEditorImg from 'react-froala-wysiwyg/FroalaEditorImg';
+// import FroalaEditorInput from 'react-froala-wysiwyg/FroalaEditorInput';
+
 import { useState } from 'react';
 import axios from 'axios'; 
 
@@ -32,7 +45,7 @@ const CrearProyecto = () => {
             {logeado && (
                 <>
                     <div>
-                        <h3>{libro1}</h3>
+                        <h3>Editor de Texto</h3>
                     </div>
                     <div class="d-grid gap-2 d-md-block mb-2">
                         {/* Dropwdown */}
@@ -53,7 +66,13 @@ const CrearProyecto = () => {
 
                     {/* Editor de texto*/}
                     <div className='col-sm'>
-                        <EditorTexto/>
+                        
+                        <FroalaEditor
+                          tag='textarea'
+                        
+                       
+                        
+                        />
                     </div>
                 </>
             )}
@@ -78,7 +97,7 @@ const CrearProyecto = () => {
  
                         </div>
                         <div class="card-footer text-muted">
-                            
+                        
                         </div>
                     </div>
                 </>

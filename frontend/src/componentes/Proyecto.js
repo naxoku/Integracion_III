@@ -9,22 +9,26 @@ const idUser = getLoggedInUserId();
 const API = process.env.REACT_APP_API;
 
 const Proyecto = () => {
-    const [libro1,  setProyecto] = useState("");
-    const [desc1,  setDescripcion] = useState("");
-    const [libro2,  setProyecto2] = useState("");
-    const [desc2,  setDescripcion2] = useState("");
-    const [libro3,  setProyecto3] = useState("");
-    const [desc3,  setDescripcion3] = useState("");
+    const [id, setID] = useState("");
+    
+    const [nuevoNombreP, setnComentario] = useState("");
+    const [nuevaDes,  setnDescripcion] = useState("");
+
+    const [Nombre_Libro, setLibro] = useState("");
+    const [descripcion,  setDescripcion] = useState("");
+
+    const [nuevoNombreP2, setnComentario2] = useState("");
+    const [nuevaDes2,  setnDescripcion2] = useState("");
+    const [Nombre_Libro2, setLibro2] = useState("");
+    const [descripcion2,  setDescripcion2] = useState("");
+
+    const [nuevoNombreP3, setnComentario3] = useState("");
+    const [nuevaDes3,  setnDescripcion3] = useState("");
+    const [Nombre_Libro3, setLibro3] = useState("");
+    const [descripcion3,  setDescripcion3] = useState("");
+
 
     const [usuario,  setNombre] = useState("");
-
-    const [nuevoPr,  setnProyecto] = useState("");
-    const [nuevaDe,  setnDescripcion] = useState("");
-    const [nuevoPr2,  setnProyecto2] = useState("");
-    const [nuevaDe2,  setnDescripcion2] = useState("")
-    const [nuevoPr3,  setnProyecto3] = useState("");
-    const [nuevaDe3,  setnDescripcion3] = useState("");
-
 
     const [descripcionPDF,  setDescripcionPDF] = useState("");
     const [etiquetasPDF,  setEtiquetasPDF] = useState("");
@@ -32,21 +36,16 @@ const Proyecto = () => {
     const [etiketas,  setEt] = useState("");
     const autorPDF = getLoggedInUserId();
     const [file, setPDF] = useState();
+    const [nombreAutorPDF, setAutorPdf] = useState("");
 
     const getUser = async () => {
-
         const res = await axios.get(`${API}/users/${idUser}`, {
             mode: "no-cors",
             });
        
         const data = res.data;
-        setProyecto(data['libro1']);
-        setDescripcion(data['desc1']);
-        setProyecto2(data['libro2']);
-        setDescripcion2(data['desc2']);
-        setProyecto3(data['libro3']);
-        setDescripcion3(data['desc3']);
         setNombre(data['name']);
+        setID(data['_id']['$oid']);
     };
 
     const agregarEtiquetas = async (etiquetas) => {
@@ -55,34 +54,43 @@ const Proyecto = () => {
 
 
  }
-    const editNyD = async () => {
-        await axios.put(`${API}/users/nuevoproyecto/${idUser}`, {
-                nuevoPr
-            });
-        await axios.put(`${API}/users/descripcionproyecto/${idUser}`, {
-            nuevaDe
-        });
-        window.location = "/proyecto/crear";
-        };
-    const editNyD2 = async () => {
-        await axios.put(`${API}/users/nuevoproyecto2/${idUser}`, {
-                nuevoPr2
-            });
-        await axios.put(`${API}/users/descripcionproyecto2/${idUser}`, {
-            nuevaDe2
-        });
-        window.location = "/proyecto/crear";
-        };
-    const editNyD3 = async () => {
-        await axios.put(`${API}/users/nuevoproyecto3/${idUser}`, {
-                nuevoPr3
-            });
-        await axios.put(`${API}/users/descripcionproyecto3/${idUser}`, {
-            nuevaDe3
-        });
-        window.location = "/proyecto/crear";
-        }; 
-        
+ const crearlibro1 = async () => {      
+    await axios.post(`${API}/users/nuevoproyecto/${idUser}`,{
+        nuevoNombreP, nuevaDes
+    }); 
+    window.location = "/proyecto/crear";
+};  
+const crearlibro2 = async (t) => {      
+    await axios.post(`/users/nuevoproyecto2/${idUser}`,{
+        nuevoNombreP2, nuevaDes2
+    }); 
+       window.location = "/proyecto/crear2";
+};
+const crearlibro3 = async () => {      
+    await axios.post(`/users/nuevoproyecto3/${idUser}`,{
+        nuevoNombreP3, nuevaDes3
+    }); 
+       window.location = "/proyecto/crear3";
+};
+
+const editarlibro1 = async () => {      
+    await axios.put(`${API}/users/nuevoproyecto/${idUser}`,{
+        nuevoNombreP, nuevaDes
+    }); 
+    window.location = "/proyecto";
+}; 
+const editarlibro2 = async () => {      
+    await axios.put(`${API}/users/nuevoproyecto2/${idUser}`,{
+        nuevoNombreP, nuevaDes
+    }); 
+    window.location = "/proyecto";
+}; 
+const editarlibro3 = async () => {      
+    await axios.put(`${API}/users/nuevoproyecto3/${idUser}`,{
+        nuevoNombreP, nuevaDes
+    }); 
+    window.location = "/proyecto";
+}; 
     useEffect(() => {
         getUser();
     
@@ -95,8 +103,8 @@ const Proyecto = () => {
                     <h2 className='mb-3'>¿Qué quieres hacer?</h2>
                     <div className='row'>
 
-                        {/* Columna izquierda */}
-                        <div className='col-sm-3'>
+                       {/* Columna izquierda */}
+                       <div className='col-sm-3'>
                             <h4>Opciones</h4>
 
                             {/* Botones verticales */}
@@ -130,58 +138,89 @@ const Proyecto = () => {
                                                 <tbody>
                                                 <tr>
                                                         <th scope="row">1</th>
-                                                        <td>{libro1}</td>
-                                                        <td>{desc1}</td>
+                                                             <td><a href='/proyecto/crear'> {usuario} </a></td>
+                                                        <td>{descripcion}</td>
+                                                      
                                                         <td className='d-flex align-content-md-center'>
                                                             <button type="button" class="btn btn-secondary me-1">
-                                                                <i class="bi bi-trash"></i>
+                                                            <i class="bi bi-trash"> Eliminar</i>
                                                             </button>
                                                             <button type="button" class="btn btn-secondary ms-1" 
                                                                     data-bs-toggle="modal" 
                                                                     data-bs-target="#modalLibro1"
                                                                     data-bs-whatever="@mdo">
-                                                                <i class="bi bi-wrench"><div class="input-group mb-3"> 
-                                                                </div>
-                                                                </i>
+                                                                 <i class="bi bi-wrench"> Editar 
                                                                 
+                                                                </i>
+
                                                             </button>
-                                                        </td>
+
+
+                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target="#modalCreacion"
+                                                                    data-bs-whatever="@mdo">
+                                                                 <i class="bi bi-brush-fill"> Crear
+                                                                </i>
+
+                                                            </button>
+                                                         
+                                                          
+                                                        </td> 
+                                                        
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">2</th>
-                                                        <td>{libro2}</td>
-                                                        <td>{desc2}</td>
+                                                        <td><a href='/proyecto/crear2'> {usuario} </a></td>
+                                                        <td>{usuario}</td>
                                                         <td className='d-flex align-content-md-center'>
                                                             <button type="button" class="btn btn-secondary me-1">
-                                                                <i class="bi bi-trash"></i>
+                                                                <i class="bi bi-trash"> Eliminar</i>
                                                             </button>
                                                             <button type="button" class="btn btn-secondary ms-1" 
                                                                     data-bs-toggle="modal" 
                                                                     data-bs-target="#modalLibro2"
                                                                     data-bs-whatever="@mdo">
-                                                                <i class="bi bi-wrench"><div class="input-group mb-3"> 
-                                                                </div>
+                                                                <i class="bi bi-wrench"> Editar 
+                                                                
                                                                 </i>
                                                                 
+                                                            </button>
+
+                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target="#modalCreacion2"
+                                                                    data-bs-whatever="@mdo">
+                                                                 <i class="bi bi-brush-fill"> Crear
+                                                                </i>
+
                                                             </button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">3</th>
-                                                        <td>{libro3}</td>
-                                                        <td>{desc3}</td>
+                                                        <td><a href='/proyecto/crear3'> {usuario} </a></td>
+                                                        <td>{usuario}</td>
                                                         <td className='d-flex align-content-md-center'>
                                                             <button type="button" class="btn btn-secondary me-1">
-                                                                <i class="bi bi-trash"></i>
+                                                            <i class="bi bi-trash"> Eliminar</i>
                                                             </button>
                                                             <button type="button" class="btn btn-secondary ms-1" 
                                                                     data-bs-toggle="modal" 
                                                                     data-bs-target="#modalLibro3"
                                                                     data-bs-whatever="@mdo">
-                                                                <i class="bi bi-wrench"><div class="input-group mb-3"> 
-                                                                </div>
+                                                                 <i class="bi bi-wrench"> Editar 
+                                                                
                                                                 </i>
                                                                 
+                                                            </button>
+                                                            <button type="button" class="btn btn-secondary ms-1" 
+                                                                    data-bs-toggle="modal" 
+                                                                    data-bs-target="#modalCreacion3"
+                                                                    data-bs-whatever="@mdo">
+                                                                 <i class="bi bi-brush-fill"> Crear
+                                                                </i>
+
                                                             </button>
                                                         </td>
                                                     </tr>
@@ -189,36 +228,73 @@ const Proyecto = () => {
                                             </table>
                                         </div>
                                     </div>
-                                       {/* Modal libro 1*/}
-                                       <div class="modal" id="modalLibro1" tabindex="-1" role="dialog">
+                                    
+                                    {/* Modal libro Creacion 1*/}
+                                       <div class="modal" id="modalCreacion" tabindex="-1" role="dialog">
                                           <div class="modal-dialog  modal-lg" role="document">
                                             <div class="modal-content">
                                               <div class="modal-header">
-                                                <h5 class="modal-title">Crear/Editar Proyecto</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                  <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                <h5 class="modal-title">Crear Proyecto</h5>
+                                             
                                               </div>
                                               <div class="modal-body">
                                               <h5>Nombre del proyecto</h5>
-                                                <div className='col mb-3'>
-                                                    <input onChange={(e) => setnProyecto(e.target.value)} type="text" class="form-control" id="recipient-name" placeholder='Nombre...'/>
+                                              <div className='col mb-3'>
+                                                <input class="form-control" placeholder="Nombre de tu Proyecto" id="exampleFormControlTextarea1" rows="1" onChange={(e) => setnComentario(e.target.value)}></input>
                                                 </div>
                                                 <div className='col'>
                                                     <h5>Descripción del proyecto</h5>
                                                 </div>
                                                 <div className='col mb-3'>
-                                                    <textarea onChange={(e) => setnDescripcion(e.target.value)} class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder='Escriba aquí...'></textarea>
+                                                <textarea class="form-control" placeholder="Descripcion de tu Proyecto" id="exampleFormControlTextarea1" rows="3" onChange={(e) => setnDescripcion(e.target.value)}></textarea>
                                                 </div>
+                                                <div className='col'>
+                                                    <h5>Autor</h5>
+                                                </div>
+                                                <div className='col mb-3'>
+                                                    <h6>  {usuario}</h6>
+                                                </div>
+
+                                                <div className='col'></div>
+                                                    
+                                              <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                              <button class="btn btn-primary me-md-2" type="button" onClick={(e) => crearlibro1(nuevoNombreP)}>Crear Proyecto</button>
+                                                
                                               </div>
+                                            </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                       {/* Modal libro 1*/}
+                                       <div class="modal" id="modalLibro1" tabindex="-1" role="dialog">
+                                          <div class="modal-dialog  modal-lg" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title">Crear Proyecto</h5>
+                                             
+                                              </div>
+                                              <div class="modal-body">
+                                              <h5>Nombre del proyecto</h5>
+                                              <div className='col mb-3'>
+                                                <textarea class="form-control" placeholder="Escribe tu biografía..." id="exampleFormControlTextarea1" rows="3" onChange={(e) => setnComentario(e.target.value)}></textarea>
+                                                </div>
+                                                <div className='col'>
+                                                    <h5>Descripción del proyecto</h5>
+                                                </div>
+                                                <div className='col mb-3'>
+                                                <textarea class="form-control" placeholder="Escribe tu biografía..." id="exampleFormControlTextarea1" rows="3" onChange={(e) => setnDescripcion(e.target.value)}></textarea>
+                                                </div>
                                                 <div className='col'>
                                                     <h5>Etiquetas</h5>
                                                 </div>
                                                 <div className='col mb-3'>
+                                                    
                                                     <div class="input-group mb-1">
-                                                        <input type="text" class="form-control" placeholder="Separar por comas..." aria-label="Recipient's username" aria-describedby="button-addon2"/>
-                                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
-                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Separar por comas..." aria-label="Recipient's username" aria-describedby="button-addon2" onChange={(e) => setEtiquetasPDF(e.target.value)} />
+                                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
+                                                </div>
+                                                  
                                                     <span class="badge text-bg-primary m-1">Libro</span>
                                                     <span class="badge text-bg-primary m-1">Historia</span>
                                                 </div>
@@ -242,27 +318,62 @@ const Proyecto = () => {
                                                     
                                               <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                    <button type="button" class="btn btn-primary" onClick={(e) => editNyD(nuevoPr)}>Crear Proyecto</button>
+                                              <button class="btn btn-primary me-md-2" type="button" onClick={(e) => crearlibro1(nuevoNombreP)}>Crear Proyecto</button>
                                                 
                                               </div>
                                             </div>
                                           </div>
                                         </div>
+                                        </div>
+                                           {/* Modal libro Creacion 2*/}
+                                       <div class="modal" id="modalCreacion2" tabindex="-1" role="dialog">
+                                          <div class="modal-dialog  modal-lg" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title">Crear Proyecto</h5>
+                                               
+                                              </div>
+                                              <div class="modal-body">
+                                              <h5>Nombre del proyecto</h5>
+                                              <div className='col mb-3'>
+                                                <input class="form-control" placeholder="Nombre de tu Proyecto" id="exampleFormControlTextarea1" rows="1" onChange={(e) => setnComentario(e.target.value)}></input>
+                                                </div>
+                                                <div className='col'>
+                                                    <h5>Descripción del proyecto</h5>
+                                                </div>
+                                                <div className='col mb-3'>
+                                                <textarea class="form-control" placeholder="Descripcion de tu Proyecto" id="exampleFormControlTextarea1" rows="3" onChange={(e) => setnDescripcion(e.target.value)}></textarea>
+                                                </div>
+                                                <div className='col'>
+                                                    <h5>Autor</h5>
+                                                </div>
+                                                <div className='col mb-3'>
+                                                    <h6>  {usuario}</h6>
+                                                </div>
 
+                                                <div className='col'></div>
+                                                    
+                                              <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                              <button class="btn btn-primary me-md-2" type="button" onClick={(e) => crearlibro1(nuevoNombreP)}>Crear Proyecto</button>
+                                                
+                                              </div>
+                                            </div>
+                                            </div>
+                                          </div>
+                                        </div>
                                          {/* Modal libro 2*/}
                                        <div class="modal" id="modalLibro2" tabindex="-1" role="dialog">
                                           <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                               <div class="modal-header">
-                                                <h5 class="modal-title">Crear/Editar Proyecto 2</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                  <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                <h5 class="modal-title">Editar Proyecto 2</h5>
+                                                
                                               </div>
                                               <div class="modal-body">
                                               <h5>Nombre del proyecto</h5>
-                                                <div className='col mb-3'>
-                                                    <input onChange={(e) => setnProyecto2(e.target.value)} type="text" class="form-control" id="recipient-name" placeholder='Nombre...'/>
+                                              <div className='col mb-3'>
+                                                    <input onChange={(e) => setnComentario2(e.target.value)} type="text" class="form-control" id="recipient-name" placeholder='Nombre...' required/>
                                                 </div>
                                                 <div className='col'>
                                                     <h5>Descripción del proyecto</h5>
@@ -270,7 +381,7 @@ const Proyecto = () => {
                                                 <div className='col mb-3'>
                                                     <textarea onChange={(e) => setnDescripcion2(e.target.value)} class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder='Escriba aquí...'></textarea>
                                                 </div>
-                                              </div>
+                                              
                                                 <div className='col'>
                                                     <h5>Etiquetas</h5>
                                                 </div>
@@ -302,27 +413,63 @@ const Proyecto = () => {
                                                     
                                               <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                    <button type="button" class="btn btn-primary" onClick={(e) => editNyD2(nuevoPr2)}>Crear Proyecto</button>
+                                                <button type="button" class="btn btn-primary" onClick={(e) => crearlibro2(nuevoNombreP2)}>Crear Proyecto</button>
                                                 
                                               </div>
                                             </div>
                                           </div>
                                         </div>
-
-                                        {/* Modal libro 3*/}
-                                       <div class="modal" id="modalLibro3" tabindex="-1" role="dialog">
-                                          <div class="modal-dialog " role="document">
+                                        </div>
+                                           {/* Modal libro Creacion 3*/}
+                                       <div class="modal" id="modalCreacion3" tabindex="-1" role="dialog">
+                                          <div class="modal-dialog  modal-lg" role="document">
                                             <div class="modal-content">
                                               <div class="modal-header">
-                                                <h5 class="modal-title">Crear/Editar Proyecto 3</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                  <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                <h5 class="modal-title">Crear Proyecto</h5>
+                                               
+                                              </div>
+                                              <div class="modal-body">
+                                              <h5>Nombre del proyecto</h5>
+                                              <div className='col mb-3'>
+                                                <input class="form-control" placeholder="Nombre de tu Proyecto" id="exampleFormControlTextarea1" rows="1" onChange={(e) => setnComentario(e.target.value)}></input>
+                                                </div>
+                                                <div className='col'>
+                                                    <h5>Descripción del proyecto</h5>
+                                                </div>
+                                                <div className='col mb-3'>
+                                                <textarea class="form-control" placeholder="Descripcion de tu Proyecto" id="exampleFormControlTextarea1" rows="3" onChange={(e) => setnDescripcion(e.target.value)}></textarea>
+                                                </div>
+                                                <div className='col'>
+                                                    <h5>Autor</h5>
+                                                </div>
+                                                <div className='col mb-3'>
+                                                    <h6>  {usuario}</h6>
+                                                </div>
+
+                                                <div className='col'></div>
+                                                    
+                                              <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                              <button class="btn btn-primary me-md-2" type="button" onClick={(e) => crearlibro1(nuevoNombreP)}>Crear Proyecto</button>
+                                                
+                                              </div>
+                                            </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        {/* Modal libro 3*/}
+                                       <div class="modal" id="modalLibro3" tabindex="-1" role="dialog">
+                                          <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title">Editar Proyecto 3</h5>
+                                            
+                                                
                                               </div>
                                               <div class="modal-body">
                                               <h5>Nombre del proyecto</h5>
                                                 <div className='col mb-3'>
-                                                    <input onChange={(e) => setnProyecto3(e.target.value)} type="text" class="form-control" id="recipient-name" placeholder='Nombre...'/>
+                                                    <input onChange={(e) => setnComentario3(e.target.value)} type="text" class="form-control" id="recipient-name" placeholder='Nombre...' required/>
                                                 </div>
                                                 <div className='col'>
                                                     <h5>Descripción del proyecto</h5>
@@ -330,7 +477,7 @@ const Proyecto = () => {
                                                 <div className='col mb-3'>
                                                     <textarea onChange={(e) => setnDescripcion3(e.target.value)} class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder='Escriba aquí...'></textarea>
                                                 </div>
-                                              </div>
+                                            
                                                 <div className='col'>
                                                     <h5>Etiquetas</h5>
                                                 </div>
@@ -362,11 +509,12 @@ const Proyecto = () => {
                                                     
                                               <div class="modal-footer">
                                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                    <button type="button" class="btn btn-primary" onClick={(e) => editNyD3(nuevoPr3)}>Crear Proyecto</button>
+                                              <button type="button" class="btn btn-primary" onClick={(e) => crearlibro3(nuevoNombreP3)}>Crear Proyecto</button>
                                                 
                                               </div>
                                             </div>
                                           </div>
+                                        </div>
                                         </div>
                                       {/* Crear un proyecto 
                                     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
@@ -458,7 +606,7 @@ const Proyecto = () => {
                                             <div className='col'>
                                                 <h5>Portada</h5>
                                             </div>
-                                            <form action={API+"/file/"+descripcionPDF+"/"+etiquetasPDF+"/"+tituloPDF+"/"+autorPDF} method='POST' href="#" enctype="multipart/form-data"  class="input-group">
+                                            <form action={API+"/file/"+descripcionPDF+"/"+etiquetasPDF+"/"+tituloPDF+"/"+autorPDF+"/"+nombreAutorPDF} method='POST' href="#" enctype="multipart/form-data"  class="input-group">
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-3">
                                                     <input type="file" name="portada" class="form-control" id="inputGroupFile01" accept=".jpg, .jpeg, .png"/>

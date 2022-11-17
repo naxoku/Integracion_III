@@ -16,41 +16,42 @@ function Users() {
     // FUNCION PARA CREAR CUENTA AL ENVIAR EL FORMULARIO
     const crearCuenta = async (e) => {
         e.preventDefault();
-       try{ 
-        const res = await fetch(`${API}/users`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name,
-              email,
-              password,
-            }),
-        });
+        
+        // Valida si el correo posee una estructura válida
+        if (/^[a-zA-Z0-9.]+\@[a-zA-Z0-9.]+\.[a-zA-Z]+$/.test(email)){
+            try { 
+                const res = await fetch(`${API}/users`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      name,
+                      email,
+                      password,
+                    }),
+                });
+    
+                if (res.status === 200){
+                    alert("Cuenta creada correctamente.")
+    
+                } else {
+                    alert("Correo ya existe en la base de datos.")
+                }
+    
+            } catch(e) {
+                alert("Error al tratar de crear cuenta.")
+            }
 
-        if (res.status === 200){
-            setError2("Cuenta creada")
-
-
-        }else{
-            setError2("Correo ya existe")
-            console.log(res)
+        } else {
+            alert("Escriba una dirección de correo válida (example@example.cl).");
         }
-
-    }catch(e){
-
-
-        setError2("Correo ya existe")
-
-    }
-                
+        
         setName("");
         setEmail("");
         setPassword("");
         nameInput.current.focus();
     };  
-
 
     return (
         <div className="container-md mt-2">

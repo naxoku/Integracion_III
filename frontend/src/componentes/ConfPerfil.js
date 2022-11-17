@@ -114,9 +114,8 @@ const Perfil = () => {
         }
     };
     
-    // Obtener la información del usuario
+    // ======== Obtener la información del usuario ========
     const getUser = async () => {
-
         const res = await axios.get(`${API}/users/${idUser}`, {
             mode: "no-cors",
             });
@@ -133,66 +132,70 @@ const Perfil = () => {
         setDesc(data['biografia']);
     };
 
-    // Editar algo del usuario
+    // ======== Editar algo del usuario ========
     const editFb = async () => {
-        
         await axios.put(`${API}/users/facebook/${idUser}`, {
-                nuevoFb
-            });
+            nuevoFb
+        });
+
         window.location = "/configuracion";
-        };
+    };
+    
     const editTw = async () => {
-        
         await axios.put(`${API}/users/twitter/${idUser}`, {
-                    nuevoTw
-                });
+            nuevoTw
+        });
+
         window.location = "/configuracion";
-        };
+    };
+
     const editIg = async () => {
-        
         await axios.put(`${API}/users/instagram/${idUser}`, {
-                    nuevoIg
-            });
+            nuevoIg
+        });
+
         window.location = "/configuracion";
-        };
-
-
+    };
 
     const editNombre = async () => {
-    
         await axios.put(`${API}/users/nombre/${idUser}`, {
-                    nuevoUsuario
-                });
+            nuevoUsuario
+        });
+
         window.location = "/configuracion";
-        };
+    };
+
     const editCorreo = async () => {
-        
-        await axios.put(`${API}/users/correo/${idUser}`, {
-                                nuevoCorreo
+        if (/^[a-zA-Z0-9.]+\@[a-zA-Z0-9.]+\.[a-zA-Z]+$/.test(nuevoCorreo)){
+            await axios.put(`${API}/users/correo/${idUser}`, {
+                nuevoCorreo
             });
-        window.location = "/configuracion";
-        };
+
+            window.location = "/configuracion";
+        } else {
+            alert("Escriba una dirección de correo válida (example@example.cl).");
+        }
+    };
+
     const editPw = async () => {
-
         await axios.put(`${API}/users/password/${idUser}`, {
-                                   nuevaContrasena
-            });
+            nuevaContrasena
+        });
+
         window.location = "/configuracion";
-            };
+    };
+
     const editDesc = async () => {
-        
         await axios.put(`${API}/users/biografia/${idUser}`, {
-                            nuevaDesc
-                        });
+            nuevaDesc
+        });
+
         window.location = "/configuracion";
-            };
+    };
 
-      
-
-    // mostrar datos actuales del usuario al cargar la pagina
+    // // ======== Mostrar datos actuales del usuario al cargar la pagina ========
     useEffect(() => {
-      getUser();
- 
+        getUser();
     });
         
     return (

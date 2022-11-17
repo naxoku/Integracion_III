@@ -50,6 +50,24 @@ def getBook(idAutor):
     response = dumps(book)
     return Response(response, mimetype="application/json")
 
+@app.route('/users/Libros/todos/<idAutor>', methods=['GET'])
+def getBooks2(idAutor):
+    libros = []
+    for doc in db.Libros.find({'autor': idAutor}):
+        libros.append({        
+            '_id':  str(ObjectId(doc['_id'])),
+            'Popularidad': doc['Popularidad'],
+            'etiquetas': doc['etiquetas'],
+            'autor': doc['autor'],
+            'nombreAutor': doc['nombreAutor'],
+            'Titulo' : doc['Titulo'], 
+            'descripcion': doc['descripcion'],
+            'filename': doc['filename'],
+            'url': doc['url'],
+            'img': doc['img']
+        })
+    return dumps(libros)
+
 @app.route('/users/Libros/id/<id>', methods=['GET'])
 def getBook2(id):
     book = db.Libros.find({'_id': ObjectId(id)})
@@ -67,6 +85,7 @@ def getBooks():
             'Popularidad': doc['Popularidad'],
             'etiquetas': doc['etiquetas'],
             'autor': doc['autor'],
+            'nombreAutor': doc['nombreAutor'],
             'Titulo' : doc['Titulo'], 
             'descripcion': doc['descripcion'],
             'filename': doc['filename'],
@@ -79,8 +98,8 @@ def getBooks():
 
 
 # Creacion de los archivos y enrutamientos a MongoDB
-@app.route('/file/<descripcionPDF>/<etiquetasPDF>/<tituloPDF>/<autorPDF>', methods=['POST'])
-def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF): 
+@app.route('/file/<descripcionPDF>/<etiquetasPDF>/<tituloPDF>/<autorPDF>/<nombreAutorPDF>', methods=['POST'])
+def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF,nombreAutorPDF): 
     file = request.files['file']
     portada = request.files['portada']
 
@@ -100,6 +119,8 @@ def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF):
         "etiquetas" : etiquetasPDF, 
         "Titulo": tituloPDF,
         "descripcion": descripcionPDF,
+        "autor": autorPDF,
+        "nombreAutor": nombreAutorPDF,
         'url': "",
         "img": ""
         })
@@ -116,8 +137,7 @@ def upload_file(descripcionPDF,etiquetasPDF,tituloPDF,autorPDF):
 
         db.Libros.update_one({'_id': ObjectId(id.inserted_id)}, {'$set': {
             "url": urlbook,
-            "img": urlimg,
-            "autor": str(id.inserted_id)
+            "img": urlimg
 
         }})
     return redirect(REACT+"/proyecto")
