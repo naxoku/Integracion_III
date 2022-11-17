@@ -197,8 +197,8 @@ render(){
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <small>Subido por: {libro.autor}</small>
-                                    <button onClick={() => this.redireccionar(libro._id)}>Ver más</button>
+                                    <p>Autor: {libro.nombreAutor}</p>
+                                    <button onClick={(e) => this.redireccionar(libro._id)}>Ver más</button>
                                 </div>
                             </div>
                         </div>

@@ -17,7 +17,7 @@ const Proyecto = () => {
     const [desc3,  setDescripcion3] = useState("");
 
     const [usuario,  setNombre] = useState("");
-
+    
     const [nuevoPr,  setnProyecto] = useState("");
     const [nuevaDe,  setnDescripcion] = useState("");
     const [nuevoPr2,  setnProyecto2] = useState("");
@@ -32,6 +32,7 @@ const Proyecto = () => {
     const [etiketas,  setEt] = useState("");
     const autorPDF = getLoggedInUserId();
     const [file, setPDF] = useState();
+    const [nombreAutorPDF, setAutorPdf] = useState("");
 
     const getUser = async () => {
 
@@ -47,6 +48,7 @@ const Proyecto = () => {
         setProyecto3(data['libro3']);
         setDescripcion3(data['desc3']);
         setNombre(data['name']);
+        setAutorPdf(data['name']);
     };
 
     const agregarEtiquetas = async (etiquetas) => {
@@ -458,7 +460,7 @@ const Proyecto = () => {
                                             <div className='col'>
                                                 <h5>Portada</h5>
                                             </div>
-                                            <form action={API+"/file/"+descripcionPDF+"/"+etiquetasPDF+"/"+tituloPDF+"/"+autorPDF} method='POST' href="#" enctype="multipart/form-data"  class="input-group">
+                                            <form action={API+"/file/"+descripcionPDF+"/"+etiquetasPDF+"/"+tituloPDF+"/"+autorPDF+"/"+nombreAutorPDF} method='POST' href="#" enctype="multipart/form-data"  class="input-group">
                                             <div className='col mb-3'>
                                                 <div class="input-group mb-3">
                                                     <input type="file" name="portada" class="form-control" id="inputGroupFile01" accept=".jpg, .jpeg, .png"/>

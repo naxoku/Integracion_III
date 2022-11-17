@@ -94,10 +94,78 @@ class Comentarios extends React.Component{
     }
 }
 
-function PerfilUser() {
+class Libros extends React.Component{
 
-    // VARIABLES DE TRABAJO
-    let listaLibros = ["Libro_1", "Libro_2", "Libro_3", "Libro_4", "Libro_5"];
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+        }
+    }
+
+    componentDidMount(){
+
+        this.getLibros();
+    }
+
+    async getLibros(){
+        
+        const res2 = await axios.get(`${API}/users/a/${this.props.elnombre}`, {
+            mode: "no-cors"
+            });
+       
+        const id = res2.data['_id']['$oid'];
+
+        const res = await axios.get(`${API}/users/Libros/todos/${id}`,{
+            mode: "no-cors"
+            });
+
+        this.setState({libros : res.data});
+
+    }
+    render(){
+        return(
+            <div className='container-md'>
+            {/* Libros publicados por el usuario */}
+        <div className='col-sm'>
+            <h4>Libros publicados</h4>
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre libro</th>
+                        <th scope="col">Autor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {this.state.libros ? 
+                        <> {
+                            this.state.libros.map((libro)=>(
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>{libro.Titulo}</td>
+                        <td>{this.props.elnombre}</td>
+                    </tr>     
+                     ))
+                        }   
+                        </>
+                        :
+                        <>                  
+                            <p> No se encontraron libros</p>
+                        </>
+                    }
+    
+                </tbody>
+            </table>
+        </div></div>);
+    }
+
+
+}
+
+
+
+function PerfilUser() {
 
     const [usuario, setNombre] = useState("");
     const [Foto, setFoto] = useState("");
@@ -110,7 +178,7 @@ function PerfilUser() {
     const [historial, setHistorial] = useState("");
     const [redes, setRedes] = useState("");
     const [nuevoComentario, setComentario] = useState("");
-    
+
     let random1 = "randomasd1"
     let random2 = "random1231"
 
@@ -156,6 +224,8 @@ function PerfilUser() {
             window.confirm("Para añadir un comentario debes estar logueado");
         }
     }
+
+   
 
     useEffect(() => {
             getUser();
@@ -254,31 +324,7 @@ function PerfilUser() {
                  
                 </div>
 
-                {/* Libros publicados por el usuario */}
-                <div className='col-sm'>
-                    <h4>Libros publicados</h4>
-                    <table class="table table-hover table-sm">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nombre libro</th>
-                                <th scope="col">Autor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Don Quijote de la Mancha</td>
-                                <td>{usuario}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Cien años de soledad</td>
-                                <td>{usuario}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <Libros  elnombre={elnombre}/>
             </div>
            
             <div class="mb-3">
@@ -289,7 +335,7 @@ function PerfilUser() {
                             <button class="btn btn-primary me-md-2" type="button" onClick={(e) => agregarComentario(nuevoComentario)}>Comentar</button>
                         </div>
         
-            <Comentarios elnombre={elnombre}/>
+            <Comentarios elnombre={elnombre} />
                
 
 
