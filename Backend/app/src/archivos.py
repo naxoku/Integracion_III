@@ -94,6 +94,15 @@ def getBooks():
         })
     return dumps(libros)
 
+@app.route('/users/Libros/<popularidad>/<id>', methods=['PUT'])
+def popularidad(id,popularidad):
+    db.Libros.update_one({'_id': ObjectId(id)}, {'$set': {
+            'Popularidad': popularidad
+        }})
+    response = jsonify({'message' : 'name' +  id + 'fue actualizado correctamente'})
+
+    return response
+
 #============== MANEJO DE ARCHIVOS =============================
 
 

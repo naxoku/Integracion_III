@@ -9,23 +9,25 @@ function Libro() {
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
     const [link, setLink] = useState("")
+    const [popularidad, setPopularidad] = useState("")
     let { nombreLibro } = useParams();
     let { idLibro } = useParams();
     const nombrelibro = {nombreLibro}.nombreLibro;
     const idlibro = {idLibro}.idLibro;
 
     
-    async function img_perf(){
+    async function visitas(){
         const res = await axios.get(`${API}/users/Libros/${idlibro}`, {
             mode: "no-cors",
             });
         const data = res.data
- 
-        
-    
+        var num_visitas = data['0']['Popularidad']
+
+        setPopularidad(parseInt(num_visitas)+1)
         setLink(data['0']['url']);
-       
- 
+        await axios.put(`${API}/users/Libros/${popularidad}/${idlibro}`);
+        
+        
     };
     
 
@@ -57,7 +59,7 @@ function Libro() {
         // console.log(valor);
     });
     useEffect(() => {
-        img_perf();
+        visitas();
     
         });
     return (
